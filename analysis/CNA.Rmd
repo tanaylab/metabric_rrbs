@@ -1,0 +1,115 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+# CNA 
+
+```{r}
+source(here::here("scripts/init.R"))
+```
+
+```{r}
+cna_df <- get_gene_cna_df() %>%
+        filter(ER != "normal") %>%
+        mutate(type = forcats::fct_explicit_na(type)) %>%
+        gather("feat", "score", -(samp:ER)) %>% as_tibble()
+```
+
+```{r}
+cna_df_count <- cna_df %>%
+        group_by(feat, ER) %>%
+        mutate(score = cut(score, breaks = quantile(score, 0:5 / 5, na.rm = TRUE), include.lowest = TRUE, labels = as.character(1:5))) %>%
+        filter(!is.na(cna)) %>%
+        count(name, ER, feat, cna, score) %>%
+        group_by(name, ER, feat, score) %>%
+        mutate(p = n / sum(n)) %>%
+        ungroup()
+```
+
+```{r}
+cna_pvals <- calc_features_cna_pvals(feats = c("clock", "MG", "ML")) %>%
+        filter(ER != "all") %>%
+        group_by(ER) %>%
+        mutate(qval_loss = p.adjust(pval_loss), qval_gain = p.adjust(pval_gain)) %>%
+        ungroup()
+```
+
+```{r}
+signif_cna_loss <- cna_pvals %>%
+        filter(type %in% "TSG", qval_loss <= 0.01, p_loss >= 0.05) %>%        
+        mutate(name1 = glue("{name} ({ER})")) %>% 
+        ungroup()
+signif_cna_loss
+```
+
+```{r}
+signif_cna_gain <- cna_pvals %>%
+        filter(type %in% "ONC", qval_gain <= 0.01, p_gain >= 0.05) %>%
+        mutate(name1 = glue("{name} ({ER})")) %>% 
+        ungroup()
+signif_cna_gain
+```
+
+#### Extended Data Figure 10C
+
+```{r}
+options(repr.plot.width = 5, repr.plot.height = 7)
+df <- cna_df_count %>%
+        mutate(name1 = glue("{name} ({ER})")) %>% 
+        filter(name1 %in% signif_cna_loss$name1) %>%
+        group_by(feat, ER, name) %>%
+        mutate(n_tot = sum(n)) %>%
+        select(-p) %>%
+        spread(score, n) %>%
+        filter(cna == "LOSSLOH") %>%
+        mutate(r = log2(`5` / `1`)) %>%
+        ungroup()
+
+p_loss <- df %>%
+        filter(feat %in% c("clock", "MG", "ML")) %>%
+        left_join(signif_cna_loss %>% select(name, ER, feat, qval_loss)) %>%
+        mutate(label = ifelse(qval_loss <= 0.01, "*", "")) %>%
+#         filter(ER == 'ER+') %>%        
+        select(name, ER, feat, r, label) %>%
+        ggplot(aes(x = feat, y = reorder(name, r), fill = r)) + geom_tile() + scale_fill_gradient2(name = "log2\n(top 20% /\nbottom 20%)", low = "darkblue", mid = "white", high = "darkred", midpoint = 0, breaks=c(-2,-1,0,1,2)) + ylab("") + xlab("") + geom_text(aes(label = label)) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+
+p_loss + theme_bw()
+```
+
+```{r}
+options(repr.plot.width = 5, repr.plot.height = 7)
+df_gain <- cna_df_count %>%
+        mutate(name1 = glue("{name} ({ER})")) %>% 
+        filter(name1 %in% signif_cna_gain$name1) %>%
+        group_by(feat, ER, name) %>%
+        mutate(n_tot = sum(n)) %>%
+        select(-p) %>%
+        spread(score, n) %>%
+        filter(cna == "GAINAMPL") %>%
+        mutate(r = log2(`5` / `1`)) %>%
+        ungroup()
+
+p_gain <- df_gain %>%
+        filter(feat %in% c("clock", "MG", "ML")) %>%
+        left_join(signif_cna_gain %>% select(name, ER, feat, qval_gain)) %>%
+        mutate(label = ifelse(qval_gain <= 0.01, "*", "")) %>%        
+        select(name, ER, feat, r, label) %>%        
+        ggplot(aes(x = feat, y = reorder(name, r), fill = r)) + geom_tile() + scale_fill_gradient2(name = "log2\n(top 20% /\nbottom 20%)", low = "darkblue", mid = "white", high = "darkred", midpoint = 0, breaks=c(-2,-1,0,1,2)) + ylab("") + xlab("") + geom_text(aes(label = label)) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+
+p_gain + theme_bw()
+```
+
+```{r}
+gc()
+```

@@ -1,0 +1,718 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+# X dosage compensation
+
+```{r}
+source(here::here("scripts/init.R"))
+```
+
+We start by looking at the CNA data
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 4)
+p1 <- cna %>% ggplot(aes(x=cna_val)) + geom_density() + xlim(0,5) + geom_vline(xintercept=c(0,0.5, 1.5, 2.5, 3.5, 4.5), color="red") 
+p2 <- cna %>% ggplot(aes(x=cna_val, color=factor(cna_round))) + geom_density() + xlim(0,5)  + guides(color=FALSE)
+p1 + p2
+```
+
+## X analysis
+
+
+We then go to extract loci that are associated with xist expression
+
+```{r}
+xist_loci <- get_xist_loci()
+
+xist_loci_meth <- get_xist_loci_meth()
+xist_meth <- xist_loci_meth %>%
+    group_by(samp) %>%
+    summarise(meth = mean(meth, na.rm = TRUE))
+
+xist_expr <- get_gene_expression_mat() %>%
+    filter(name == "XIST") %>%
+    gather("samp", "expr", -(chrom:name3.chr))
+
+xist_loci_expr <- get_xist_loci_expr()
+df <- xist_meth %>%
+    left_join(xist_expr %>% select(samp, expr)) %>%
+    left_join(samp_data %>% select(samp, ER = ER1)) %>%
+    filter(!is.na(ER))
+
+head(xist_loci)
+count(xist_loci, chrom)
+```
+
+We show that Xist expression is correlated with XIST loci methylation
+
+```{r}
+head(df)
+```
+
+#### Extended Data Figure 9B
+
+```{r}
+options(repr.plot.width = 7, repr.plot.height = 7)
+df %>% group_by(ER) %>% summarise(cor = cor(meth, expr, use="pairwise.complete.obs"))
+p_xist_meth_cor <- df %>%
+    arrange(sample(samp)) %>% 
+    ggplot(aes(x = meth, y = expr, color = ER)) +
+    geom_point(size=0.2) + 
+    scale_color_manual(values = annot_colors$ER1, guide = FALSE) +
+    theme(aspect.ratio = 1) +
+    xlab("Methylation") +
+    ylab("Xist expression") +
+    annotate("text", x = 0.45, y = 6, label = sprintf("~ rho == %0.2f", cor(df$meth, df$expr, method = "spearman", use = "pairwise.complete.obs")), parse = TRUE, size = 2, family = "Arial")
+p_xist_meth_cor
+```
+
+Moving on to look at the methylation in different CNA regimes
+
+```{r}
+get_xist_cna
+```
+
+```{r}
+xist_cna <- get_xist_cna()
+xist_cna %>% count(cna) %>% ggplot(aes(x=factor(cna), y=n)) + geom_col() + theme_bw()
+```
+
+Plotting the distribution of loci
+
+
+#### Extended Data Figure 9D
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 5)
+df <- xist_cna %>%
+    left_join(get_xist_loci_meth()) %>%
+    group_by(cna_grp, ER, chrom, start, end) %>%
+    summarise(meth = mean(meth, na.rm = TRUE)) %>%
+    filter(!is.na(ER)) %>% 
+    mutate(cna_grp = factor(cna_grp, levels = c("1N", "2N", ">=3N"))) %>% 
+    mutate(ER = factor(ER, levels = c("ER+", "ER-")))
+p_boxp_meth_cna <- df %>% 
+    ggplot(aes(x = cna_grp, y = meth, fill = ER, group = cna_grp)) +
+#     ggrastr::geom_boxplot_jitter(outlier.size = 0.1, outlier.jitter.width = 0.01, raster=TRUE) +
+    geom_boxplot(linewidth=0.1, fatten=0.5, outlier.size=0.1) + 
+    scale_fill_manual(values = annot_colors$ER1, guide = FALSE) +
+    xlab("") +
+    ylab("Methylation in Xist\nassociated promoters") +
+    facet_grid(. ~ ER) +
+    ylim(0, 1.1) + 
+            theme(
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor.x = element_blank()
+            )
+p_boxp_meth_cna  + ggpubr::stat_compare_means(label = "p.signif", comparisons = list(c("1N", "2N"), c("2N", ">=3N")))+ theme_bw()
+p_boxp_meth_cna  + ggpubr::stat_compare_means(comparisons = list(c("1N", "2N"), c("2N", ">=3N")))+ theme_bw()
+```
+
+```{r}
+df %>% ungroup() %>% distinct(chrom, start, end, ER, cna_grp) %>% count(ER, cna_grp)
+```
+
+```{r}
+xist_cna %>% distinct(cna_grp, samp, ER) %>% count(cna_grp, ER) 
+```
+
+We now move to show scatters of loci in different CNA regimes
+
+```{r}
+get_xist_meth_cna
+xist_meth_cna <- get_xist_meth_cna()
+head(xist_meth_cna)
+```
+
+#### Extended Data Figure 9E
+
+```{r}
+p_scatter_meth_cna_2_3 <- xist_meth_cna %>%
+        ggplot(aes(x = `2N`, y = `>=3N`, color = ER)) +
+#         ggrastr::geom_point_rast(size = 0.2, raster.width = 1, raster.height = 1) +
+        geom_point(size=0.2) + 
+        geom_abline(color = "black", linetype = "dashed") +
+        scale_color_manual(values = annot_colors$ER1, guide = FALSE) +
+        theme(aspect.ratio = 1) +
+        xlim(0, 0.65) +
+        ylim(0, 0.65) #+
+#         annotate("text", x = 0.5, y = 0.1, label = paste("rho = ", round(cor(xist_meth_cna$`2N`, xist_meth_cna$`>=3N`, use = "pairwise.complete.obs"), digits = 3)), size = 2, family = "Arial")
+p_scatter_meth_cna_1_2 <- xist_meth_cna %>%
+        ggplot(aes(x = `1N`, y = `2N`, color = ER)) +
+#         ggrastr::geom_point_rast(size = 0.2, raster.width = 1, raster.height = 1) +
+        geom_point(size=0.2) + 
+        geom_abline(color = "black", linetype = "dashed") +
+        scale_color_manual(values = annot_colors$ER1, guide = FALSE) +
+        theme(aspect.ratio = 1) +
+        xlim(0, 0.65) +
+        ylim(0, 0.65) #+
+#         annotate("text", x = 0.5, y = 0.1, label = paste("rho = ", round(cor(xist_meth_cna$`1N`, xist_meth_cna$`2N`, use = "pairwise.complete.obs"), digits = 3)), size = 2, family = "Arial")
+(p_scatter_meth_cna_1_2 + theme_bw() + theme(aspect.ratio = 1)) + (p_scatter_meth_cna_2_3 + theme_bw() + theme(aspect.ratio = 1))
+```
+
+```{r}
+p_scatter_meth_cna_2_3 + facet_wrap(~ER) + theme_bw() + theme(aspect.ratio = 1) 
+```
+
+Same with expression:
+
+```{r}
+get_xist_expr_cna
+xist_expr_cna <- get_xist_expr_cna()
+head(xist_expr_cna)
+```
+
+#### Extended Data Figure 9F
+
+```{r}
+p_scatter_expr_cna_2_3 <- xist_expr_cna %>%
+        ggplot(aes(x = `2N`, y = `>=3N`, color = ER)) +
+        geom_point(size=0.2) + 
+        geom_abline(color = "black", linetype = "dashed") +
+        scale_color_manual(values = annot_colors$ER1, guide = FALSE) +
+        theme(aspect.ratio = 1) +
+        xlim(5, 14) +
+        ylim(5, 14)
+
+ p_scatter_expr_cna_1_2 <- xist_expr_cna %>% ggplot(aes(x = `1N`, y = `2N`, color = ER)) +
+        geom_point(size=0.2) + 
+        geom_abline(color = "black", linetype = "dashed") +
+        scale_color_manual(values = annot_colors$ER1, guide = FALSE) +
+        theme(aspect.ratio = 1) +
+        xlim(5, 14) +
+        ylim(5, 14) 
+
+p_scatter_expr_cna_1_2 + p_scatter_expr_cna_2_3
+```
+
+## autosome analysis
+
+```{r}
+get_autosome_loci
+autosome_loci <- get_autosome_loci()
+```
+
+```{r}
+get_autosome_cna
+autosome_cna <- get_autosome_cna()
+head(autosome_cna)
+```
+
+```{r}
+get_autosome_loci_meth
+autosome_loci_meth <- get_autosome_loci_meth()
+head(autosome_loci_meth)
+```
+
+Plotting the distribution of loci
+
+
+#### Extended Data Figure 9G
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 5)
+df <- autosome_cna %>%
+    left_join(autosome_loci_meth) %>%
+    group_by(cna_grp, ER, chrom, start, end) %>%
+    summarise(meth = mean(meth, na.rm = TRUE)) %>%
+    filter(!is.na(ER)) %>% 
+    mutate(cna_grp = factor(cna_grp, levels = c("1N", "2N", ">=3N"))) %>% 
+    mutate(ER = factor(ER, levels = c("ER+", "ER-")))
+p_boxp_meth_cna_autosome <- df %>% 
+    ggplot(aes(x = cna_grp, y = meth, fill = ER, group = cna_grp)) +
+#     ggrastr::geom_boxplot_jitter(outlier.size = 0.1, outlier.jitter.width = 0.01, raster=TRUE) + 
+    geom_boxplot(linewidth=0.1, fatten=0.5, outlier.size = 0.1) + 
+    scale_fill_manual(values = annot_colors$ER1, guide = FALSE) +
+    xlab("") +
+    ylab("Methylation in autosomes") +
+    facet_grid(. ~ ER) +
+    ylim(0, 1.1) + 
+            theme(
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor.x = element_blank()
+            )
+
+p_boxp_meth_cna_autosome + ggpubr::stat_compare_means(comparisons = list(c("1N", "2N"), c("2N", ">=3N")))
+p_boxp_meth_cna_autosome +
+     ggpubr::stat_compare_means(label = "p.signif", comparisons = list(c("1N", "2N"), c("2N", ">=3N"))) 
+p_boxp_meth_cna_autosome
+```
+
+```{r}
+df %>% ungroup() %>% distinct(chrom, start, end, ER) %>% count(ER)
+```
+
+```{r}
+autosome_cna %>% distinct(cna_grp, samp, ER) %>% count(ER, cna_grp)
+```
+
+We now move to show scatters of loci in different CNA regimes
+
+```{r}
+get_autosome_meth_cna
+autosome_meth_cna <- get_autosome_meth_cna()
+head(autosome_meth_cna)
+```
+
+#### Extended Data Figure 9H
+
+```{r}
+options(repr.plot.width = 5, repr.plot.height = 3)
+p_scatter_meth_cna_2_3_autosome <- autosome_meth_cna %>%
+        ggplot(aes(x = `2N`, y = `>=3N`, color = ER)) +
+        geom_point(size=0.2) + 
+        geom_abline(color = "black", linetype = "dashed") +
+        scale_color_manual(values = annot_colors$ER1, guide = FALSE) +
+        geom_abline(color = "red", linetype = "dashed", intercept = 0.1) + 
+        geom_abline(color = "red", linetype = "dashed", intercept = -0.1) + 
+        theme(aspect.ratio = 1)
+p_scatter_meth_cna_1_2_autosome <- autosome_meth_cna %>%
+        ggplot(aes(x = `1N`, y = `2N`, color = ER)) +
+        geom_point(size=0.2) + 
+        geom_abline(color = "black", linetype = "dashed") +
+        scale_color_manual(values = annot_colors$ER1, guide = FALSE) +        
+        geom_abline(color = "red", linetype = "dashed", intercept = 0.1) + 
+        geom_abline(color = "red", linetype = "dashed", intercept = -0.1) +
+        theme(aspect.ratio = 1)          
+        
+p_scatter_meth_cna_1_2_autosome + p_scatter_meth_cna_2_3_autosome
+```
+
+Same with expression:
+
+```{r}
+get_autosome_expr_cna
+autosome_expr_cna <- get_autosome_expr_cna()
+head(autosome_expr_cna)
+```
+
+```{r}
+p_scatter_expr_cna_2_3 <- autosome_expr_cna %>%
+        ggplot(aes(x = `2N`, y = `>=3N`, color = ER)) +
+        geom_point(size=0.2) + 
+        geom_abline(color = "black", linetype = "dashed") +
+        scale_color_manual(values = annot_colors$ER1, guide = FALSE) +
+        theme(aspect.ratio = 1) +
+        xlim(5, 14) +
+        ylim(5, 14)
+
+ p_scatter_expr_cna_1_2 <- autosome_expr_cna %>% ggplot(aes(x = `1N`, y = `2N`, color = ER)) +
+        geom_point(size=0.2) + 
+        geom_abline(color = "black", linetype = "dashed") +
+        scale_color_manual(values = annot_colors$ER1, guide = FALSE) +
+        theme(aspect.ratio = 1) +
+        xlim(5, 14) +
+        ylim(5, 14) 
+
+p_scatter_expr_cna_1_2 + p_scatter_expr_cna_2_3
+```
+
+Looking at the distribution of loci in 2N / >=3N (averaging the samples expression per ER and CNA)
+
+```{r}
+get_xist_expr_cna
+get_autosome_expr_cna
+df_fc <- get_xist_expr_cna() %>%
+        mutate(type = "X") %>%
+        bind_rows(get_autosome_expr_cna() %>% mutate(type = "auto")) %>%
+        mutate(diff = `>=3N` - `2N`, diff1 = `2N` - `1N`) %>%
+#         filter(ER == "ER+")
+        filter(ER == "ER-")
+head(df_fc)
+```
+
+#### Extended Data Figure 9I
+
+```{r}
+pval <- ks.test(df_fc$diff[df_fc$type == "X"], df_fc$diff[df_fc$type == "auto"])$p.value
+message(pval)
+
+fc_p <- df_fc %>%
+        ggplot(aes(color = type, x = diff)) +
+        geom_density(size = 1) +
+        theme(aspect.ratio = 1) +
+        xlab("log expression fold change (>=3N/2N)") +
+        ylab("") +
+        scale_color_manual(values = c("X" = "darkblue", "auto" = "red")) +
+        coord_cartesian(xlim = c(-0.5, 1)) +
+        theme(aspect.ratio = 1) 
+#         annotate("text", x = 0.5, y = 4, label = "p<<0.001 (KS)", size = 2, family = "Arial")
+
+fc_p
+```
+
+```{r}
+pval <- ks.test(df_fc$diff1[df_fc$type == "X"], df_fc$diff1[df_fc$type == "auto"])$p.value
+message(pval)
+
+fc_p <- df_fc %>%
+        ggplot(aes(color = type, x = -diff1)) +
+        geom_density(size = 1) +
+        theme(aspect.ratio = 1) +
+        xlab("log expression fold change (1N/2N)") +
+        ylab("") +
+        scale_color_manual(values = c("X" = "darkblue", "auto" = "red")) +
+        coord_cartesian(xlim = c(-0.5, 1)) +
+        theme(aspect.ratio = 1) 
+#         annotate("text", x = 0.5, y = 4, label = "p<<0.001 (KS)", size = 2, family = "Arial")
+
+fc_p
+```
+
+```{r}
+head(df_fc)
+```
+
+```{r}
+thresh <- 0.1
+autosome_cna_meth_expr <- get_autosome_cna_meth_expr()
+    dosage_cands <- autosome_cna_meth_expr %>% 
+        filter(`>=3N` >= (`2N` + thresh) ) %>%         
+        filter(`n_>=3N` >= 5, `n_2N` >= 5) 
+
+    dosage_cands_1N <- autosome_cna_meth_expr %>% 
+        filter(`1N` <= (`2N` - thresh) ) %>%         
+        filter(`n_1N` >= 5, `n_2N` >= 5)     
+
+    dosage_cands_expr <- dosage_cands %>% select(chrom, start, end, ER, `1N` = `expr_1N`, `2N` = `expr_2N`, `>=3N` = `expr_>=3N`)
+    dosage_cands_expr_1N <- dosage_cands_1N %>% select(chrom, start, end, ER, `1N` = `expr_1N`, `2N` = `expr_2N`)
+
+    df_fc <- get_xist_expr_cna() %>%
+        mutate(type = "X") %>%
+        bind_rows(autosome_expr_cna %>% anti_join(dosage_cands_expr) %>% mutate(type = "auto")) %>%
+        bind_rows(dosage_cands_expr %>% mutate(type = "auto-dosage")) %>% 
+        mutate(ER = factor(ER, levels=c("ER+", "ER-"))) %>%
+        filter(!is.na(ER)) %>% 
+        mutate(type = factor(type, levels=c("X", "auto", "auto-dosage"))) %>%
+        arrange(type) %>%
+        mutate(diff = `>=3N` - `2N`) 
+
+    fc_p <- df_fc %>%
+        ggplot(aes(color = type, x = diff)) +
+        geom_density(size = 0.5) +
+        theme(aspect.ratio = 1) +
+        xlab("log expression fold change (>=3N/2N)") +
+        ylab("") +
+        scale_color_manual(values = c("auto" = "red", "auto-dosage" = "blue", "X" = "gray")) + 
+        # ggsci::scale_color_npg() +         
+        coord_cartesian(xlim = c(-0.6, 1)) +
+        theme(aspect.ratio = 1) + 
+        facet_wrap(~ER, scale="free_y", nrow=1) + 
+        guides(color = FALSE)
+
+    df_fc %>% group_by(ER) %>% summarise(p_x_auto = ks.test(diff[type == "X"], diff[type == "auto"])$p.value, p_auto_dosage =  ks.test(diff[type == "auto-dosage"], diff[type == "auto"])$p.value) %>% print()
+
+    df_fc_1N <- get_xist_expr_cna() %>%
+        mutate(type = "X") %>%
+        bind_rows(autosome_expr_cna %>% anti_join(dosage_cands_expr_1N) %>% mutate(type = "auto")) %>%
+        bind_rows(dosage_cands_expr_1N %>% mutate(type = "auto-dosage")) %>% 
+        mutate(ER = factor(ER, levels=c("ER+", "ER-"))) %>%
+        filter(!is.na(ER)) %>% 
+        mutate(type = factor(type, levels=c("X", "auto", "auto-dosage"))) %>%
+        arrange(type) %>%
+        mutate(diff = `1N` - `2N`) 
+
+    fc_p_1N <- df_fc_1N %>%
+        ggplot(aes(color = type, x = diff)) +
+        geom_density(size = 0.5) +
+        theme(aspect.ratio = 1) +
+        xlab("log expression fold change (1N/2N)") +
+        ylab("") +
+        scale_color_manual(values = c("auto" = "red", "auto-dosage" = "blue", "X" = "gray")) +           
+        coord_cartesian(xlim = c(-0.6, 1)) +
+        theme(aspect.ratio = 1) + 
+        facet_wrap(~ER, scale="free_y", nrow=1) + 
+        guides(color = FALSE)
+
+    df_fc_1N %>% group_by(ER) %>% summarise(p_x_auto = ks.test(diff[type == "X"], diff[type == "auto"])$p.value, p_auto_dosage =  ks.test(diff[type == "auto-dosage"], diff[type == "auto"])$p.value) %>% print() 
+
+fc_p
+fc_p_1N
+```
+
+## Checking dosage compensation on all X loci
+
+```{r}
+get_xist_loci
+```
+
+```{r}
+all_norm_meth_x <- fread(here("data/all_norm_meth.tsv")) %>% 
+            filter(chrom == "chrX") %>% as_tibble()
+X_loci <- all_norm_meth_x %>% distinct(chrom, start, end)
+```
+
+```{r}
+get_xist_cna
+```
+
+```{r}
+X_cna <- X_loci %>% gintervals.neighbors1(cna %>% 
+    mutate(end = ifelse(start == end, start + 1, end)) %>% 
+    filter(chrom == "chrX"), maxneighbors = nrow(samp_data)) %>% 
+    filter(dist == 0) %>% select(chrom, start, end, samp, 
+    cna = cna_round)
+X_cna <- X_cna %>% mutate(cna_grp = cut(cna, breaks = c(-1, 
+        0, 1, 2, 10), labels = c("0N", "1N", "2N", ">=3N"))) %>% 
+        filter(cna_grp != "0N") %>% left_join(samp_data %>% select(samp, 
+        ER = ER1)) %cache_df% here("data/X_cna.tsv") %>% as_tibble()
+head(X_cna)
+```
+
+```{r}
+get_xist_loci_meth
+```
+
+```{r}
+X_loci_meth <- X_loci %>% inner_join(get_promoter_avg_meth()) %>% 
+        gather("samp", "meth", -(chrom:end))
+```
+
+```{r}
+options(repr.plot.width = 5, repr.plot.height = 3)
+p_boxp_meth_cna_all <- X_cna %>%
+    left_join(X_loci_meth) %>%
+    group_by(cna_grp, ER, chrom, start, end) %>%
+    summarise(meth = mean(meth, na.rm = TRUE)) %>%
+    filter(!is.na(ER)) %>% 
+    mutate(cna_grp = factor(cna_grp, levels = c("1N", "2N", ">=3N"))) %>% 
+    mutate(ER = factor(ER, levels = c("ER+", "ER-"))) %>% 
+    ggplot(aes(x = cna_grp, y = meth, fill = ER, group = cna_grp)) +
+    geom_boxplot(linewidth=0.1, fatten=0.5, outlier.size = 0.1) + 
+    scale_fill_manual(values = annot_colors$ER1, guide = FALSE) +
+    xlab("") +
+    ylab("Methylation in X promoters") +
+    facet_grid(. ~ ER) +
+    ylim(0, 1.1) +
+    ggpubr::stat_compare_means(label = "p.signif", comparisons = list(c("1N", "2N"), c("2N", ">=3N"))) + 
+            theme(
+                panel.grid.major.x = element_blank(),
+                panel.grid.minor.x = element_blank()
+            )
+p_boxp_meth_cna_all
+```
+
+> Looks very similar to the XIST associated version
+
+
+## % of X lost
+
+
+#### Extended Data Figure 9C
+
+```{r}
+chr_x_len <- gintervals.all() %>% filter(chrom == "chrX") %>% pull(end)
+p_x_perc <- cna %>% 
+    filter(chrom == "chrX") %>% mutate(l = end - start) %>% 
+    mutate(cna = cut(cna_round, breaks = c(0, 1, 2, 20), include.lowest=TRUE, labels=c("Loss", "normal", "Gain"))) %>% 
+    group_by(samp, cna) %>% 
+    summarise(p = sum(l) / chr_x_len) %>% 
+    filter(cna != "normal") %>% 
+    ungroup() %>% 
+    add_ER() %>% 
+    filter(!is.na(ER)) %>% 
+    ggplot(aes(x=p, color=ER, y=1-..y..)) + 
+        stat_ecdf() + 
+        facet_wrap(~cna) + 
+        scale_color_manual(values=annot_colors$ER1) + 
+        theme(aspect.ratio=1) + 
+        xlab("% of X") + 
+        ylab("% of samples") + 
+        scale_x_continuous(labels=scales::percent) + 
+        scale_y_continuous(labels=scales::percent)
+p_x_perc
+```
+
+## Plot Expression-Methylation correlation for X
+
+```{r}
+meth_mat <- all_norm_meth_x %>% select(chrom:end, any_of(ER_positive_samples)) %>% intervs_to_mat()
+```
+
+```{r}
+expr_m <- get_gene_expression_mat() %>% select(-any_of(c("chrom", "start", "end", "name3.chr")))
+expr_mat <- expr_m %>%
+    as.data.frame() %>%
+    column_to_rownames("name")
+f <- rowSums(!is.na(expr_mat)) > 0
+expr_mat <- expr_mat[f, ]
+dim(expr_mat)
+```
+
+```{r}
+em_cross <- em_cross_cor(meth_mat, expr_mat, meth_cor_thresh = 0.25, expr_cor_thresh = 0.25) %cache_rds% here("data/X_er_positive_em_cross_cor.rds")
+```
+
+```{r}
+em_cross_clust <- cluster_em_cross_cor(em_cross, k_meth = 32, k_expr = 32) %cache_rds% here("data/X_er_positive_em_cross_cor_clust.rds")
+```
+
+#### Extended Data Figure 9A
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 13)
+plot_em_cross_cor(em_cross_clust)
+```
+
+```{r}
+em_cross_clust$em_cross[1:5, 1:5]
+```
+
+```{r}
+dim(em_cross_clust$em_cross)
+```
+
+# Finding specific dosage compensation examples
+
+```{r}
+autosome_cands_3n <- get_autosome_dosage_comp_cands("3N")
+head(autosome_cands_3n)
+```
+
+```{r}
+thresh <- 0.1
+dosage_cands_gain_3n <- autosome_cands_3n %>% 
+        filter(`>=3N` >= (`2N` + thresh) ) %>%         
+        filter(`n_>=3N` >= 5, `n_2N` >= 5) %>% #,  !is.na(name))  %>%
+        select(chrom, start, end, name, ER, `>=3N`, `2N`, `n_>=3N`, n_2N, `expr_>=3N`, `expr_2N`, `n_expr_>=3N`, `n_expr_2N`) %>%
+        arrange(-`>=3N`, ER, name) 
+dosage_cands_gain_3n %>% count(ER)
+```
+
+```{r}
+autosome_cands_4n <- get_autosome_dosage_comp_cands("4N")
+head(autosome_cands_4n)
+```
+
+```{r}
+thresh <- 0.1
+dosage_cands_gain_4n <- autosome_cands_4n %>% 
+        filter(`>=4N` >= (`2N` + thresh) ) %>%         
+        filter(`n_>=4N` >= 5, `n_2N` >= 5) %>% #,  !is.na(name))  %>%
+        select(chrom, start, end, name, ER, `>=4N`, `2N`, `n_>=4N`, n_2N, `expr_>=4N`, `expr_2N`, `n_expr_>=4N`, `n_expr_2N`) %>%
+        arrange(-`>=4N`, ER, name) 
+dosage_cands_gain_4n %>% count(ER)
+```
+
+```{r}
+dosage_cands_loss <- autosome_cna_meth_expr %>% 
+        filter(`1N` <= (`2N` - thresh) ) %>%         
+        filter(`n_1N` >= 5, `n_2N` >= 5)  %>%
+        select(chrom, start, end, name, ER, `1N`, `2N`, `n_1N`, n_2N, `expr_1N`, `expr_2N`, `n_expr_1N`, `n_expr_2N`) %>%
+        arrange(-`n_1N`, ER, name)
+
+dosage_cands_loss %>% count(ER)
+```
+
+```{r}
+df <- get_autosome_meth_cna()
+```
+
+Validating that we have enough samples for each locus:
+
+```{r}
+auto_cna <- get_autosome_cna() %>% inner_join(get_autosome_loci_meth())
+```
+
+```{r}
+num_cna_meth <- auto_cna %>% filter(!is.na(meth)) %>% count(chrom, start, end, ER, cna_grp) %>% mutate(cna_grp = paste0("n_", cna_grp)) %>% spread(cna_grp, n)
+```
+
+```{r}
+num_cna_meth %>% gather('type', 'num', -(chrom:ER)) %>% group_by(chrom, start, end, ER) %>% mutate(p = num / sum(num))  %>% select(-num) %>% spread(type, p) %>% ggplot(aes(x=`n_1N`, y=`n_2N`, color=ER)) + geom_point() + scale_color_manual(values=annot_colors$ER1, guide = FALSE) + theme(aspect.ratio=1)
+num_cna_meth %>% gather('type', 'num', -(chrom:ER)) %>% group_by(chrom, start, end, ER) %>% mutate(p = num / sum(num))  %>% select(-num) %>% spread(type, p) %>% ggplot(aes(x=`n_2N`, y=`n_>=3N`, color=ER)) + geom_point() + scale_color_manual(values=annot_colors$ER1, guide = FALSE) + theme(aspect.ratio=1)
+```
+
+```{r}
+df <- df %>% left_join(num_cna_meth)
+```
+
+```{r}
+df_expr <- get_autosome_expr_cna() %>% gather("cna", "expr", -(chrom:ER)) %>% mutate(cna = paste0("expr_", cna)) %>% spread(cna, expr)
+```
+
+```{r}
+df <- df %>% left_join(df_expr)
+```
+
+```{r}
+num_cna_expr <- get_autosome_cna() %>% inner_join(get_autosome_loci_expr()) %>% filter(!is.na(expr)) %>% count(chrom, start, end, ER, cna_grp) %>% mutate(cna_grp = paste0("n_expr_", cna_grp)) %>% spread(cna_grp, n)
+```
+
+```{r}
+df <- df %>% left_join(num_cna_expr)
+```
+
+```{r}
+df <- df %>% left_join(get_gene_expression_mat() %>% select(chrom:end, name) %>% mutate(start = start + 1, end = end + 1))
+```
+
+```{r}
+fwrite(df, here("data/autosome_cna_meth_expr.tsv"), sep="\t")
+```
+
+```{r}
+thresh <- 0.1
+```
+
+```{r}
+options(repr.plot.width = 4, repr.plot.height = 4)
+
+df %>% ggplot(aes(x = `2N`, y = `>=3N`, color = ER)) +geom_point(size=0.2)  + geom_abline(color = "black", linetype = "dashed") + scale_color_manual(values = annot_colors$ER1, guide = FALSE) + theme(aspect.ratio = 1) + geom_line(data = tibble(`2N` = seq(0,1,0.001), `>=3N`= `2N` - thresh), color="red", linetype="dashed") +  geom_line(data = tibble(`2N` = seq(0,1,0.001), `>=3N`= `2N` + thresh), color="red", linetype = "dashed") + xlim(0,1) + ylim(0,1)
+
+```
+
+```{r}
+df %>% filter(`>=3N` >= (`2N` + thresh) ) %>% select(chrom, start, end, ER, `>=3N`, `2N`, `n_>=3N`, n_2N, `expr_>=3N`, `expr_2N`, `n_expr_>=3N`, `n_expr_2N`, name) %>% filter(`n_>=3N` >= 5, `n_2N` >= 5, !is.na(name)) %>% arrange(-`n_>=3N`, ER, name) %>% ggplot(aes(x=(`expr_>=3N` - `expr_2N`))) + geom_density() + xlim(-0.5, 1)
+```
+
+```{r}
+df %>% filter(`>=3N` >= (`2N` + thresh) ) %>% select(chrom, start, end, ER, `>=3N`, `2N`, `n_>=3N`, n_2N, `expr_>=3N`, `expr_2N`, `n_expr_>=3N`, `n_expr_2N`, name) %>% filter(`n_>=3N` >= 5, `n_2N` >= 5, !is.na(name)) %>% arrange(-`n_>=3N`, ER, name)
+```
+
+```{r}
+df %>% filter(`>=3N` <= (`2N` - thresh) ) %>% select(chrom, start, end, ER, `>=3N`, `2N`, `n_>=3N`, n_2N, `expr_>=3N`, `expr_2N`, `n_expr_>=3N`, `n_expr_2N`, name) %>% filter(`n_>=3N` >= 5, `n_2N` >= 5, !is.na(name))
+```
+
+```{r}
+dosage_cands <- df %>% filter(`>=3N` >= (`2N` + thresh) ) %>% select(chrom, start, end, ER, `>=3N`, `2N`, `n_>=3N`, n_2N, `expr_>=3N`, `expr_2N`, `n_expr_>=3N`, `n_expr_2N`, name) %>% filter(`n_>=3N` >= 5, `n_2N` >= 5, !is.na(name)) %>% arrange(-`n_>=3N`, ER, name)
+```
+
+```{r}
+dosage_cands_mean_expr <- dosage_cands %>% select(chrom, start, end, ER) %>% inner_join(get_gene_expression_mat() %>% select(-name3.chr) %>% mutate(start = start + 1, end = end + 1))  %>% gather("samp", "expr", -(chrom:name)) %>% left_join(samp_data %>% select(samp, ER1)) %>% filter(ER == ER1) %>% group_by(chrom, start, end, name, ER) %>% summarise(mean_expr = mean(expr, na.rm=TRUE)) %>% ungroup()
+all_mean_expr <- get_gene_expression_mat() %>% select(-name3.chr) %>% mutate(start = start + 1, end = end + 1)  %>% gather("samp", "expr", -(chrom:name)) %>% left_join(samp_data %>% select(samp, ER1)) %>% group_by(chrom, start, end, name, ER1) %>% summarise(mean_expr = mean(expr, na.rm=TRUE)) %>% ungroup()
+```
+
+```{r}
+dosage_cands_mean_expr %>% mutate(type = "dosage") %>% bind_rows(all_mean_expr %>% mutate(type = "all")) %>% ggplot(aes(x=mean_expr, color=type)) + geom_density()
+```
+
+```{r}
+get_xist_cna() %>%
+        left_join(get_xist_loci_expr()) %>%
+        group_by(cna_grp, samp, ER, chrom, start, end) %>%
+        summarise(expr = mean(expr, na.rm = TRUE)) %>%
+        ggplot(aes(x = cna_grp, y = expr, fill = ER, group = cna_grp)) +
+        geom_boxplot(outlier.size = 0.1) + 
+        scale_fill_manual(values = annot_colors$ER1, guide = FALSE) +
+        xlab("") +
+        ylab("Expression in Xist\nassociated promoters") +
+        facet_grid(. ~ ER) +        
+        ggpubr::stat_compare_means(label = "p.signif", comparisons = list(c("1N", "2N"), c("2N", ">=3N")))
+```
+
+```{r}
+gc()
+```

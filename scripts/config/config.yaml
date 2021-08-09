@@ -1,0 +1,214 @@
+seed: 19
+
+genomic_regions:
+  enhancers:
+    file: data/enhancer_intervals.csv   
+    file_tumors: data/enhancer_intervals_tumors.csv 
+    k27ac_file: data/k27ac_intervals.csv
+    H3K4me1_tracks: 
+      - Roadmap.Breast_Luminal_Epithelial_Cells.H3K4me1
+      - Roadmap.Breast_Myoepithelial_Cells.H3K4me1_1
+      - Roadmap.Breast_Myoepithelial_Cells.H3K4me1_2
+      - encode.Tfbs.HMECwgEncodeBroadHistoneHmecH3k4me1StdSig
+    H3K4me1_thresh: 0.97 
+    H3K4me1_size: 200
+    H3K4me1_tss_dist: 2000
+    H3K27ac_tracks:
+      - encode.Tfbs.HMECwgEncodeBroadHistoneHmecH3k27acStdSig  
+    H3K27ac_thresh: 0.999
+    H3K27ac_size: 200
+    H3K27ac_tss_dist: 2000    
+    H3K4me1_tumor_tracks:
+      - GSE85158.AU565_H3K4me1_rep1
+      - GSE85158.AU565_H3K4me1_rep2
+      - GSE85158.HCC1937_H3K4me1_rep2
+      - GSE85158.HCC1954_H3K4me1_rep1
+      - GSE85158.HCC1954_H3K4me1_rep2
+      - GSE85158.MB231_H3K4me1_rep1
+      - GSE85158.MB231_H3K4me1_rep2
+      - GSE85158.MB361_H3K4me1_rep1
+      - GSE85158.MB361_H3K4me1_rep2
+      - GSE85158.MB436_H3K4me1_rep1
+      - GSE85158.MB436_H3K4me1_rep2
+      - GSE85158.MB468_H3K4me1_rep1
+      - GSE85158.MB468_H3K4me1_rep2
+      - GSE85158.MCF7_H3K4me1_rep1
+      - GSE85158.MCF7_H3K4me1_rep2
+      - GSE85158.SKBR3_H3K4me1_rep1
+      - GSE85158.SKBR3_H3K4me1_rep2
+      - GSE85158.UACC812_H3K4me1_rep1
+      - GSE85158.UACC812_H3K4me1_rep2
+      - GSE85158.ZR751_H3K4me1_rep1
+      - GSE85158.ZR751_H3K4me1_rep2
+
+  promoters:  
+    file: data/promoter_intervals.csv
+    refseq_file: metadata/refseq.tss.csv
+    k4me3_file: data/k4me3_peaks_intervals.csv
+    upstream: 500
+    downstream: 50
+    H3K4me3_tracks: 
+      - Roadmap.Breast_Myoepithelial_Cells.H3K4me3_1
+      - Roadmap.Breast_Myoepithelial_Cells.H3K4me3_2
+      - encode.Tfbs.HMECwgEncodeBroadHistoneHmecH3k4me3StdSig
+    H3K4me3_thresh: 0.99    
+
+  polycomb:
+    file: data/k27me3_intervals.csv    
+    H3K27me3_track: encode.H3k27me3.wgEncodeBroadHistoneH1hescH3k27me3StdSig
+    H3K27me3_thresh: 0.98
+
+  tor_track: encode.repliseq.wgEncodeUwRepliSeqMcf7WaveSignalRep1
+  tor_strata: 
+  - -3.95314
+  - 17.70170
+  - 31.39073
+  - 43.62610
+  - 56.68740
+  - 67.53183
+  - 86.43420
+  tor_high_low: [-3.95314, 43.62610, 86.43420]
+  tor_low_mid_high: [-3.95314, 20.64748, 51.61780, 86.43420]
+   
+  tor_track2: encode.Tfbs.ENCSR321LSA_T47D_Repliseq  
+  tor_high_low2: [-5.316520, -0.446221,  4.894990]  
+
+colors:
+  stage:
+    DCIS: lightblue
+    1: blue
+    2: green
+    3: red
+    4: black
+    ADJNORMAL: grey
+  type:
+    ADJNORMAL: grey
+    TUMOUR: maroon
+  ER:
+    positive: '#37b899'
+    negative: '#7D26CD'
+    normal: gray    
+  ER1:
+    ER+: '#37b899'
+    ER-: '#7D26CD'
+    normal: gray    
+  IHC: 
+    ER-HER2+: '#377EB8'
+    ER+HER2-: '#37b899'
+    ER+HER2+: darkorange
+    TNBC: '#7D26CD'
+    ADJNORMAL: grey
+  grade:
+    1: red
+    2: darkred
+    3: yellow
+    ADJNORMAL: grey  
+  iC10: 
+    ADJNORMAL: grey
+    1: '#FF5500'
+    2: '#00EE76'
+    3: '#CD3278'
+    4ER+: '#00C5CD'
+    4ER-: '#B5D0D2'
+    5: '#8B0000'
+    6: '#FFFF40'
+    7: '#0000CD'
+    8: '#FFAA00'
+    9: '#EE82EE'
+    10: '#7D26CD'  
+  iC10_1:
+    ADJNORMAL: grey
+    1: '#FF5500'
+    2: '#00EE76'
+    3: '#CD3278'
+    4: '#00C5CD'    
+    5: '#8B0000'
+    6: '#FFFF40'
+    7: '#0000CD'
+    8: '#FFAA00'
+    9: '#EE82EE'
+    10: '#7D26CD'  
+  PAM50: 
+    LUMA: '#1F78B4'
+    LUMB: '#A6CEE3'
+    HER2: '#FB9A99'
+    BASAL: '#E41A1C'
+    CLAUDIN: '#7D26CD'
+    NORMAL: '#66A61E'
+    ADJNORMAL: grey
+  red_blue_pal: ["#0571b0","#92c5de","white","#f4a582","#ca0020"] 
+  mutation:
+    MUT-: "darkred"
+    MUT+: "darkblue"
+    NO MUT: "white"
+    NOR: "darkgreen"
+  cna: 
+    NEUT: 'white'
+    GAINAMPL: 'red'
+    LOSSLOH: 'darkblue'
+    NOR: 'darkgreen'
+
+coverage:
+  min_samples_frac: 0.5
+  min_cov: 5
+  cov_cpgs_file: data/cov_cpgs.csv
+  cov_cpgs_file_median_cov: data/cov_cpgs_median_cov.csv
+
+promoter_methylation: 
+  cov_file: data/promoter_cov.csv
+  meth_file: data/promoter_meth.csv
+  avg_meth_file: data/promoter_avg_meth.csv
+  filtered_avg_meth_file: data/promoter_avg_meth_filt.csv
+  cov_extended_file: data/promoter_extended_cov.csv
+  meth_extended_file: data/promoter_extended_meth.csv
+  avg_meth_extended_file: data/promoter_extended_avg_meth.csv
+  stats_file: data/promoter_summary_stats.csv
+  
+exon_methylation: 
+  cov_file: data/exon_cov.csv
+  meth_file: data/exon_meth.csv
+  avg_meth_file: data/exon_avg_meth.csv
+  filtered_avg_meth_file: data/exon_avg_meth_filt.csv
+
+promoter_cpgs_methylation: 
+  cov_file: data/promoter_cpgs_cov.csv
+  meth_file: data/promoter_cpgs_meth.csv
+  avg_meth_file: data/promoter_cpgs_avg_meth.csv
+  filtered_avg_meth_file: data/promoter_cpgs_avg_meth_filt.csv
+  cov_extended_file: data/promoter_cpgs_extended_cov.csv
+  meth_extended_file: data/promoter_cpgs_extended_meth.csv
+  avg_meth_extended_file: data/promoter_cpgs_extended_avg_meth.csv
+  stats_file: data/promoter_cpgs_summary_stats.csv
+
+msp1_methylation:
+  cov_file: data/msp1_cov.csv
+  meth_file: data/msp1_meth.csv
+  avg_meth_file: data/msp1_avg_meth.csv
+  
+genomic_msp1_methylation:
+  cov_file: data/genomic_msp1_cov.csv
+  meth_file: data/genomic_msp1_meth.csv
+  avg_meth_file: data/genomic_msp1_avg_meth.csv
+
+genomic_msp1_cpgs_methylation:
+  cov_file: data/genomic_msp1_cpgs_cov.csv
+  meth_file: data/genomic_msp1_cpgs_meth.csv
+  avg_meth_file: data/genomic_msp1_cpgs_avg_meth.csv
+
+data_files: 
+  normal_medians: data/normal_cpg_medians.csv
+
+  gene_expression_matrix: data/expression_matrix.csv
+
+  sample_coverage_dist: data/sample_coverage_dist.csv
+  sample_coverage_dist_cov_cpgs: data/sample_coverage_dist_cov_cpgs.csv
+  sample_coverage_medians_cov_cpgs: data/sample_coverage_medians_cov_cpgs.csv
+  sample_coverage_dist_per_context: data/sample_coverage_dist_per_context.csv  
+  sample_coverage_dist_per_context_cov_cpgs: data/sample_coverage_dist_per_context_cov_cpgs.csv
+  sample_tot_meth_calls: data/sample_tot_meth_calls.csv
+  sample_promoters_tot_meth_calls: data/sample_promoters_tot_meth_calls.csv
+
+  pats_stats: data/pats_stats.csv
+  fid_annotation: data/fid_annotation.csv  
+
+

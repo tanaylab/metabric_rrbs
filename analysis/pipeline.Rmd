@@ -1,0 +1,173 @@
+---
+title: "METABRIC-RRBS pipeline"
+output:
+  html_document:
+    toc: true
+    toc_float: true   
+    number_sections: false
+    theme: united
+    highlight: tango
+    # code_folding: show 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+# Workdir and other definitions
+
+### Load packages
+
+```{r}
+library(tidyverse)
+library(glue)
+library(gpatterns)
+library(tgutil)
+```
+
+### Definitions
+Set the working directory (change the code below if you are not running from the base repository): 
+
+```{r}
+workdir <- getwd()
+```
+
+Set the Misha database: 
+
+```{r}
+gsetroot('db/trackdb')
+```
+
+# Annotating the BAM file names
+
+We list all the bam files and parse the file names:
+
+```{r}
+bams <- tibble(
+        bam = list.files(
+            glue("{workdir}/rawdata/BAM"), 
+            include.dirs=FALSE, 
+            full.names=TRUE, 
+            recursive=TRUE, 
+            pattern="*\\.bam$")
+        ) %>% 
+    mutate(fn = basename(bam), 
+           fn = gsub(".fq.gz_bismark_bt2.bam", "", fn), 
+           bam_dir = dirname(bam), 
+           tcpgs_dir = gsub("BAM", "TCPGS", bam_dir)) %>%
+    mutate(
+        batch = 
+            gsub(glue("{workdir}/rawdata/BAM/"), "", bam) %>% 
+            gsub("/.*", "", .), name=gsub(".s_..r_1_trimmed", "", fn), 
+            name = paste0(batch, '.', name), 
+            name=gsub('-', '_', name), 
+        track=paste0('metabric_rrbs.', name)
+        ) %>%
+    mutate(tcpgs_dir = paste0(tcpgs_dir, "/", track)) %>%
+    select(bam, tcpgs_dir, track)
+```
+
+# Running the pipeline
+
+We generate a command for each bam file (sample):
+
+```{r}
+cmds <- bams %>% 
+    mutate(cmd = glue('{{ \\
+        gpatterns::gpatterns.set_parallel(8); \\
+        gpatterns::gpatterns.import_from_bam(\\
+        "{bam}", \\
+        workdir=NULL, \\
+        steps=c("bam2tidy_cpgs", "bind_tidy_cpgs", "pileup", "pat_freq"), \\
+        use_sge=F, \\
+        parallel=TRUE, \\
+        bismark=TRUE, \\
+        add_chr_prefix=TRUE, \\
+        paired_end=FALSE, \\
+        track="{track}", \\
+        description="xxx", \\
+        pat_freq_len=5, \\
+        min_qual=20)}}')) %>% 
+    pull(cmd)
+```
+
+Run the pipeline: 
+
+```{r}
+message(glue('glue running {length(cmds)} jobs'))
+res <- gcluster.run2(command_list = cmds, jobs_title="metabric_rrbs", max.jobs=25, threads=5, io_saturation=1)
+```
+
+### Make sure that all the samples succeeded
+Update misha database: 
+
+```{r}
+gdb.reload()
+```
+
+Test that samples have all the tidy_cpgs files and misha tracks
+
+```{r}
+get_chrom_stats <- function(track){
+    tcpgs_dir <- paste0(gpatterns:::.gpatterns.base_dir(track), '/tidy_cpgs')
+
+    df <- tibble(fn = list.files(tcpgs_dir, full.names=T)) %>% 
+        mutate(size = file.size(fn)) %>%
+        filter(grepl('chr', basename(fn))) %>% 
+        mutate(chrom = gsub('\\.tcpgs\\.gz$', '', basename(fn))) %>% 
+        mutate(stat_fn = paste0(tcpgs_dir, '/stats/', chrom, '.stats')) %>% 
+        filter(file.exists(stat_fn))
+    df <- df %>% plyr::adply(1, function(x) fread(x$stat_fn)) %>% as_tibble() %>% mutate(track = track)
+    return(df)
+}
+
+stats <- bams %>% plyr::adply(1, function(x) get_chrom_stats(x$track), .parallel=TRUE) %>% as_tibble()
+stats <- stats %>% 
+    mutate(track_exists = gtrack.exists(paste0(track, '.cov')) & gtrack.exists(paste0(track, '.meth')) & gtrack.exists(paste0(track, '.unmeth')))
+stats <- stats %>% 
+    mutate(pat_track = paste0(track, '.pat5'), pat_track_exists=gtrack.exists(pat_track))
+
+failed_samples <- stats %>% filter(!track_exists | !pat_track_exists | (size < 100 & !grepl('chrY', chrom))) %>% distinct(bam, track)
+failed_samples
+
+```
+
+
+# Sample QC
+
+```{r}
+get_track_stats <- function(track){
+    sm <- gsummary(glue('{track}.cov'))
+    stats <- tibble(
+        cg_num = sm[1],
+        meth_calls = sm[5],
+        global_avg_meth = gsummary(glue("{track}.avg"))[6]
+        )
+    return(stats)
+}
+
+get_tracks_qc <- function(){
+    track_stats <- bams %>% 
+        plyr::adply(1, function(x) get_chrom_stats(x$track), .parallel=TRUE) %>% 
+        group_by(bam, track) %>% 
+        summarise(
+            CpG = mean(CpG, na.rm=TRUE), 
+            CHH = mean(CHH, na.rm=TRUE), 
+            CHG = mean(CHG, na.rm=TRUE), 
+            single_R1 = single_R1[1], 
+            total_reads = single_R1 + no_conv[1] + unmapped[1]
+            ) %>%
+        mutate(mapped_reads = single_R1, mapped_frac = mapped_reads / total_reads) %>% 
+        select(-single_R1) %>%
+        ungroup() %>%
+        plyr::adply(1, function(x) { message(x$track); get_track_stats(x$track) }, .parallel=TRUE) %>%
+        as_tibble()
+    return(track_stats)
+}
+
+qc <- get_tracks_qc()
+
+fwrite(qc, 'data/sample_qc.csv')
+
+qc
+```

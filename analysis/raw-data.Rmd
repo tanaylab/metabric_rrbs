@@ -1,0 +1,172 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+# Raw data extraction
+
+```{r}
+source(here::here("scripts/init.R"))
+```
+
+## Extract raw methylation data
+
+
+Due to the large size of the METABRIC methylation data we have to parallelize heavily. We do so using a custom api for a Sun Grid Engine (SGE) cluster, see `misha.ext::gcluster.run2` for details.
+
+
+### Msp1 fragments
+
+
+We average all CpGs on one Msp1 fragment. \
+Fragments with less than 30 methylation calls are considered missing data (NA):
+
+```{r}
+msp1_meth <- get_msp1_meth(min_cov = 30)
+```
+
+```{r}
+dim(msp1_meth$avg)
+rm(msp1_meth)
+gc()
+```
+
+### Promoters
+
+
+Promoters were defined as 500bp upstream and 50bp downstream from a RefSeq TSS (release 69, hg19). \
+We extract average methylation of all CpGs covered in the promoter region. 
+
+```{r}
+prom_meth <- get_promoter_meth(min_cov = 30)
+```
+
+```{r}
+dim(prom_meth$avg)
+rm(prom_meth)
+gc()
+```
+
+> Note that the above table contains multiple rows for the same promoter when alternative promoters exists.
+
+
+#### Filter promoters
+
+
+We keep only promoters that were 70% of the tumor samples and 70% of the normal samples. 
+
+```{r}
+prom_avg_meth <- get_promoter_avg_meth(normal_fraction = 0.7, tumor_fraction = 0.7)
+```
+
+```{r}
+dim(prom_avg_meth)
+```
+
+> Note: this table contains only one row per genomic coordinates
+
+
+### Non-promoter methylation ("Genomic")
+
+
+We define a subset of Msp1 fragments that do not have a partial overlap to a defined promoter region or to an exon (within 10 bp of an exon). \
+We keep only fragments that were 70% of the tumor samples and 70% of the normal samples. 
+
+```{r}
+genomic_meth <- get_genomic_avg_meth(normal_fraction = 0.7, tumor_fraction = 0.7)
+dim(genomic_meth)
+```
+
+### All average methylation loci
+
+
+In order to get average methylation in all the loci, we concatenate the promoter and non-promoter methylation:
+
+```{r}
+all_meth <- get_all_meth()
+dim(all_meth)
+```
+
+### Exons
+
+
+We compute separately the methylation on exons.
+
+```{r}
+exon_meth <- get_exon_meth(min_cov = 30)
+```
+
+```{r}
+dim(exon_meth$avg)
+rm(exon_meth)
+gc()
+```
+
+#### Filter exons
+
+
+We keep only exons that were 70% of the tumor samples and 70% of the normal samples. 
+
+```{r}
+exon_avg_meth <- get_exon_avg_meth(normal_fraction = 0.7, tumor_fraction = 0.7)
+```
+
+```{r}
+dim(exon_avg_meth)
+```
+
+## Raw expression data
+
+
+We match promoter methylation and gene expression profiles using Refseq annotations. \
+Alternative promoters are resolved by selecting the promoter with the minimal average methylation value in the normal samples.
+
+```{r}
+expr_mat <- get_gene_expression_mat()
+expr_mat[1:5, 1:10]
+dim(expr_mat)
+```
+
+## Methylation per CpG
+
+
+### Promoters
+
+```{r}
+prom_cpg_meth <- get_promoter_cpgs_meth(min_cov = 1)
+```
+
+```{r}
+dim(prom_cpg_meth$avg)
+rm(prom_cpg_meth)
+gc()
+```
+
+```{r}
+prom_avg_meth_cpgs <- get_promoter_cpgs_avg_meth(normal_fraction = 0.7, tumor_fraction = 0.7)
+```
+
+```{r}
+dim(prom_avg_meth_cpgs)
+```
+
+### Non-promoters
+
+```{r}
+genomic_meth_cpgs <- get_genomic_cpgs_avg_meth(normal_fraction = 0.7, tumor_fraction = 0.7)
+dim(genomic_meth_cpgs)
+```
+
+```{r}
+gc()
+```

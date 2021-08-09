@@ -1,0 +1,323 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+# Export supplementary tables 
+
+```{r}
+source(here::here("scripts/init.R"))
+```
+
+## Table 1: METABRIC samples metadata
+
+
+METABRIC samples profiled in this study.  
+
+Metadata fields are:
+
+
+- samp
+- patient
+- batch
+- track
+- total_reads
+- mapped_reads
+- mapped_frac
+- cg_num
+- meth_calls
+- global_avg_meth
+- type
+- age
+- grade
+- stage
+- ER
+- IHC
+- iC10
+- PAM50
+- matched_normal
+- matched_tumor
+- digpath_lymph
+- digpath_stromal
+- IMC_Fibroblasts
+- IMC_Lymphocytes
+- ASCAT_cellularity
+- ASCAT_ploidy
+- MathScore
+- log10_global_epm
+
+```{r}
+samp_qc <- fread(here("data/sample_qc.csv")) %>% as_tibble()
+```
+
+```{r}
+tab <- samp_data %>% left_join(samp_qc) %>% select(samp, patient, batch, track, total_reads, mapped_reads, mapped_frac, cg_num, meth_calls, global_avg_meth, type, age, grade, stage, ER, IHC, iC10, PAM50, matched_normal, matched_tumor, digpath_lymph, digpath_stromal, IMC_Fibroblasts, IMC_Lymphocytes, ASCAT_cellularity, MathScore, log10_global_epm)
+```
+
+```{r}
+writexl::write_xlsx(tab, here("export/S1 - Sample Information.xlsx"))
+```
+
+## Table 2: Immune expression signature 
+
+
+Table of genes that were used to define the Immune expression signature, separated by ER status.
+
+```{r}
+immune_genes_tab <- map2_dfr(c("ER_positive", "ER_negative", "normal"), c("ER+", "ER-", "normal"), ~
+        tibble(gene = get_TME_genes(readr::read_rds(here(glue("data/{.x}_norm_meth.rds")))$em_cross_clust, caf_gene = NULL)) %>% mutate(ER = .y) ) %cache_df% here("data/immune_genes_by_er.tsv")
+
+immune_genes_tab %>% count(ER)
+head(immune_genes_tab)
+```
+
+```{r}
+writexl::write_xlsx(immune_genes_tab, here("export/S2 - Immune expression signature.xlsx"))
+```
+
+## Table 3: CAF expression signature 
+
+
+Table of genes that were used to define the CAF expression signature, separated by ER status.
+
+```{r}
+caf_genes_tab <- map2_dfr(c("ER_positive", "ER_negative", "normal"), c("ER+", "ER-", "normal"), ~
+        tibble(gene = get_TME_genes(readr::read_rds(here(glue("data/{.x}_norm_meth.rds")))$em_cross_clust, immune_gene = NULL)) %>% mutate(ER = .y) ) %cache_df% here("data/caf_genes_by_er.tsv")
+
+caf_genes_tab %>% count(ER)
+head(caf_genes_tab)
+```
+
+```{r}
+writexl::write_xlsx(caf_genes_tab, here("export/S3 - CAF expression signature.xlsx"))
+```
+
+## Table 4: Expression-Methylation correlation
+
+
+Expression-Methylation correlation tables. 
+Shown are pairs of tables of the following datasets:
+1. Raw promoter methylation (Extended Data Fig. 2a,b).
+2. Immune-CAF normalized methylation for loci that were correlated with MG/ML epigenomic instability (Fig. 2f).
+3. X chromosome immune-CAF normalized methylation (Extended Data Fig 9a). 
+
+Each dataset is represented by an expression table, showing the mean correlation of each one of 30/32 methylation clusters in each gene, and a methylation table showing the mean correlation of every locus to 30/32 expression clusters. 
+
+```{r}
+em_raw <- list(
+        `ER+` = readr::read_rds(here("data/ER_positive_norm_meth.rds"))$em_cross_clust,
+        `ER-` = readr::read_rds(here("data/ER_negative_norm_meth.rds"))$em_cross_clust,
+        `normal` = readr::read_rds(here("data/normal_norm_meth.rds"))$em_cross_clust
+)
+```
+
+```{r}
+em_raw <- map(em_raw, parse_em_cors)
+```
+
+```{r}
+norm_em <- readr::read_rds(here("data/MG_ML_em_cross_cor_clust.rds"))
+norm_em <- parse_em_cors(norm_em)
+```
+
+```{r}
+x_em <- readr::read_rds(here("data/X_er_positive_em_cross_cor_clust.rds"))
+x_em <- parse_em_cors(x_em)
+```
+
+```{r}
+sheets <- list(
+    "Raw promoters ER+ (Expression)" = em_raw[["ER+"]]$expr_tab, 
+    "Raw promoters ER+ (Methylation)" = em_raw[["ER+"]]$meth_tab,
+    "Raw promoters ER- (Expression)" = em_raw[["ER-"]]$expr_tab, 
+    "Raw promoters ER- (Methylation)" = em_raw[["ER-"]]$meth_tab, 
+    "MG,ML loci ER+ (Expression)" = norm_em$expr_tab,
+    "MG,ML loci ER+ (Methylation)" = norm_em$meth_tab,
+    "X chromosome ER+ (Expression)" = x_em$expr_tab, 
+    "X chromosome ER+ (Methylation)" = x_em$meth_tab
+)
+```
+
+```{r}
+writexl::write_xlsx(sheets, here("export/S4 - Expression-methylation correlations.xlsx"))
+```
+
+## Table 5: Methylation scores
+
+
+Table with CAF, Immune, Clock, MG and ML methylation scores per METABRIC sample.
+
+```{r}
+tab <- get_all_features()
+```
+
+```{r}
+writexl::write_xlsx(tab, here("export/S5 - Methylation scores.xlsx"))
+```
+
+## Table 6: Gene expression correlation to epigenomic instability
+
+
+Tables of genes that have an absolute expression correlation higher than 0.3 to MG/ML/Clock scores, together with their respective correlations.
+
+```{r}
+feat_gene_cors <- get_expression_features_cors()
+cor_thresh <- 0.3
+```
+
+```{r}
+tab <- feat_gene_cors %>% filter(abs(MG) >= cor_thresh | abs(ML) >= cor_thresh | abs(clock) > cor_thresh) %>% mutate(ER = factor(ER, levels = c("ER+", "ER-", "normal"))) %>% select(name, ER,  clock.cor = clock, MG.cor = MG, ML.cor = ML, caf.cor = caf, immune.cor = immune) %>% arrange(ER, clock.cor, MG.cor, ML.cor)
+```
+
+```{r}
+writexl::write_xlsx(tab, here("export/S6 - Gene expression correlation to methylation scores.xlsx"))
+```
+
+## Table 7: Methylation layers loci
+
+
+Coordinates of loci that were used in order to calculate the CAF, Immune, Clock, MG and ML scores.  
+
+```{r}
+clust_df <- fread(here("data/ER_positive_loci_clust.tsv") ) %>% as_tibble()
+```
+
+```{r}
+tab <- clust_df %>% rename(layer = clust) %>% filter(layer %in% c("ML", "MG", "clock")) %>% arrange(layer, chrom, start, end) 
+head(tab)
+```
+
+```{r}
+writexl::write_xlsx(tab, here("export/S7 - Methylation layers loci.xlsx"))
+```
+
+## Table 8: Cis regulation candidates 
+
+
+Pairs of loci and genes that are candidates for cis regulation in different FDR thresholds. Promoters and genomic loci are shown in separate tables. 
+
+```{r}
+min_dist <- 5e5
+min_tss_dist <- 200
+```
+
+```{r}
+genomic_cis_cands <- bind_rows(
+    fread(here("data/genomic_cis_cands_ER_positive.tsv")),
+    fread(here("data/genomic_cis_cands_ER_negative.tsv")),
+    fread(here("data/genomic_cis_cands_normal.tsv")))
+head(genomic_cis_cands)
+dim(genomic_cis_cands)
+```
+
+```{r}
+cands_genomic <- genomic_cis_cands %>%
+    filter(type == "obs", !is.na(dist), abs(dist) <= min_dist, abs(dist) >= min_tss_dist) %>%
+    arrange(cor) %>% 
+    as_tibble()
+```
+
+```{r}
+source(here::here("scripts/init.R"))
+```
+
+```{r tags=c()}
+genomic_list <- list(
+    `Genomic (best correlation)` = cands_genomic %>% filter(rank == 1),
+    `Genomic (FDR < 0.05)` = cands_genomic %>% filter(fdr < 0.05), 
+    `Genomic (FDR < 0.1)` = cands_genomic %>% filter(fdr < 0.1)
+)
+
+genomic_list <- map(genomic_list, ~ annotate_cis_cands(.x, sigma_meth = 2, sigma_expr = 2, meth_diff = 0.2, expr_diff = 1))
+```
+
+```{r}
+genomic_list <- map(genomic_list, ~ .x %>% 
+    select(gene, 
+           ER, 
+           chrom, 
+           start, 
+           end,            
+           distance = dist, 
+           fdr, 
+           rank, 
+           cor, 
+           mean_meth, 
+           sd_meth, 
+           mean_expr, 
+           sd_expr, 
+           normal_meth, 
+           normal_meth_sd, 
+           normal_expr, 
+           normal_expr_sd, 
+           n_hypometh, 
+           n_induced, 
+           n_hypermeth, 
+           n_repressed, 
+           N_considered, 
+           n_hypometh_vs_normal,
+           n_stable_vs_normal, 
+           n_hypermeth_vs_normal, 
+           n_repressed_vs_normal, 
+           n_stable_expr_vs_normal, 
+           n_induced_vs_normal) %>% 
+                    arrange(cor) 
+)
+```
+
+```{r}
+cands_prom <- fread(here("data/promoter_cis_cands.tsv")) %>% as_tibble() 
+```
+
+```{r}
+prom_list <- list(
+    `Promoters (best correlation)` = cands_prom %>% filter(r == 1),
+    `Promoters (FDR < 0.005)` = cands_prom %>% filter(fdr < 0.005), 
+    `Promoters (FDR < 0.01)` = cands_prom %>% filter(fdr < 0.01),
+    `Promoters (FDR < 0.05)` = cands_prom %>% filter(fdr < 0.05)
+)
+
+```
+
+```{r tags=c()}
+prom_list <- map(prom_list, ~ annotate_cis_cands(.x %>% rename(gene = name), sigma_meth = 2, sigma_expr = 2, meth_diff = 0.2, expr_diff = 1))
+```
+
+```{r}
+prom_list <- map(prom_list, ~ 
+                .x %>% 
+        mutate(diff = abs(best - kth)) %>% 
+        select(gene, ER, chrom, start, end, fdr, rank = r, cor, diff_from_second_best = diff, mean_meth, sd_meth, mean_expr, sd_expr, normal_meth, normal_meth_sd, normal_expr, normal_expr_sd, n_hypometh, n_induced, n_hypermeth, n_repressed, N_considered, n_hypometh_vs_normal, n_stable_vs_normal, n_hypermeth_vs_normal, n_repressed_vs_normal, n_stable_expr_vs_normal, n_induced_vs_normal) %>%
+                arrange(cor) )
+```
+
+```{r}
+cis_cands <- c(prom_list, genomic_list)    
+```
+
+```{r}
+writexl::write_xlsx(x = cis_cands, path = here("export/S8 - Cis Regulation Candidates.xlsx"))
+```
+
+## Table 9: Dosage compensation in autosomes 
+
+
+Table of autosome promoters that show increase of at least 10% in methylation when amplified to at least 3N vs 2N (‘Gain 3N’ table), at least 4N vs 2N (‘Amplification 4N’). The table ‘Loss’ shows loci that showed decreased methylation of at least 10% when losing a copy (1N vs 2N). 
+
+```{r}
+gen_dosage_comp_excel()
+```
+
+```{r}
+gc()
+```

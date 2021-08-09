@@ -1,0 +1,170 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+# Survival
+
+```{r}
+source(here::here("scripts/init.R"))
+```
+
+```{r}
+feats_tidy <- get_all_features() %>% 
+    select(-immune, -caf) %>% 
+    rename(Immune = immune.meth, CAF = caf.meth, Clock = clock) %>% 
+    gather("feat", "score", -ER, -samp) %>%
+    mutate(feat = factor(feat, levels = c("CAF", "Immune", "Clock", "MG", "ML")))
+```
+
+```{r}
+surv_df <- survival %>%
+        select(-ER) %>%
+        left_join(feats_tidy, by = "samp") %>%
+        filter(ER != "normal") %>% 
+        group_by(ER, feat) %>%
+        filter(sum(!is.na(score)) >= 1) %>%
+        mutate(score = cut(score, breaks = quantile(score, 0:3 / 3, na.rm = TRUE), labels = c("low", "mid", "high"), include.lowest = TRUE)) %>%
+        ungroup() %>% 
+        filter(score != "mid") %>%
+        mutate(score = factor(score, levels = c("low", "high")))
+
+surv_df %>% count(feat, ER, score)
+```
+
+```{r}
+surv_df %>% count(feat, ER)
+```
+
+#### Figure 4D
+
+```{r}
+options(repr.plot.width = 12, repr.plot.height = 3)
+
+p_surv_pos <- surv_df %>%
+        filter(ER == "ER+") %>%
+        plot_km("score", facet.by = "feat", ggtheme = theme_arial(6), time_breaks = 5, legend = "none", censor.size = 3, colors = "aaas", time_range = c(0, 15), nrow = 1, censor = FALSE, pval = TRUE, size=0.2) + theme(aspect.ratio = 1)
+
+p_surv_neg <- surv_df %>%
+        filter(ER == "ER-") %>%
+        plot_km("score", facet.by = "feat", ggtheme = theme_arial(6), time_breaks = 5, legend = "none", colors = "aaas", time_range = c(0, 15), nrow = 1, censor = FALSE, pval = TRUE, size=0.2) + theme(aspect.ratio = 1)
+
+p_surv_pos + theme_bw() + theme(aspect.ratio=1)
+p_surv_neg + theme_bw() + theme(aspect.ratio=1)
+```
+
+```{r}
+surv_df %>% group_by(feat, ER, score) %>% summarise(n_death = sum(y < 5 & death == 1), n_surv = sum(y >= 5), n = n_surv + n_death, surv = n_surv / n, surv_p = scales::percent(surv))  %>% as.data.frame
+```
+
+```{r}
+df <- surv_df %>% filter(ER == "ER+", feat == "MG")
+survival::survdiff(survival::Surv(df$y, df$death) ~ score, data = as.data.frame(df))
+
+df <- surv_df %>% filter(ER == "ER-", feat == "MG")
+survival::survdiff(survival::Surv(df$y, df$death) ~ score, data = as.data.frame(df))
+
+```
+
+```{r}
+df <- surv_df %>% filter(ER == "ER+", feat == "MG")
+survival::coxph(survival::Surv(df$y, df$death) ~ score, data = as.data.frame(df))
+
+df <- surv_df %>% filter(ER == "ER-", feat == "MG")
+survival::coxph(survival::Surv(df$y, df$death) ~ score, data = as.data.frame(df))
+```
+
+#### Extended Data Figure 10D
+
+```{r}
+df <- survival %>%
+        select(-ER) %>%
+        left_join(feats_tidy, by = "samp") %>%
+        filter(ER != "normal") %>% 
+        left_join(get_mut_df() %>%
+            filter(gene == "TP53") %>%
+            filter(!is.na(mutation)) %>%
+            select(samp, gene, mutation)) %>%        
+        filter(ER == "ER+", !is.na(mutation)) 
+p_surv_p53 <- df %>%
+        group_by(ER, feat) %>%
+        filter(sum(!is.na(score)) >= 1) %>%
+        mutate(score = cut(score, breaks = quantile(score, 0:3 / 3, na.rm = TRUE), labels = c("low", "mid", "high"), include.lowest = TRUE)) %>%
+        ungroup() %>% 
+        filter(score != "mid") %>%
+        mutate(score = factor(score, levels = c("low", "high"))) %>%
+        plot_km("score", facet.by = c("mutation", "feat"), ggtheme = theme_arial(6), time_breaks = 5, legend = "none", censor.size = 3, colors = "aaas", time_range = c(0, 15), nrow = 1, censor = FALSE, pval = TRUE) + theme(aspect.ratio = 1)
+
+p_surv_p53 + theme_bw() + theme(aspect.ratio=1)
+
+
+```
+
+```{r}
+df %>% distinct(samp, ER, mutation) %>% count(mutation)
+```
+
+### Raw-methylation 
+
+```{r}
+feats_tidy <- get_all_features_raw() %>% 
+    select(-immune, -caf) %>% 
+    rename(Immune = immune.meth, CAF = caf.meth, Clock = clock) %>% 
+    gather("feat", "score", -ER, -samp) %>%
+    mutate(feat = factor(feat, levels = c("CAF", "Immune", "Clock", "MG", "ML")))
+```
+
+```{r}
+surv_df <- survival %>%
+        select(-ER) %>%
+        left_join(feats_tidy, by = "samp") %>%
+        filter(ER != "normal") %>% 
+        group_by(ER, feat) %>%
+        filter(sum(!is.na(score)) >= 1) %>%
+        mutate(score = cut(score, breaks = quantile(score, 0:3 / 3, na.rm = TRUE), labels = c("low", "mid", "high"), include.lowest = TRUE)) %>%
+        ungroup() %>%
+        filter(score != "mid") %>%
+        mutate(score = factor(score, levels = c("low", "high")))
+
+surv_df %>% count(feat, ER, score)
+```
+
+```{r}
+options(repr.plot.width = 12, repr.plot.height = 3)
+
+p_surv_pos <- surv_df %>%
+        filter(ER == "ER+") %>%
+        plot_km("score", facet.by = "feat", ggtheme = theme_arial(6), time_breaks = 5, legend = "none", censor.size = 3, colors = "aaas", time_range = c(0, 15), nrow = 1, censor = FALSE, pval = TRUE, size=0.2) + theme(aspect.ratio = 1)
+
+p_surv_neg <- surv_df %>%
+        filter(ER == "ER-") %>%
+        plot_km("score", facet.by = "feat", ggtheme = theme_arial(6), time_breaks = 5, legend = "none", colors = "aaas", time_range = c(0, 15), nrow = 1, censor = FALSE, pval = TRUE, size=0.2) + theme(aspect.ratio = 1)
+
+p_surv_pos + theme_bw() + theme(aspect.ratio=1)
+p_surv_neg + theme_bw() + theme(aspect.ratio=1)
+```
+
+```{r}
+options(repr.plot.width = 12, repr.plot.height = 6)
+surv_df_p53 <- surv_df %>%
+        left_join(get_mut_df() %>%
+            filter(gene == "TP53") %>%
+            filter(!is.na(mutation)) %>%
+            select(samp, gene, mutation)) %>% 
+            filter(!is.na(mutation))
+p_surv_p53 <- surv_df_p53 %>%        
+        filter(ER == "ER+") %>%
+        plot_km("score", facet.by = c("mutation", "feat"), ggtheme = theme_arial(6), time_breaks = 5, legend = "none", censor.size = 3, colors = "aaas", time_range = c(0, 15), nrow = 1, censor = FALSE, pval = TRUE) + theme(aspect.ratio = 1)
+
+p_surv_p53 + theme_bw() + theme(aspect.ratio=1)
+```

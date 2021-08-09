@@ -1,0 +1,897 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+# Definition of Clock, MG and ML scores 
+
+
+## Introduction
+
+
+After cleaning the methylation data from TME effects we went on to look for global trends in the methylation data, i.e. trends that affect all or almost all of the methylome, in particular due to replication age and copy number aberration effects. 
+
+
+## Initialize
+
+```{r}
+source(here::here("scripts/init.R"))
+```
+
+## Load data
+
+
+We load both TME-normalized and raw methylation values.
+
+```{r}
+all_norm_meth <- fread(here("data/all_norm_meth.tsv")) %>% as_tibble() 
+```
+
+```{r}
+all_mat_raw <- get_all_meth()  %>% intervs_to_mat()
+
+head(all_mat_raw)
+dim(all_mat_raw)
+```
+
+## Clustering of normalized methylation of ER+ tumors
+
+```{r}
+ER_positive_mat <- all_norm_meth %>% select(chrom:end, any_of(ER_positive_samples)) %>% intervs_to_mat()
+```
+
+```{r}
+ER_positive_mat_raw <- all_mat_raw[, ER_positive_samples]
+```
+
+Filter loci that have low methylation (average of under 0.1):
+
+```{r}
+means <- rowMeans(all_mat_raw, na.rm=TRUE)
+means_ER_positive <- rowMeans(ER_positive_mat_raw, na.rm=TRUE)
+```
+
+```{r}
+meth_thresh <- 0.1
+```
+
+```{r}
+options(repr.plot.width = 4, repr.plot.height = 4)
+tibble(m = means_ER_positive) %>% ggplot(aes(x=m))  + geom_density() + geom_vline(xintercept=meth_thresh) + theme_bw()
+```
+
+```{r}
+ER_positive_mat_s <- ER_positive_mat[means_ER_positive >= meth_thresh, ]
+nrow(ER_positive_mat_s)
+```
+
+We sample 50k loci and calculate a correlation matrix of their methylation values in ER+ samples:
+
+```{r}
+set.seed(17)
+ER_positive_mat_s <- ER_positive_mat_s[sample(1:nrow(ER_positive_mat_s), 5e4), ]
+```
+
+```{r}
+cm <- tgs_cor(t(ER_positive_mat_s), pairwise.complete.obs=TRUE) %cache_rds% here("data/ER_positive_loci_cm_samp.rds")
+```
+
+We remove rows and columns without at least one correlation value above 0.25:
+
+```{r}
+cm1 <- cm
+diag(cm1) <- NA
+cor_maxs <- matrixStats::rowMaxs(abs(cm1), na.rm=TRUE)
+f <- cor_maxs >= 0.25
+cm_f <- cm[f, f] 
+```
+
+```{r}
+dim(cm_f)
+```
+
+We cluster the correlation matrix using `hclust`:
+
+```{r}
+hc_meth <- as.dist(1-cm_f) %>% fastcluster::hclust(method = "ward.D2") %cache_rds% here("data/ER_positive_loci_cm_hclust.rds")
+```
+
+Reorder the dendrogram according to raw average methylation:
+
+```{r}
+hc_meth <- vegan:::reorder.hclust(hc_meth, rowMeans(ER_positive_mat_raw[rownames(cm_f), ], na.rm=TRUE)) %cache_rds% here("data/ER_positive_loci_cm_hclust_reordered.rds")
+```
+
+We start by cutting the the tree with a large number of clusters (14) which we will then aim to merge.
+
+```{r}
+k <- 14
+```
+
+#### Extended Data Figure 4a
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 8)
+plot_meth_mat_cm(cm_f, k=k, width = 1000, height = 1000, hc_meth=hc_meth, downscale = TRUE, zlim = c(-0.3, 0.3), colors = c("black", "darkred", "white", "darkblue", "cyan"))
+```
+
+We can see that there is a large group of correlated loci at the top right (9-14), another group in the middle (5), and another one at the bottom left (1-2). In addition, we have another 2 small clusters (3 and 7) which are anti-correlated to each other.
+
+The other clusters (4,6,8) look weak in their intra correalation. 
+
+We term the first large group "clock", the second "ML" and the last "MG" due to reasons that would be disscused at `clock` and `Epigenomic-instability` notebooks. 
+
+```{r}
+ct <- cutree_order(hc_meth, k=k)
+ct_new <- case_when(
+    ct %in% 9:14 ~ "clock", 
+    ct == 5 ~ "ML", 
+    ct %in% 1:2 ~ "MG",
+    ct == 3 ~ "other1",     
+    ct == 7 ~ "other2", 
+    TRUE ~ "no_cor")
+names(ct_new) <- names(ct)
+```
+
+```{r}
+clust_df <- as.matrix(ct_new) %>% mat_to_intervs() %>% rename(clust = V1) %cache_df% here("data/ER_positive_loci_clust.tsv") %>% as_tibble()
+clust_df %>% count(clust)
+```
+
+We will generate a score for each tumor based on the mean methylation of each group:
+
+```{r}
+feats_mat <- tgs_matrix_tapply(all_norm_meth %>% intervs_to_mat() %>% .[names(ct_new), ] %>% t(), ct_new, mean, na.rm=TRUE) %>% t()
+```
+
+We add the TME features for comparison:
+
+```{r}
+tme_df <- fread(here("data/TME_features.tsv")) %>% as_tibble()
+feats_mat <- cbind(feats_mat, tme_df  %>% select(samp, caf, immune, caf.meth, immune.meth) %>% as.data.frame() %>% column_to_rownames("samp"))
+```
+
+```{r}
+feats_df <- feats_mat %>% 
+    as.data.frame() %>% 
+    rownames_to_column("samp") %>%     
+    select(-other1, -other2, -no_cor) %>%
+    left_join(samp_data %>% select(samp, ER=ER1), by = "samp") %>%     
+    select(samp, ER, everything()) %cache_df% 
+    here("data/epigenomic_features.tsv") %>% 
+    as_tibble()
+```
+
+```{r}
+head(feats_df)
+```
+
+We save the the cluster association of each locus:
+
+```{r}
+loci_clust <- as.matrix(ct_new) %>% mat_to_intervs() %>% rename(clust = V1) %cache_df% here("data/ER_positive_loci_clust_df.tsv") %>% as_tibble()
+```
+
+For the 3 large meta-clusters (clock, MG, ML) we calcualte the __raw__ (before TME normalization) average methylation in each sample:
+
+```{r}
+loci_f <- loci_clust %>% filter(clust %in% c("clock", "MG", "ML")) %>% intervs_to_mat()
+```
+
+```{r}
+feats_mat_raw <- tgs_matrix_tapply(all_mat_raw[rownames(loci_f), ] %>% t(), loci_f[, 1], mean, na.rm=TRUE) %>% t() %>% as.data.frame() %>% rownames_to_column("samp")
+```
+
+```{r}
+feats_df_raw <- tme_df %>% 
+    left_join(feats_mat_raw, by = "samp") %>% 
+    add_ER() %>% 
+    select(samp, ER, everything()) %fcache_df% 
+    here("data/epigenomic_features_raw_meth.tsv") %>% 
+    as_tibble()
+head(feats_df_raw)
+```
+
+## Project clustering on ER- correlation matrix
+
+```{r}
+ER_negative_mat <- all_norm_meth %>% select(chrom:end, any_of(ER_negative_samples)) %>% intervs_to_mat()
+```
+
+```{r}
+ER_negative_mat_f <- ER_negative_mat[rownames(cm_f), ]
+```
+
+```{r}
+dim(ER_negative_mat_f)
+```
+
+```{r}
+cm_f_neg <- tgs_cor(t(ER_negative_mat_f), pairwise.complete.obs=TRUE) %cache_rds% here("data/ER_negative_loci_cm_samp.rds")
+```
+
+#### Extended Data Figure 4b
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 8)
+plot_meth_mat_cm(cm_f_neg, k=k, width = 1000, height = 1000, hc_meth=hc_meth, downscale = TRUE, zlim = c(-0.3, 0.3), colors = c("black", "darkred", "white", "darkblue", "cyan"))
+```
+
+We can see that the clock, MG and ML are preserved also in ER- tumors. 
+
+
+## Classify loci in the genome to epigenomic features
+
+
+See `Loss-clock` and `Epignomic-instability` notebooks for further characterization of the epigenomic scores. We would now continue to look at the broad genomic picture and try to classify loci in the genome based on their correlation with the scores. 
+
+```{r}
+# calculate the correlation between normalized methylation and the epigenomic features
+epi_features_loci_cors <- function(all_norm_meth, feats_df, samples){
+    samples <- intersect(samples, feats_df$samp)
+    samples <- intersect(samples, colnames(all_norm_meth)[-(1:3)])
+    mat <- all_norm_meth %>% select(chrom:end, any_of(samples)) %>% intervs_to_mat()
+    feats_mat <- feats_df %>% select(-ER) %>% as.data.frame() %>% column_to_rownames("samp") %>% as.matrix()
+    
+    loci_cors <- tgs_cor(t(mat[, samples]), feats_mat[samples, ], pairwise.complete.obs = TRUE)
+    loci_cors <- loci_cors %>% mat_to_intervs()
+    return(loci_cors)    
+}
+```
+
+```{r}
+loci_cors <- bind_rows(
+        epi_features_loci_cors(all_norm_meth, feats_df, ER_positive_samples) %>% mutate(ER = "ER+"), 
+        epi_features_loci_cors(all_norm_meth, feats_df, ER_negative_samples) %>% mutate(ER = "ER-"), 
+        epi_features_loci_cors(all_norm_meth, feats_df, normal_samples) %>% mutate(ER = "normal")
+    ) %>% 
+    select(chrom:end, ER, everything()) %fcache_df%
+    here("data/features_loci_cors.tsv") %>% 
+    as_tibble()    
+```
+
+Looking at all the correaltions we see that there are loci who are not correlated to any of the featurers:
+
+```{r}
+options(repr.plot.width = 7, repr.plot.height = 7)
+loci_cors %>% filter(ER == "ER+") %>% ggplot(aes(x=MG, y=ML, color=clock)) + geom_point(size=0.0001) + theme_bw() + theme(aspect.ratio=1) + scale_color_viridis_c()
+loci_cors %>% filter(ER == "ER+") %>% ggplot(aes(x=ML, y=clock, color=MG)) + geom_point(size=0.0001) + theme_bw() + theme(aspect.ratio=1) + scale_color_viridis_c()
+```
+
+We use PCA (pricinpal component analysis) on the features for visualization of the feature space
+
+```{r}
+loci_cors %>% distinct(chrom, start, end) %>% nrow()
+```
+
+```{r}
+pca <- loci_cors %>% filter(ER == "ER+") %>% select(-ER, -immune, -caf) %>% intervs_to_mat() %>% t() %>% prcomp()
+```
+
+```{r}
+df <- pca$rotation %>% mat_to_intervs() %>% left_join(loci_cors %>% filter(ER == "ER+"), by = c("chrom", "start", "end")) %>% as_tibble()
+```
+
+#### Figure 2a
+
+```{r}
+options(repr.plot.width = 15, repr.plot.height = 5)
+
+remove_axis <- function(x)
+        theme( aspect.ratio = 1,
+            strip.background = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            axis.ticks = element_blank(),
+            axis.text = element_blank()
+        )
+point_size = 1e-10
+viridis_opt <- "E"
+limits <- c(-0.25, 0.8)
+p_clock_proj <- df %>% ggplot(aes(x=PC1, y=PC2, color=clock)) + geom_point(size=point_size)   + remove_axis() + scale_color_viridis_c(option = viridis_opt, limits = limits)
+p_MG_proj <- df %>% ggplot(aes(x=PC1, y=PC2, color=MG)) + geom_point(size=point_size)   + remove_axis() + scale_color_viridis_c(option = viridis_opt, limits = limits)
+p_ML_proj <- df %>% ggplot(aes(x=PC1, y=PC2, color=ML)) + geom_point(size=point_size)   + remove_axis() + scale_color_viridis_c(option = viridis_opt, limits = limits)
+p_immune_proj <- df %>% ggplot(aes(x=PC1, y=PC2, color=immune)) + geom_point(size=point_size) + remove_axis() + scale_color_viridis_c(option = viridis_opt, limits = limits)
+p_caf_proj <- df %>% ggplot(aes(x=PC1, y=PC2, color=caf)) + geom_point(size=point_size)  + remove_axis() + scale_color_viridis_c(option = viridis_opt, limits = limits)
+
+(p_clock_proj + p_MG_proj + p_ML_proj) 
+(p_immune_proj + p_caf_proj + plot_spacer())
+```
+
+## Average methylation of the features
+
+
+We will now move to look at the average methylation distribution of the scores. We will do that computing the average methylation (in ER+/ER-/normal) of loci that are highly correlated to them (above 0.6 for clock and above 0.5 for MG and ML). 
+
+```{r}
+loci_annot <- loci_cors %>% 
+    filter(ER == "ER+") %>% 
+    select(-ER) %>% 
+    left_join(get_loci_annot(), by = c("chrom", "start", "end")) %cache_df%
+    here("data/loci_annot_epigenomic_features.tsv") %>% 
+    as_tibble()
+head(loci_annot)
+```
+
+See exons-TME notebook for the generation of this file. 
+
+```{r}
+loci_annot_exons <- fread(here("data/exon_annot_epigenomic_features.tsv")) %>% as_tibble()
+```
+
+## Plot distribution over samples of the correlated loci
+
+
+We calculate the average methylation of each sample in loci that pass the threshold of every score: 
+
+```{r}
+df_MG <- colMeans(all_mat_raw[loci_annot %>% filter(MG >= 0.5) %>% intervs_to_mat() %>% rownames(), ], na.rm=TRUE) %>% enframe("samp", "MG")
+df_ML <- colMeans(all_mat_raw[loci_annot %>% filter(ML >= 0.5) %>% intervs_to_mat() %>% rownames(), ], na.rm=TRUE) %>% enframe("samp", "ML")
+df_clock <- colMeans(all_mat_raw[loci_annot %>% filter(clock >= 0.5) %>% intervs_to_mat() %>% rownames(), ], na.rm=TRUE) %>% enframe("samp", "clock")
+df_sum <- df_clock %>% 
+    left_join(df_MG, by = "samp") %>% 
+    left_join(df_ML, by = "samp") %>% 
+    add_ER() %>% 
+    filter(!is.na(ER))
+```
+
+We can now plot the distribution of scores over samples: 
+
+
+#### Figure 1i
+
+```{r}
+options(repr.plot.width = 4, repr.plot.height = 4)
+p_avg_clock <- df_sum %>%     
+    ggplot(aes(x=clock, color=ER)) + 
+        geom_density() + 
+        scale_color_manual(values = annot_colors$ER1) + 
+        theme(aspect.ratio = 1) + 
+        ylab("Density") + 
+        xlab("Clock avg. methylation") + 
+        coord_cartesian(xlim=c(0.25, 1))
+
+p_avg_clock + theme_bw() + theme(aspect.ratio = 0.9)    
+```
+
+#### Figure 2b
+
+```{r}
+options(repr.plot.width = 4, repr.plot.height = 4)
+p_avg_MG <- df_sum %>%     
+    ggplot(aes(x=MG, color=ER)) + 
+        geom_density() + 
+        scale_color_manual(values = annot_colors$ER1) + 
+        theme(aspect.ratio = 1) + 
+        ylab("Density") + 
+        xlab("MG avg. methylation") + 
+        coord_cartesian(xlim=c(0, 0.6))
+
+p_avg_MG + theme_bw() + theme(aspect.ratio = 0.9)    
+```
+
+```{r}
+options(repr.plot.width = 4, repr.plot.height = 4)
+p_avg_ML <- df_sum %>%     
+    ggplot(aes(x=ML, color=ER)) + 
+        geom_density() + 
+        scale_color_manual(values = annot_colors$ER1) + 
+        theme(aspect.ratio = 1) + 
+        ylab("Density") + 
+        xlab("ML avg. methylation") + 
+        coord_cartesian(xlim=c(0.4, 1))
+
+p_avg_ML + theme_bw() + theme(aspect.ratio = 0.9)    
+```
+
+Calculate p-values:
+
+```{r}
+df_sum %>% 
+    gather("feat", "meth", -samp, -ER) %>% 
+    group_by(feat) %>% 
+    summarise(
+        p_pos_norm = ks.test(meth[ER == "ER+"], meth[ER == "normal"])$p.value, 
+        p_neg_norm = ks.test(meth[ER == "ER-"], meth[ER == "normal"])$p.value)
+```
+
+## Plot loci classification
+
+
+Next, we classify loci to "Promoters", "Enhancers" or "Background" (non promoter/enhancer), and stratify by CpG content.
+
+```{r}
+df_loci_class <- loci_annot %>% 
+        left_join(promoter_intervs %>% distinct(chrom, start, end) %>% mutate(type = "Promoters"), by = c("chrom", "start", "end")) 
+
+k4me1_names <- grep("k4me1", colnames(loci_annot), value=TRUE)
+df_loci_class <- df_loci_class %>%            
+    mutate(type = 
+        case_when(            
+            type == "Promoters" ~ "Promoters",
+            matrixStats::rowAnys((df_loci_class[, k4me1_names] > 0.97), na.rm = TRUE) ~ "Enhancers", 
+            TRUE ~ "Background"
+        )
+    ) %>%                           
+    bind_rows(loci_annot_exons %>% mutate(type = "Exons")) %>%
+    mutate(cg_cont = cut(cg_cont, c(0,0.04,0.08,1), include.lowest=TRUE, labels=c("Low", "Mid", "High"))) %>%
+    as_tibble()
+```
+
+```{r}
+df_loci_layer <- df_loci_class %>% left_join(get_all_summary_meth(), by = c("chrom", "start", "end")) %>% mutate(normal_type = cut(normal, breaks = c(0, 0.2, 0.9, 1), labels = c("0-0.2", "0.2-0.9", "0.9-1"), include.lowest=TRUE))
+```
+
+```{r}
+cor_thresh <- 0.25
+
+df_loci_layer <- df_loci_layer %>% 
+    mutate(layer = case_when(clock >= cor_thresh ~ "clock", MG >= cor_thresh ~ "MG", ML >= cor_thresh ~ "ML", TRUE ~ "other"), layer = factor(layer, levels = c("other", "clock", "ML", "MG")))
+```
+
+```{r}
+df_loci_layer %>% count(type, layer)  %>% as.data.frame()
+```
+
+```{r}
+df_loci_layer %>% filter(type == "Enhancers", cg_cont %in% c("Mid", "High")) %>% count(layer)  %>% mutate(p = n / sum(n)) %>% as.data.frame()
+```
+
+```{r}
+df_loci_layer %>% 
+    filter(type == "Enhancers") %>% 
+    count(normal_type, layer) %>% 
+    group_by(normal_type) %>% 
+    mutate(p = n / sum(n)) %>% 
+    as.data.frame()
+```
+
+#### Figure 2c
+
+```{r}
+options(repr.plot.width = 4, repr.plot.height = 6)
+df <- df_loci_layer %>% 
+    filter(type == "Enhancers") %>% 
+    count(normal_type, layer) %>% 
+    group_by(normal_type) %>% 
+    mutate(p = n / sum(n))
+
+p_enh_layer_perc <- df %>% 
+    filter(layer != "other") %>% 
+    ggplot(aes(x=normal_type, y=p, fill=layer)) + 
+        geom_col() + 
+        scale_fill_manual(name = "", values = c("ML" = "darkblue", "MG" = "darkred", "clock" = "darkgreen")) + 
+        scale_y_continuous(limits = c(0,1), labels=scales::percent) + 
+        vertical_labs() +         
+        xlab("Methylation in normal") + 
+        ylab("% of enhancers")
+
+p_enh_layer_perc + theme_bw() + vertical_labs()
+```
+
+#### Extended Data Figure 6c
+
+```{r}
+options(repr.plot.width = 10, repr.plot.height = 10)
+df <- df_loci_class %>% 
+    filter(!is.na(cg_cont)) %>% 
+    mutate(cg_cont = case_when(cg_cont == "Low" ~ "Low", cg_cont %in% c("Mid", "High") ~ "Mid/High")) %>% 
+    mutate(
+        cg_cont = paste(cg_cont, "CpG cont."), 
+        cg_cont = factor(cg_cont, levels=c("Low CpG cont.", "Mid/High CpG cont.")), 
+        type = factor(type, levels=c("Promoters", "Enhancers", "Background", "Exons"))) %>% 
+    select(chrom, start, end, type, cg_cont, clock, MG, ML) %>% 
+    gather("class", "cor", -(chrom:end), -cg_cont, -type)
+
+p_cor_density <- df %>% 
+    ggplot(aes(x=cor, color=class)) + 
+        geom_density(size=0.5) + 
+        scale_color_manual(name = "", values = c("ML" = "darkblue", "MG" = "darkred", "clock" = "darkgreen")) +
+        guides(color=FALSE) + 
+        ylab("Density") + 
+        xlab("Correlation to epigenomic score") + 
+        facet_grid(type~cg_cont, scales="free_y") +
+        theme(aspect.ratio=0.5) + 
+        geom_vline(xintercept = cor_thresh, linetype = "dashed", color="darkgray") + 
+        geom_text(data = df %>% count(type, cg_cont) %>% mutate(label = paste0("n=", scales::comma(n))), inherit.aes = FALSE, aes(label=label), x = 0.5, y = 4)
+
+p_cor_density + theme_bw() + theme(aspect.ratio=0.7)
+```
+
+## Project all epigenomic features using UMAP
+
+```{r}
+set.seed(17)
+raw_feats <- fread(here("data/epigenomic_features_raw_meth.tsv"))
+um <- raw_feats %>%     
+        mutate(ML = -ML, clock = -clock, immune.meth = -immune.meth, caf.meth = -caf.meth) %>%
+        mutate(caf = caf / 20, immune = immune / 20) %>%  
+        select(caf, immune, clock, MG, ML) %>%        
+        as.matrix() %>%
+        umap::umap()
+```
+
+```{r}
+mut_df <- fread(here("data/mutations.tsv")) %>% as_tibble()
+p53_df <- mut_df %>%
+        left_join(samp_data %>% select(samp, ER = ER1), by = "samp") %>%
+        filter(gene == "TP53") %>%        
+        mutate(p53= forcats::fct_recode(mutation, "WT" = "NO MUT", "TP53+" = "MUT+", "TP53-" = "MUT-")) %>%    
+        select(samp, p53)
+
+pik3ca_df <- mut_df %>%
+        left_join(samp_data %>% select(samp, ER = ER1), by = "samp") %>%
+        filter(gene == "PIK3CA") %>%        
+        mutate(pik3ca = forcats::fct_recode(mutation, "WT" = "NO MUT", "PIK3CA+" = "MUT+", "PIK3CA-" = "MUT-")) %>%               select(samp, pik3ca)
+```
+
+```{r}
+feats_proj <- raw_feats %>%     
+        mutate(ML = -ML, clock = -clock, immune.meth = -immune.meth, caf.meth = -caf.meth) %>%
+        mutate(x = um$layout[, 1], y = um$layout[, 2]) %>%
+        left_join(samp_data %>% select(samp, iC10, stage, grade, PAM50, gi = giScore_width, MathScore, epi_burden = log10_global_epm), by = "samp") %>%
+        mutate(iC10 = factor(iC10, levels = names(annot_colors$iC10))) %>%
+        mutate(stage = factor(stage, levels = names(annot_colors$stage))) %>%
+        mutate(grade = factor(grade, levels = names(annot_colors$grade))) %>%
+        mutate(PAM50 = factor(PAM50, levels = names(annot_colors$PAM50))) %>%
+        left_join(p53_df, by = "samp") %>%
+        mutate(p53 = forcats::fct_explicit_na(p53)) %>%
+        left_join(pik3ca_df, by = "samp") %>% 
+        mutate(pik3ca = forcats::fct_explicit_na(pik3ca)) %>% 
+        mutate(grade = ifelse(ER == "normal", "ADJNORMAL", grade)) %>% 
+        mutate(stage = ifelse(ER == "normal", "ADJNORMAL", stage))
+```
+
+#### Figure 4a.
+
+```{r}
+options(repr.plot.width = 20, repr.plot.height = 4)
+plotlist <- list()
+plotlist$ER <- feats_proj %>%
+    ggplot(aes(x = x, y = y, color = ER)) +
+    scale_color_manual(values = annot_colors$ER1)
+
+plotlist$iC10 <- feats_proj %>%
+    ggplot(aes(x = x, y = y, color = iC10)) +
+    scale_color_manual(values = annot_colors$iC10)
+
+plotlist$PAM50 <- feats_proj %>%
+    ggplot(aes(x = x, y = y, color = PAM50)) +
+    scale_color_manual(values = annot_colors$PAM50)
+
+plotlist$grade <- feats_proj %>%
+    ggplot(aes(x = x, y = y, color = grade)) +
+    scale_color_manual(values = annot_colors$grade)
+
+plotlist$stage <- feats_proj %>%
+    ggplot(aes(x = x, y = y, color = stage)) +
+    scale_color_manual(values = annot_colors$stage)
+
+for (feat in c("immune", "caf", "clock", "MG", "ML", "gi", "MathScore", "epi_burden")) {
+    df <- feats_proj
+    df[[feat]] <- clip_vals(df[[feat]], quantile(df[[feat]], 0.05, na.rm = TRUE), quantile(df[[feat]], 0.95, na.rm = TRUE))
+    plotlist[[feat]] <- df %>%
+        ggplot(aes_string(x = "x", y = "y", color = feat)) +
+        scale_colour_distiller(palette = "RdYlBu")
+}
+
+plotlist$p53 <- feats_proj %>%
+    ggplot(aes(x = x, y = y, color = p53)) +
+    scale_color_manual(values = c("TP53+" = "darkred", "TP53-" = "darkred", "WT" = "darkgray", "(Missing)" = "darkgray"))
+plotlist$pik3ca <- feats_proj %>%
+    ggplot(aes(x = x, y = y, color = pik3ca)) +
+    scale_color_manual(values = c("PIK3CA-" = "darkred", "PIK3CA+" = "darkblue", "WT" = "darkgray", "(Missing)" = "darkgray"))
+
+plotlist1 <- map(plotlist, ~
+.x +
+    xlab("") +
+    ylab("") +
+    theme(
+        aspect.ratio = 1,
+        strip.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank()
+    ))
+
+p <- plot_grid(plotlist = map(plotlist1, ~ .x + geom_point(size = 0.8)))
+
+plots_ppt1 <- map2(
+        plotlist[c("immune", "caf", "clock", "MG", "ML")],
+        c("Immune", "CAF", "Clock", "MG", "ML"),
+        ~ .x + geom_point(size = 0.05) + guides(color = "none") + ggtitle(.y)
+    )
+
+plots_ppt2 <- map2(
+        plotlist[c("ER", "grade", "stage", "pik3ca", "p53")],
+        c("ER", "Grade", "Stage", "PIK3CA", "TP53"),
+        ~ .x + geom_point(size = 0.05) + guides(color = "none") + ggtitle(.y)
+)
+
+plot_grid(plotlist = map(plots_ppt1, ~ .x + theme_bw() + theme(aspect.ratio = 1, strip.background = element_blank(),        panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.ticks = element_blank(), axis.text = element_blank()) + xlab("") + ylab("") + geom_point(size = 0.8)), nrow=1)
+
+plot_grid(plotlist = map(plots_ppt2, ~ .x + theme_bw() + theme(aspect.ratio = 1, strip.background = element_blank(),        panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.ticks = element_blank(), axis.text = element_blank()) + xlab("") + ylab("") + geom_point(size = 0.8)), nrow=1)
+```
+
+## Compare epigenomic scores to clinical annotations
+
+```{r}
+all_feats <- fread(here("data/epigenomic_features.tsv")) %>% mutate(ML = -ML, clock = -clock, immune.meth = -immune.meth, caf.meth = -caf.meth) %>% as_tibble()
+```
+
+```{r}
+feats_tidy <- all_feats %>% 
+        select(-caf, -immune) %>% 
+        rename(caf = caf.meth, immune = immune.meth) %>% 
+        gather("feat", "score", -ER, -samp) 
+```
+
+#### Figure 4c, Extended Data Figure 10b
+
+```{r}
+options(repr.plot.width = 7, repr.plot.height = 10)
+
+p_mut <- plot_score_feats_boxp(samp_data %>% select(samp, clin_feat = MathScore), "Mutational load (MATH score)
+", feats_tidy, nbins = 5)
+p_gi <- plot_score_feats_boxp(samp_data %>% select(samp, clin_feat = giScore_width), "Chromosomal Instability (CIN)", feats_tidy, nbins = 5) 
+
+p_mut + p_gi 
+```
+
+p.values 
+
+```{r}
+feats_tidy %>% left_join(samp_data %>% select(samp, clin_feat = MathScore)) %>% group_by(ER, feat) %>% na.omit() %>% do({broom::tidy(cor.test(.$score, .$clin_feat, method = "spearman", use = "pairwise.complete.obs"))}) %>% filter(ER != "normal") %>% filter(p.value < 0.05) %>% arrange(p.value) %>% mutate(signif = case_when(p.value < 0.0001 ~ "****", p.value < 0.001 ~ "***", p.value < 0.01 ~ "**", p.value < 0.05 ~ "*"))
+```
+
+```{r}
+feats_tidy %>% left_join(samp_data %>% select(samp, clin_feat = giScore_width)) %>% group_by(ER, feat) %>% na.omit() %>% do({broom::tidy(cor.test(.$score, .$clin_feat, method = "spearman", use = "pairwise.complete.obs"))}) %>% filter(ER != "normal") %>% filter(p.value < 0.05) %>% arrange(p.value) %>% mutate(signif = case_when(p.value < 0.0001 ~ "****", p.value < 0.001 ~ "***", p.value < 0.01 ~ "**", p.value < 0.05 ~ "*"))
+```
+
+```{r}
+feats_tidy %>% left_join(samp_data %>% select(samp, clin_feat = giScore_width), by = "samp") %>% count(ER, feat)
+```
+
+## Distribution of the scores in iC10 integrative clusters
+
+```{r}
+feats_tidy <- all_feats %>% 
+    gather("feat", "score", -samp, -ER) %>% 
+    mutate(ER = factor(ER, levels = c("ER+", "ER-", "normal")))
+df_iC10 <- samp_data %>%
+        select(samp, iC10) %>%
+        mutate(iC10 = factor(iC10, levels = names(annot_colors$iC10))) %>%
+        left_join(feats_tidy, by = "samp") %>%
+        filter(ER != "normal", !is.na(feat))
+df_iC10_count <- df_iC10 %>%
+        group_by(feat) %>%
+        mutate(score = cut(score, breaks = quantile(score, 0:5 / 5, na.rm = TRUE), include.lowest = TRUE, labels = as.character(1:5))) %>%
+        count(iC10, feat, score) %>%
+        group_by(feat, score) %>%
+        mutate(p = n / sum(n))
+```
+
+#### Extended Data Figure 10a
+
+```{r}
+options(repr.plot.width = 5, repr.plot.height = 10)
+p_iC10_count <- df_iC10_count %>%
+        mutate(feat = factor(feat, levels = c("caf", "immune", "clock", "MG", "ML"))) %>% 
+        filter(!is.na(feat)) %>% 
+        ggplot(aes(fill = iC10, y = p, x = score, label = n)) +
+        geom_col(width = 1, color = "black") +
+        scale_fill_manual(values = annot_colors$iC10) +
+        geom_text(family = "Arial", size = 1, position = position_stack(vjust = 0.5)) +
+        guides(color = "none") +
+        facet_grid(feat ~ .) +
+        ylab("% of samples") +
+        xlab("Score") +
+        scale_y_continuous(labels = scales::percent) +
+        theme(aspect.ratio = 0.6, axis.text.x = element_blank(), axis.ticks.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_blank())
+
+p_iC10_count
+```
+
+```{r}
+p_ic10 <- df_iC10 %>%
+        ggplot(aes(x = iC10, y = score, fill = iC10)) +
+        geom_hline(yintercept = 0, color = "darkgray") +
+        geom_boxplot(lwd = 0.2, outlier.size = 0.2) +
+        scale_fill_manual(values = annot_colors$iC10, guide = "none") +
+        facet_grid(feat ~ ., scales = "free_y") +
+        ylab("") +
+        xlab("iC10") +
+        theme(aspect.ratio = 0.5)
+p_ic10
+```
+
+## Epipolymorphism of the epigenomic layers
+
+```{r}
+loci_epi_mean <- fread(here("data/loci_epipoly_mean.tsv")) %>% as_tibble() 
+```
+
+```{r}
+gvtrack.create("d_exon", "intervs.global.exon", "distance")
+gvtrack.create("d_intron", "intervs.global.introns", "distance")
+gvtrack.create("d_promoter", promoter_intervs, "distance")
+loci_annot <- gextract.left_join(c("d_promoter", "d_exon", "d_intron"), intervals = loci_annot %>% distinct(chrom, start, end), iterator = loci_annot %>% distinct(chrom, start, end)) %>% 
+    as_tibble() %>% 
+    right_join(loci_annot, by = c("chrom", "start", "end"))
+loci_annot <- loci_annot %>% mutate(type = case_when(
+        d_promoter == 0 ~ "promoter",
+        d_exon == 0 ~ "exon",
+        d_intron == 0 ~ "intron", 
+        TRUE ~ "inter-genic"        
+    ))
+```
+
+```{r}
+plot_epipoly_strip <- function(df, df_bg, ER, k=15){
+    p_bg <- df_bg %>%
+        filter(ER == !!ER) %>%
+        arrange(pat_meth) %>%
+        filter(!is.na(epipoly)) %>% 
+        group_by(type) %>% 
+        mutate(med = zoo::rollmedian(epipoly, k = k, na.pad = TRUE)) %>%
+        ggplot(aes(x = pat_meth, y = epipoly)) +        
+        geom_point(size = 0.001, color="gray", alpha=0.5) + 
+        geom_line(inherit.aes = FALSE, data = tibble(m = seq(0, 1, by = 0.001)) %>% mutate(epipoly = 2 * m * (1 - m)), linetype = "dashed", aes(x = m, y = epipoly)) +
+        geom_line(inherit.aes = FALSE, data = tibble(m = seq(0, 1, by = 0.001)) %>% mutate(epipoly = 1 - ((1 - 2 * m + 2 * m * m)^5)), linetype = "dashed", aes(x = m, y = epipoly)) +
+        xlab("Avg. methylation") +
+        ylab("Epi-polymorphism")
+    df <- df %>% 
+        filter(ER == !!ER) %>%
+        arrange(pat_meth) %>%
+        filter(!is.na(epipoly)) %>% 
+        group_by(type) %>% 
+        mutate(med = zoo::rollmedian(epipoly, k = k, na.pad = TRUE))
+    p <- p_bg + 
+        geom_point(data = df, size = 0.001, color="darkred", alpha=0.5) + 
+        geom_line(inherit.aes = FALSE, aes(x = pat_meth, y = med), lwd = 0.6) +
+        geom_line(data = df, inherit.aes = FALSE, aes(x = pat_meth, y = med), color = "red", lwd = 0.6) +
+        theme(aspect.ratio = 1) 
+    p + facet_grid(.~type)
+}
+```
+
+#### Extended Data Figure 7a
+
+```{r}
+options(repr.plot.width = 15, repr.plot.height = 5)
+df <- loci_epi_mean %>% inner_join(loci_annot %>% filter(MG >= 0.5))
+df_bg <- loci_epi_mean %>% anti_join(loci_annot %>% filter(MG >= 0.5)) %>% left_join(loci_annot)
+p_epipoly_MG <- plot_epipoly_strip(df, df_bg, "ER+", k=101)  + ggtitle("MG")
+p_epipoly_MG
+```
+
+```{r}
+options(repr.plot.width = 15, repr.plot.height = 5)
+df <- loci_epi_mean %>% inner_join(loci_annot %>% filter(ML >= 0.5))
+df_bg <- loci_epi_mean %>% anti_join(loci_annot %>% filter(ML >= 0.5)) %>% left_join(loci_annot)
+p_epipoly_ML <- plot_epipoly_strip(df, df_bg, "ER+", k=101)  + ggtitle("ML")
+p_epipoly_ML
+```
+
+## Comparison of the epigenomic scores with existing epigenomic age metrics
+
+
+### phenoAge
+
+Compare the epigenomic scores with phenoAge score from Steve Horvath's lab (PMID: 29676998)
+
+```{r}
+cpg_450k <- gintervals.load("intervs.450k_27k.cpgs") %>% as_tibble()
+pheno_age <- fread(here("data/phenoAge.tsv")) %>% select(id = CpG) %>% left_join(cpg_450k, by = "id") %>% slice(-1) %>% select(chrom, start, end, id) %>% as_tibble()
+```
+
+```{r}
+pheno_age_mb <- fread(here("data/pheno_age_score.tsv")) %>% as_tibble()
+```
+
+Unfortunately, the METABRIC data doesn't cover all of _phenoAge_ CpGs, but we have sufficient CpGs for correlating with the epigenomic scores:
+
+```{r}
+options(repr.plot.width = 7, repr.plot.height = 7)
+n_cpgs_pheno <- colSums(!is.na(pheno_age_mb %>% intervs_to_mat())) %>% enframe("samp", "n_cpgs")
+n_cpgs_pheno %>% ggplot(aes(x=n_cpgs, y = 1-..y..)) + stat_ecdf() + xlab("# of CpGs") + ylab("Fraction of samples") + theme_bw() + theme(aspect.ratio = 1)
+```
+
+```{r}
+options(repr.plot.width = 7, repr.plot.height = 7)
+n_samples_pheno <- rowSums(!is.na(pheno_age_mb %>% intervs_to_mat())) %>% enframe("cpg", "n_samples")
+n_samples_pheno %>% ggplot(aes(x=n_samples, y = 1-..y..)) + stat_ecdf() + xlab("# of samples") + ylab("fraction of CpGs") + theme_bw() + theme(aspect.ratio = 1)  + scale_x_log10()
+```
+
+```{r}
+pheno_age_df <- pheno_age_mb %>% intervs_to_mat() %>% colMeans(na.rm = TRUE)  %>% enframe("samp", "pheno_age_score") %>% left_join(n_cpgs_pheno) %>% filter(n_cpgs >= 50)
+```
+
+```{r}
+options(repr.plot.width = 15, repr.plot.height = 8)
+
+df <- all_feats %>%     
+    gather("feat", "score", clock:immune.meth) %>% 
+    left_join(pheno_age_df)
+
+p_pheno_age <- df %>% 
+    ggplot(aes(x=score, y=pheno_age_score, color=ER)) + geom_point(size=0.5) + facet_grid(ER~feat, scales="free") + scale_color_manual(values=annot_colors$ER1) +  theme(aspect.ratio=1)
+
+p_pheno_age + theme_bw() + theme(aspect.ratio=1)
+```
+
+```{r}
+df %>% 
+    group_by(feat) %>% 
+    summarise(cor = cor(pheno_age_score, score, use="pairwise.complete.obs")) %>% 
+    arrange(cor) %>% 
+    as.data.frame()
+```
+
+#### Ext Data Figure 5e
+
+```{r}
+options(repr.plot.width = 15, repr.plot.height = 5)
+p_pheno_age_clock <- df %>% 
+    filter(feat == "clock") %>% 
+    mutate(ER = factor(ER, levels = c("ER+", "ER-", "normal"))) %>%     
+    ggplot(aes(x=score, y=pheno_age_score, color=ER)) + geom_point(size=0.1) + facet_grid(.~ER) + scale_color_manual(values=annot_colors$ER1) +  theme(aspect.ratio=1) + ylab("PhenoAge") + xlab("Clock")
+p_pheno_age_clock + theme_bw() + theme(aspect.ratio=1)
+```
+
+#### Ext Data Figure 5f
+
+```{r}
+options(repr.plot.width = 15, repr.plot.height = 5)
+df <- pheno_age_df %>%     
+    left_join(samp_data %>% select(samp, age)) %>% 
+    add_ER()
+
+df  %>% summarise(cor = cor(age, pheno_age_score, method = "spearman", use = "pairwise.complete.obs"))
+
+p_age_pheno <- df %>% 
+    filter(!is.na(ER)) %>% 
+    ggplot(aes(x=age, y=pheno_age_score, color=ER)) + 
+        geom_point(size=0.1) + 
+        scale_color_manual(values = annot_colors$ER1) + 
+        theme(aspect.ratio = 1) + 
+        facet_grid(.~ER) + 
+        xlab("Biological age") + 
+        ylab("phenoAge")
+
+p_age_pheno + theme_bw() + theme(aspect.ratio = 1)
+```
+
+```{r}
+feats_mat <- all_feats %>% select(-ER) %>% column_to_rownames("samp") %>% as.matrix()
+pheno_mat <- intervs_to_mat(pheno_age_mb)
+samples <- intersect(colnames(pheno_mat), rownames(feats_mat))
+cor_pheno <- tgs_cor(feats_mat[samples, ], t(pheno_mat[, samples]), pairwise.complete.obs=TRUE) %>% t() %>% mat_to_intervs() %>% as_tibble()
+```
+
+#### Ext Data Figure 5d
+
+```{r}
+options(repr.plot.width = 4, repr.plot.height = 4)
+cor_thresh <- 0.25
+cor_pheno <- cor_pheno %>% mutate(type = case_when(clock >= cor_thresh ~ "clock", MG >= cor_thresh ~ "MG", ML >= cor_thresh ~ "ML", is.na(MG) | is.na(ML) | is.na(clock) ~ "missing", TRUE ~ "other"))
+p_pheno_cpgs <- cor_pheno %>% 
+    count(type) %>% 
+    ggplot(aes(x=reorder(type, n), y=n)) + geom_col() + xlab("CpG type") + ylab("phenoAge CpGs") + vertical_labs()
+p_pheno_cpgs
+```
+
+```{r}
+gc()
+```

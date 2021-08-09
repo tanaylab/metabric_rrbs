@@ -1,0 +1,632 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+# Tumor microenvironment (TME) deconvolution
+
+
+## Introduction
+
+
+Tumor microenvironment [TME] effects are a major confounder in any dataset of tumor DNA methylation. Differences in methylation between tumor and normal cells or between different tumors can just reflect a different proportion of immune or cancer associated fibroblasts (CAF) cells. Fortunately, the METABRIC dataset contains gene expression for each sample, which allows us to identify Immune and CAF expression signatures and associate them with those of DNA methylation, using the cross-correlations between gene expression profiles with promoter methylation signatures. 
+
+In broad strokes, _Methylayer_'s normalization strategy is to:
+
+1. Compute cross-correlation between gene expression and promoter methylation. 
+2. Cluster the cross-correlation matrix to identify TME expression signatures (i.e. groups of TME genes that affect promoter methylation). 
+3. Use the Euclidean distance in the 2D space of these signatures to identify the K-nearest neighbors of each tumor. 
+4. Subtract from the raw methylation value of each tumor the mean methylation of its K neighbors.
+
+More details regarding TME normalization can be found in the Methylayer R package: https://github.com/tanaylab/methylayer
+
+See also __Supplementary Note 1__ for an additional, independent and unsupervised analysis scheme using non-negative matrix factorization (NMF) that further validated Methylayer estimates of Immune and CAF.
+
+
+## Initialize
+
+```{r}
+source(here::here("scripts/init.R"))
+```
+
+## Load data
+
+
+#### Promoter methylation matrix:
+
+```{r}
+prom_avg_meth <- fread(here("data/promoter_avg_meth_filt.csv")) %>% 
+    select(-name, -name3.chr) %>% 
+    distinct(chrom, start, end, .keep_all = TRUE) %>% 
+    as_tibble()
+head(prom_avg_meth)
+dim(prom_avg_meth)
+```
+
+#### Expression matrix: 
+
+```{r}
+expr_mat <- fread(here("data/expression_matrix.csv")) %>% expr_intervs_to_mat()
+head(expr_mat)
+dim(expr_mat)
+```
+
+Note that we matched promoter methylation and gene expression profiles using Refseq annotations. Alternative promoters were resolved by selecting the promoter with the minimal average methylation value in the normal samples.
+
+
+#### Genomic methylation:
+
+
+After we use the promoter methylation and expression to deconvolute the data, we can remove the TME signatures also from the genomic regions. We need, therefore, do load also the entire avg. methylation dataset (both promoter and genomic):
+
+```{r}
+genomic_avg_meth <- fread(here("data/genomic_msp1_avg_meth_filt.csv")) %>% as_tibble()
+all_meth <- bind_rows(
+    prom_avg_meth, 
+    genomic_avg_meth
+)
+
+head(all_meth)
+dim(all_meth)
+```
+
+## Deconvolve TME 
+
+
+Due to the very different characteristics of ER+/ER- and normal samples, we analyze them separatly. 
+
+`k` is chosen based on the number of samples in the dataset. See below a power analysis on the effect of K on normalization. 
+
+We exclude loci with mean methylation value lower than 0.1 or higher than 0.9 (`min_meth`, `max_meth`) and use only rows (expression profiles) and columns (methylation profiles) that have at least one correlation value greater than 0.25 or smaller than -0.25 (`meth_cor_thresh`, `expr_cor_thresh`). 
+
+We use "CD3D" gene as an anchor for immune genes, and "CAV1" as an anchor for CAF genes. 
+
+
+The following utility function subsets samples from the methylation matrices and then runs `methylayer::deconv_TME`:
+
+```{r}
+deconv_TME_metabric <- function(prom_avg_meth, all_meth, expr_mat, samples, ...){
+    prom_mat <- prom_avg_meth %>% select(chrom:end, any_of(samples)) %>% intervs_to_mat()
+    raw_meth_mat <- all_meth %>% select(chrom:end, any_of(samples)) %>% intervs_to_mat()
+    res <- methylayer::deconv_TME(prom_mat, expr_mat, raw_meth_mat, ...)
+    return(res)
+}
+```
+
+### ER+ samples
+
+```{r}
+ER_positive_norm_meth <- deconv_TME_metabric(prom_avg_meth, all_meth, expr_mat, ER_positive_samples, k = 30) %cache_rds% here("data/ER_positive_norm_meth.rds")
+```
+
+### ER- samples
+
+```{r}
+ER_negative_norm_meth <- deconv_TME_metabric(prom_avg_meth, all_meth, expr_mat, ER_negative_samples, k = 15) %cache_rds% here("data/ER_negative_norm_meth.rds")
+```
+
+### Normal samples
+
+```{r}
+normal_norm_meth <- deconv_TME_metabric(prom_avg_meth, all_meth, expr_mat, normal_samples, k = 15) %cache_rds% here("data/normal_norm_meth.rds")
+```
+
+### Merge normalized methylation
+
+
+For convenience, we can now merge the TME-normalized methylation from ER+/ER-/normal samples to a single file:
+
+```{r}
+all_norm_meth <- 
+    cbind(ER_positive_norm_meth$norm_meth, ER_negative_norm_meth$norm_meth, normal_norm_meth$norm_meth) %>% 
+    mat_to_intervs() %cache_df% 
+    here("data/all_norm_meth.tsv") %>% 
+    as_tibble()
+dim(all_norm_meth)
+```
+
+### Merge TME scores 
+
+
+We also merge the CAF and Immmune score for each sample. Note that `methylayer` extracts both the expression module score (`caf` and `immune` columns) and methylation score (`caf.meth`, `immune.meth`). The expression scores were used for the deconvolution wheareas the methylation scores are the average methylation of the loci that were correlated to the expression score (above 0.3, `scores_cor_thresh` parameter). 
+
+```{r}
+tme_df <- bind_rows(
+        ER_positive_norm_meth$tme_features,
+        ER_negative_norm_meth$tme_features,
+        normal_norm_meth$tme_features
+    ) %>%            
+    select(samp, caf, immune, caf.meth, immune.meth) %cache_df% 
+    here("data/TME_features.tsv") %>% 
+    as_tibble()
+tme_df
+```
+
+### CAF and Immune genes
+
+
+We can see the genes that were used in the deconvolution by running `get_TME_genes` function: 
+
+```{r}
+get_TME_genes(ER_positive_norm_meth$em_cross_clust, caf_gene = NULL)
+```
+
+```{r}
+message("ER+")
+get_TME_genes(ER_positive_norm_meth$em_cross_clust, caf_gene = NULL) %>% length()
+get_TME_genes(ER_positive_norm_meth$em_cross_clust, immune_gene = NULL) %>% length()
+```
+
+```{r}
+message("ER-")
+get_TME_genes(ER_negative_norm_meth$em_cross_clust, caf_gene = NULL) %>% length()
+get_TME_genes(ER_negative_norm_meth$em_cross_clust, immune_gene = NULL) %>% length()
+```
+
+```{r}
+message("normal")
+get_TME_genes(normal_norm_meth$em_cross_clust, caf_gene = NULL) %>% length()
+get_TME_genes(normal_norm_meth$em_cross_clust, immune_gene = NULL) %>% length()
+```
+
+## Expression-methylation correlation matrices
+
+
+`methylayer` allows us to plot the expression-methylation correlation matrices it uses in the deconvolution process: 
+
+
+#### Extended Data Figure 2a-b
+
+```{r}
+options(repr.plot.width = 7, repr.plot.height=10)
+methylayer::plot_em_cross_cor(ER_positive_norm_meth$em_cross_clust)
+```
+
+```{r}
+dim(ER_positive_norm_meth$em_cross_clust$em_cross)
+```
+
+```{r}
+options(repr.plot.width = 7, repr.plot.height=10)
+plot_em_cross_cor(ER_negative_norm_meth$em_cross_clust)
+```
+
+```{r}
+dim(ER_negative_norm_meth$em_cross_clust$em_cross)
+```
+
+```{r}
+options(repr.plot.width = 7, repr.plot.height=10)
+plot_em_cross_cor(normal_norm_meth$em_cross_clust)
+```
+
+```{r}
+dim(normal_norm_meth$em_cross_clust$em_cross)
+```
+
+### Export clustering
+
+
+We can export summary statistics (centers) of the expression-methylation clusters to excel files:
+
+```{r}
+methylayer::export_em_cross_mods(ER_negative_norm_meth$em_cross_clust, here("export", "em_cross_ER_negative.xlsx"))
+methylayer::export_em_cross_mods(ER_positive_norm_meth$em_cross_clust, here("export", "em_cross_ER_positive.xlsx"))
+methylayer::export_em_cross_mods(normal_norm_meth$em_cross_clust, here("export", "em_cross_normal.xlsx"))
+```
+
+## Diagnose TME normalization
+
+
+We will extract the correlation of the raw and normalized methylation to gene expression of selected genes in order to see that our normalization worked. 
+
+```{r}
+before_after_df <- methylayer::calc_gene_cor_before_after_deconv(
+    ER_positive_norm_meth, 
+    all_meth, 
+    c("CAV1", "CD3D", "GATA3", "TOP2A")) %cache_df% 
+    here("data/gene_cor_before_after_ER_positive.tsv") %>% 
+    as_tibble()
+```
+
+```{r}
+before_after_df <- before_after_df %>% 
+    select(-ends_with(".norm")) %>% 
+    gather("gene", "cor_raw", -(chrom:end)) %>% 
+    left_join(before_after_df %>% 
+              select(chrom:end, ends_with(".norm")) %>% 
+              gather("gene", "cor_norm", -(chrom:end)) %>% 
+              mutate(gene = gsub(".norm$", "", gene)), by = c("chrom", "start", "end", "gene"))
+```
+
+#### Figure 1h
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 8)
+
+lims <- c(-0.7, 0.7)
+
+p_before_after <- before_after_df %>% 
+    mutate(ER = "ER+") %>%     
+    mutate(
+            cor_raw = tgutil::clip_vals(cor_raw, lims[1], lims[2]),
+            cor_norm = tgutil::clip_vals(cor_norm, lims[1], lims[2])
+        ) %>% 
+    ggplot(aes(x=cor_raw, y=cor_norm, color=ER)) + 
+        geom_point(size=0.001) + 
+        scale_color_manual(values=annot_colors$ER1) + 
+        geom_abline(linetype = "dashed") + 
+        xlab("Raw methylation vs. expression correlation") +
+        ylab("Normalized methylation\nvs. expression correlation") +
+        facet_wrap(.~gene, nrow=2) + 
+        guides(color="none") + 
+        xlim(lims[1], lims[2]) +
+        ylim(lims[1], lims[2]) +
+        theme(aspect.ratio=1) + 
+        theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+
+p_before_after + theme_bw() + theme(aspect.ratio=1) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
+```
+
+We plot the CAF and immune expression signatures against the promoter that is most anti-correlated with CD3D gene expression:
+
+```{r}
+get_top_cor_promoter <- function(gene, em_cross){
+    em_cross[, gene] %>% 
+        as.matrix() %>% 
+        mat_to_intervs() %>% 
+        rename(cor = V1) %>% 
+        inner_join(promoter_intervs, by = c("chrom", "start", "end")) %>% 
+        arrange(cor) %>% 
+        slice(1) %>% 
+        as_tibble()
+}
+```
+
+```{r}
+get_locus_before_after_meth <- function(deconv_list, raw_meth, intervals){
+    raw_meth <- all_meth %>% 
+        inner_join(intervals, by = c("chrom", "start", "end")) %>% 
+        gather("samp", "raw_meth", -(chrom:end)) %>% 
+        as_tibble()
+    norm_meth <- deconv_list$norm_meth[intervals %>% intervs_to_mat() %>% rownames(), ]  %>% 
+        enframe("samp", "norm_meth") %>% 
+        as_tibble()
+    return(raw_meth %>% left_join(norm_meth, by = "samp"))
+}
+```
+
+```{r}
+plot_before_after_gene_cor_meth <- function(gene, tme_df, deconv_list, raw_meth){
+    anti_cor_gene <- get_top_cor_promoter(gene, deconv_list$em_cross$em_cross)
+before_after_meth <- get_locus_before_after_meth(deconv_list, raw_meth, anti_cor_gene %>% select(chrom, start, end)) %>% add_ER()
+    p_gene_norm_before_after <- tme_df %>% 
+        left_join(before_after_meth, by = "samp") %>% 
+        filter(ER == "ER+") %>% 
+        select(samp, CAF=caf, Immune=immune, `Methylation`=raw_meth, `Normalized\nMethylation`=norm_meth) %>% 
+        gather("type", "meth", -samp, -Immune, -CAF) %>% 
+        mutate(type = factor(type, levels=c("Methylation", "Normalized\nMethylation"))) %>% 
+        gather("expr_type", "expr", -samp, -type, -meth) %>% 
+        ggplot(aes(x=meth, y=expr)) + 
+            geom_point(size=0.1) + 
+            facet_grid(expr_type~type, scales="free_x") + 
+            theme(aspect.ratio=1) + xlab("")  + 
+            ylab("Expression") + 
+            scale_y_continuous(labels = scales::number_format(accuracy = 0.1)) + 
+            ggtitle(glue("{anti_cor_gene$name[1]} ({gene})")) + vertical_labs()
+    p_gene_norm_before_after
+}
+```
+
+#### Extended Data Figure 3a-d
+
+```{r}
+p_cd3d_top_meth <- plot_before_after_gene_cor_meth("CD3D", tme_df, ER_positive_norm_meth, all_meth)
+p_cav1_top_meth <- plot_before_after_gene_cor_meth("CAV1", tme_df, ER_positive_norm_meth, all_meth)
+p_top2a_top_meth <- plot_before_after_gene_cor_meth("TOP2A", tme_df, ER_positive_norm_meth, all_meth)
+p_gata3_top_meth <- plot_before_after_gene_cor_meth("GATA3", tme_df, ER_positive_norm_meth, all_meth)
+
+p_cd3d_top_meth + theme_bw()
+p_cav1_top_meth + theme_bw()
+p_top2a_top_meth + theme_bw()
+p_gata3_top_meth + theme_bw()
+```
+
+## Plot CD3D and CAV1 vs immune and CAF methylation modules
+
+
+#### Figure 1f
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 4)
+
+df <- tme_df %>%     
+    add_ER() %>% 
+    left_join(expr_mat["CD3D", ] %>% 
+    enframe("samp", "expr")) %>% 
+    filter(ER != "normal") %>%     
+    as_tibble() 
+    
+rho_df <- df %>% 
+    group_by(ER) %>% 
+    summarise(rho = cor(immune.meth, expr, use="pairwise.complete.obs", method="spearman")) %>% 
+    mutate(label = sprintf("~rho == %0.2f", rho))
+
+
+p_CD3D <- df %>% 
+    ggplot(aes(x=immune.meth, y=expr, color=ER)) + 
+        geom_point(size=0.1) + 
+        scale_color_manual(values=annot_colors$ER1) + 
+        theme(aspect.ratio=1) + 
+        guides(color=FALSE) + 
+        facet_wrap(.~ER) + 
+        xlab("Immune methylation module") + 
+        ylab("CD3D expression")        
+
+p_CD3D + geom_text(data = rho_df, inherit.aes = FALSE, x = 0.65, y = 11, aes(label=label), parse=TRUE, size=5)
+```
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 4)
+
+df <- tme_df %>%     
+    add_ER() %>% 
+    left_join(expr_mat["CAV1", ] %>% 
+    enframe("samp", "expr")) %>% 
+    filter(ER != "normal") %>%     
+    as_tibble() 
+    
+rho_df <- df %>% 
+    group_by(ER) %>% 
+    summarise(rho = cor(caf.meth, expr, use="pairwise.complete.obs", method="spearman")) %>% 
+    mutate(label = sprintf("~rho == %0.2f", rho))
+
+
+p_CAV1 <- df %>% 
+    ggplot(aes(x=caf.meth, y=expr, color=ER)) + 
+        geom_point(size=0.1) + 
+        scale_color_manual(values=annot_colors$ER1) + 
+        theme(aspect.ratio=1) + 
+        guides(color=FALSE) + 
+        facet_wrap(.~ER) + 
+        xlab("CAFs methylation module") + 
+        ylab("CAV1 expression") 
+       
+
+p_CAV1 + geom_text(data = rho_df, inherit.aes = FALSE, x = 0.65, y = 11, aes(label=label), parse=TRUE, size=5)
+```
+
+#### Extended Data Figure 2c
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 4)
+
+df <- expr_mat[c("CAV1", "CD3D"), ] %>% t() %>% as.data.frame() %>% rownames_to_column("samp") %>% as_tibble() %>% add_ER() %>% filter(ER != "normal")
+    
+rho_df <- df %>% 
+    group_by(ER) %>% 
+    summarise(rho = cor(CAV1, CD3D, use="pairwise.complete.obs", method="spearman")) %>% 
+    mutate(label = sprintf("~rho == %0.2f", rho))
+
+
+p_CAV1_CD3D <- df %>% 
+    ggplot(aes(x=CAV1, y=CD3D, color=ER)) + 
+        geom_point(size=0.1) + 
+        scale_color_manual(values=annot_colors$ER1) + 
+        theme(aspect.ratio=1) + 
+        guides(color="none") + 
+        facet_wrap(.~ER) + 
+        xlab("CAV1 expression") + 
+        ylab("CD3D expression") 
+        
+
+p_CAV1_CD3D + geom_text(data = rho_df, inherit.aes = FALSE, x = 11.5, y = 11.5, aes(label=label), parse=TRUE, size=5)
+```
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 4)
+
+df <- tme_df %>%         
+    add_ER() %>% 
+    filter(ER != "normal") %>%     
+    as_tibble() 
+    
+rho_df <- df %>% 
+    group_by(ER) %>% 
+    summarise(rho = cor(caf.meth, immune.meth, use="pairwise.complete.obs", method="spearman")) %>% 
+    mutate(label = sprintf("~rho == %0.2f", rho))
+
+
+p_immune_caf <- df %>% 
+    ggplot(aes(x=caf.meth, y=immune.meth, color=ER)) + 
+        geom_point(size=0.1) + 
+        scale_color_manual(values=annot_colors$ER1) + 
+        theme(aspect.ratio=1) + 
+        guides(color="none") + 
+        facet_wrap(.~ER) + 
+        xlab("CAFs methylation module") + 
+        ylab("Immune methylation module")         
+
+p_immune_caf + geom_text(data = rho_df, inherit.aes = FALSE, x = 0.7, y = 0.4, aes(label=label), parse=TRUE, size=5)
+```
+
+## Annotate TME scores
+
+
+We reverse immune and CAF methylation scores so as higher score => more progressed. 
+
+```{r}
+feats <- tme_df %>% mutate(immune.meth = -immune.meth, caf.meth = -caf.meth)
+```
+
+We will calculate the distribution of tumor grade stratified by five bins of Immune/CAF methylation scores:
+
+```{r}
+nbins <- 5
+df <- feats %>%     
+    mutate(        
+        immune = cut(immune, quantile(immune, 0:nbins/nbins, na.rm=TRUE), include.lowest=TRUE, labels=1:nbins), 
+        caf = cut(caf, quantile(caf, 0:nbins/nbins, na.rm=TRUE), include.lowest=TRUE, labels=1:nbins), 
+        immune.meth = cut(immune.meth, quantile(immune.meth, 0:nbins/nbins, na.rm=TRUE), include.lowest=TRUE, labels=1:nbins), 
+        caf.meth = cut(caf.meth, quantile(caf.meth, 0:nbins/nbins, na.rm=TRUE), include.lowest=TRUE, labels=1:nbins)) %>% 
+    left_join(samp_data %>% select(samp, ER=ER1, stage, grade), by = "samp") %>% 
+    mutate(stage = ifelse(stage %in% c(0, "DCIS", 1), "0-1", stage)) %>% 
+    mutate(stage = ifelse(ER == "normal", "N", stage)) %>% 
+    mutate(grade = ifelse(ER == "normal", "N", grade))
+```
+
+Calculate p-values:
+
+```{r}
+df %>% 
+    filter(ER %in% c("ER+", "ER-")) %>% 
+    gather("feat", "bin", -samp, -ER, -stage, -grade) %>% 
+    group_by(ER, feat) %>% 
+    summarise(grade_pval = chisq.test(bin, grade)$p.value, stage_pval = chisq.test(bin, stage)$p.value) %>%
+    mutate(signif = case_when(grade_pval <= 0.0001 ~ "****", grade_pval <= 0.001 ~ "***", grade_pval <= 0.01 ~ "**", grade_pval <= 0.05 ~ "*")) %>% 
+    as.data.frame()
+```
+
+#### Figure 1g
+
+```{r}
+options(repr.plot.width = 6, repr.plot.height = 4)
+p_grade_immune_positive <- df %>% 
+    filter(ER == "ER+") %>% 
+    mutate(grade = factor(grade, levels = c("N", "1", "2", "3"))) %>% 
+    filter(!is.na(grade)) %>% 
+    count(grade, immune.meth) %>% 
+    group_by(immune.meth) %>% 
+    mutate(p = n / sum(n)) %>% 
+    ggplot(aes(x=immune.meth, y=p, fill=grade)) + 
+        geom_col() + 
+        scale_fill_manual(name = "Grade", values = c("N" = "gray", "1" = "darkblue", "2" = "red", "3" = "orange")) + 
+        scale_y_continuous(labels=scales::percent) + 
+        xlab("Immune") + 
+        ylab("% of samples") + 
+        ggtitle("ER+")
+p_grade_immune_positive + theme_bw()
+```
+
+```{r}
+p_grade_caf_positive <- df %>% 
+    filter(ER == "ER+") %>% 
+    mutate(grade = factor(grade, levels = c("N", "1", "2", "3"))) %>% 
+    filter(!is.na(grade)) %>% 
+    count(grade, caf.meth) %>% 
+    group_by(caf.meth) %>% 
+    mutate(p = n / sum(n)) %>% 
+    ggplot(aes(x=caf.meth, y=p, fill=grade)) + 
+        geom_col() + 
+        scale_fill_manual(name = "Grade", values = c("N" = "gray", "1" = "darkblue", "2" = "red", "3" = "orange")) + 
+        scale_y_continuous(labels=scales::percent) + 
+        ylab("% of samples") + 
+        xlab("CAF") + 
+        ggtitle("ER+")
+p_grade_caf_positive + theme_bw()
+```
+
+```{r}
+p_grade_immune_negative <- df %>% 
+    filter(ER == "ER-") %>% 
+    mutate(grade = factor(grade, levels = c("N", "1", "2", "3"))) %>% 
+    filter(!is.na(grade)) %>% 
+    count(grade, immune.meth) %>% 
+    group_by(immune.meth) %>% 
+    mutate(p = n / sum(n)) %>% 
+    ggplot(aes(x=immune.meth, y=p, fill=grade)) + 
+        geom_col() + 
+        scale_fill_manual(name = "Grade", values = c("N" = "gray", "1" = "darkblue", "2" = "red", "3" = "orange")) + 
+        scale_y_continuous(labels=scales::percent) + 
+        ylab("% of samples") + 
+        xlab("Immune") + 
+        ggtitle("ER-")
+p_grade_immune_negative + theme_bw()
+```
+
+```{r}
+p_grade_caf_negative <- df %>% 
+    filter(ER == "ER-") %>% 
+    mutate(grade = factor(grade, levels = c("N", "1", "2", "3"))) %>% 
+    filter(!is.na(grade)) %>% 
+    count(grade, caf.meth) %>% 
+    group_by(caf.meth) %>% 
+    mutate(p = n / sum(n)) %>% 
+    ggplot(aes(x=caf.meth, y=p, fill=grade)) + 
+        geom_col() + 
+        scale_fill_manual(name = "Grade", values = c("N" = "gray", "1" = "darkblue", "2" = "red", "3" = "orange")) + 
+        scale_y_continuous(labels=scales::percent) + 
+        ylab("% of samples") + 
+        xlab("CAF") + 
+        ggtitle("ER-")
+p_grade_caf_negative + theme_bw()
+```
+
+## Appendix: Sensitivity analysis of TME normalization
+
+
+#### Extended Data Figure 3e
+
+```{r}
+get_TME_deconv_sensitivity <- function(prom_avg_meth, expr_mat, all_meth){
+    {
+        calc_tme_gene_cor <- function(samples, k, genes = c("CAV1", "CD3D", "TOP2A", "GATA3")){
+            print(k)
+            deconv_list <- deconv_TME_metabric(prom_avg_meth, all_meth, expr_mat, samples, k = k) 
+            calc_gene_cor_before_after_deconv(deconv_list, all_meth, genes) %>% mutate(k = k)
+        }
+
+        ER_pos_df <- map_dfr(seq(5,60,5), ~ calc_tme_gene_cor(ER_positive_samples, .x) %>% mutate(ER = "ER+"))
+        ER_neg_df <- map_dfr(seq(5,60,5), ~ calc_tme_gene_cor(ER_negative_samples, .x) %>% mutate(ER = "ER-"))
+        normal_df <- map_dfr(seq(5,60,5), ~ calc_tme_gene_cor(normal_samples, .x) %>% mutate(ER = "normal+"))
+
+        sens_df <- bind_rows(ER_pos_df, ER_neg_df, normal_df)
+        sens_df 
+    } %cache_df% here("data/TME_sensetivity.tsv") %>% as_tibble()
+}
+```
+
+```{r}
+sens_df <- get_TME_deconv_sensitivity(prom_avg_meth, expr_mat, all_meth) %>% mutate(ER = factor(ER, levels = c("ER+", "ER-", "normal")))
+```
+
+```{r}
+options(repr.plot.width = 8, repr.plot.height = 5)
+CD3D_plot <- sens_df %>% 
+    mutate(cor = CD3D.norm) %>% 
+    ggplot(aes(x=factor(k), y=cor)) + 
+        geom_violin(fill="gray") + 
+        ggtitle("CD3D") + 
+        xlab("K") + 
+        ylab("Normalized methylation\ncorrelation") + 
+        facet_grid(.~ER) + 
+        ylim(-0.6, 0.6) + 
+        theme(aspect.ratio=0.8) + 
+        vertical_labs()
+CAV_plot <- sens_df %>% 
+        mutate(cor = CAV1.norm) %>% 
+        ggplot(aes(x=factor(k), y=cor)) + 
+            geom_violin(fill="gray") + 
+            ggtitle("CAV1") + 
+            xlab("K") + 
+            ylab("Normalized methylation\ncorrelation") + facet_grid(.~ER) + ylim(-0.6, 0.6) + theme(aspect.ratio=0.8) + vertical_labs()
+
+p_sens <- cowplot::plot_grid(CD3D_plot, CAV_plot, nrow=2, align = "hv")
+p_sens
+```
+
+We can see that larger values of K lead to less effective normalization (wider correlation distribution) of the CAF and immune signatures since the neighborhood becomes less homogenous in the Immune/CAF space. 
+
+```{r}
+gc()
+```

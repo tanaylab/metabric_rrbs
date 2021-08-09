@@ -1,0 +1,19 @@
+rmd_files: 
+  - "coverage-stats.Rmd"
+  - "TME.Rmd"
+  - "Epigenomic-scores.Rmd"
+  - "Loss-clock.Rmd"
+  - "epigenomic-instability.Rmd"
+  - "CNA.Rmd"
+  - "mutations.Rmd"
+  - "survival.Rmd"
+  - "cis.Rmd"
+  - "dosage-compensation.Rmd"
+  - "sup-tables.Rmd"
+  - "files.md"
+
+new_session: yes
+
+appendix: 
+  - "Epipolymorphism.Rmd"
+  - "Pipeline.Rmd"
