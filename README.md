@@ -8,7 +8,7 @@ This is the code that generates the figures for the METABRIC RRBS paper. The cod
 
 ## Run the notebooks
 
-Due to the size of the METABRIC-RRBS dataset (~2.2TB full, 55GB pileup alone), we generated a few smaller processed files to help reproduce the analysis. Even this bundle is quite large (~26GB), and you can download it from: 
+Due to the size of the METABRIC-RRBS dataset (~2.2TB full, 55GB pileup alone), we generated a few smaller processed files to help reproduce the analysis. Even this bundle is quite large (~50GB), and you can download it from: 
 
 http://www.wisdom.weizmann.ac.il/~atanay/metabric/analysis_files.tar.gz
 
