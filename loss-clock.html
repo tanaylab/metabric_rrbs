@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Loss clock | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</title>
+  <meta name="description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Loss clock | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="tanaylab.github.io/metabric_rrbs" />
+  
+  <meta property="og:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="github-repo" content="tanaylab/metabric_rrbs" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Loss clock | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+  <meta name="twitter:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+
+<meta name="author" content="Aviezer Lifshitz" />
+
+
+<meta name="date" content="2021-08-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="definition-of-clock-mg-and-ml-scores.html"/>
+<link rel="next" href="epigenomic-instability.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#run-the-notebooks"><i class="fa fa-check"></i><b>1.1</b> Run the notebooks</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notebook-order"><i class="fa fa-check"></i><b>1.3</b> Notebook order</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#find-a-specific-figure"><i class="fa fa-check"></i><b>1.4</b> Find a specific figure</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html"><i class="fa fa-check"></i><b>2</b> METABRIC methylation data statistics</a><ul>
+<li class="chapter" data-level="2.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#breakdown-of-samples"><i class="fa fa-check"></i><b>2.1</b> Breakdown of samples</a></li>
+<li class="chapter" data-level="2.2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#number-of-samples"><i class="fa fa-check"></i><b>2.2</b> Number of samples</a></li>
+<li class="chapter" data-level="2.3" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#total-number-of-reads"><i class="fa fa-check"></i><b>2.3</b> Total number of reads</a></li>
+<li class="chapter" data-level="2.4" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-cpg-coverage-per-sample"><i class="fa fa-check"></i><b>2.4</b> Distribution of CpG coverage per sample</a></li>
+<li class="chapter" data-level="2.5" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-covered-cpgs"><i class="fa fa-check"></i><b>2.5</b> Distribution of covered CpGs</a></li>
+<li class="chapter" data-level="2.6" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#promoter-coverage"><i class="fa fa-check"></i><b>2.6</b> Promoter coverage</a></li>
+<li class="chapter" data-level="2.7" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#coverage-per-clinical-annotations"><i class="fa fa-check"></i><b>2.7</b> Coverage per clinical annotations</a></li>
+<li class="chapter" data-level="2.8" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage"><i class="fa fa-check"></i><b>2.8</b> Marginal CpG coverage</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage-of-k4me1-hotspots"><i class="fa fa-check"></i><b>2.8.1</b> Marginal CpG coverage of k4me1 hotspots</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#sample-cellularity"><i class="fa fa-check"></i><b>2.9</b> Sample cellularity</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html"><i class="fa fa-check"></i><b>3</b> Tumor microenvironment (TME) deconvolution</a><ul>
+<li class="chapter" data-level="3.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#initialize"><i class="fa fa-check"></i><b>3.2</b> Initialize</a></li>
+<li class="chapter" data-level="3.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#load-data"><i class="fa fa-check"></i><b>3.3</b> Load data</a></li>
+<li class="chapter" data-level="3.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#deconvolve-tme"><i class="fa fa-check"></i><b>3.4</b> Deconvolve TME</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er-samples"><i class="fa fa-check"></i><b>3.4.1</b> ER+ samples</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er--samples"><i class="fa fa-check"></i><b>3.4.2</b> ER- samples</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#normal-samples"><i class="fa fa-check"></i><b>3.4.3</b> Normal samples</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-normalized-methylation"><i class="fa fa-check"></i><b>3.4.4</b> Merge normalized methylation</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-tme-scores"><i class="fa fa-check"></i><b>3.4.5</b> Merge TME scores</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#caf-and-immune-genes"><i class="fa fa-check"></i><b>3.4.6</b> CAF and Immune genes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#expression-methylation-correlation-matrices"><i class="fa fa-check"></i><b>3.5</b> Expression-methylation correlation matrices</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#export-clustering"><i class="fa fa-check"></i><b>3.5.1</b> Export clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#diagnose-tme-normalization"><i class="fa fa-check"></i><b>3.6</b> Diagnose TME normalization</a></li>
+<li class="chapter" data-level="3.7" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#plot-cd3d-and-cav1-vs-immune-and-caf-methylation-modules"><i class="fa fa-check"></i><b>3.7</b> Plot CD3D and CAV1 vs immune and CAF methylation modules</a></li>
+<li class="chapter" data-level="3.8" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#annotate-tme-scores"><i class="fa fa-check"></i><b>3.8</b> Annotate TME scores</a></li>
+<li class="chapter" data-level="3.9" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#appendix-sensitivity-analysis-of-tme-normalization"><i class="fa fa-check"></i><b>3.9</b> Appendix: Sensitivity analysis of TME normalization</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html"><i class="fa fa-check"></i><b>4</b> Definition of Clock, MG and ML scores</a><ul>
+<li class="chapter" data-level="4.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#initialize-1"><i class="fa fa-check"></i><b>4.2</b> Initialize</a></li>
+<li class="chapter" data-level="4.3" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#load-data-1"><i class="fa fa-check"></i><b>4.3</b> Load data</a></li>
+<li class="chapter" data-level="4.4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#clustering-of-normalized-methylation-of-er-tumors"><i class="fa fa-check"></i><b>4.4</b> Clustering of normalized methylation of ER+ tumors</a></li>
+<li class="chapter" data-level="4.5" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-clustering-on-er--correlation-matrix"><i class="fa fa-check"></i><b>4.5</b> Project clustering on ER- correlation matrix</a></li>
+<li class="chapter" data-level="4.6" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#classify-loci-in-the-genome-to-epigenomic-features"><i class="fa fa-check"></i><b>4.6</b> Classify loci in the genome to epigenomic features</a></li>
+<li class="chapter" data-level="4.7" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#average-methylation-of-the-features"><i class="fa fa-check"></i><b>4.7</b> Average methylation of the features</a></li>
+<li class="chapter" data-level="4.8" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-distribution-over-samples-of-the-correlated-loci"><i class="fa fa-check"></i><b>4.8</b> Plot distribution over samples of the correlated loci</a></li>
+<li class="chapter" data-level="4.9" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-loci-classification"><i class="fa fa-check"></i><b>4.9</b> Plot loci classification</a></li>
+<li class="chapter" data-level="4.10" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-all-epigenomic-features-using-umap"><i class="fa fa-check"></i><b>4.10</b> Project all epigenomic features using UMAP</a></li>
+<li class="chapter" data-level="4.11" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#compare-epigenomic-scores-to-clinical-annotations"><i class="fa fa-check"></i><b>4.11</b> Compare epigenomic scores to clinical annotations</a></li>
+<li class="chapter" data-level="4.12" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#distribution-of-the-scores-in-ic10-integrative-clusters"><i class="fa fa-check"></i><b>4.12</b> Distribution of the scores in iC10 integrative clusters</a></li>
+<li class="chapter" data-level="4.13" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#epipolymorphism-of-the-epigenomic-layers"><i class="fa fa-check"></i><b>4.13</b> Epipolymorphism of the epigenomic layers</a></li>
+<li class="chapter" data-level="4.14" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#comparison-of-the-epigenomic-scores-with-existing-epigenomic-age-metrics"><i class="fa fa-check"></i><b>4.14</b> Comparison of the epigenomic scores with existing epigenomic age metrics</a><ul>
+<li class="chapter" data-level="4.14.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#phenoage"><i class="fa fa-check"></i><b>4.14.1</b> phenoAge</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="loss-clock.html"><a href="loss-clock.html"><i class="fa fa-check"></i><b>5</b> Loss clock</a><ul>
+<li class="chapter" data-level="5.1" data-path="loss-clock.html"><a href="loss-clock.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="loss-clock.html"><a href="loss-clock.html#initialize-2"><i class="fa fa-check"></i><b>5.2</b> Initialize</a></li>
+<li class="chapter" data-level="5.3" data-path="loss-clock.html"><a href="loss-clock.html#plot-methylation-distribution-of-the-clock"><i class="fa fa-check"></i><b>5.3</b> Plot methylation distribution of the clock</a></li>
+<li class="chapter" data-level="5.4" data-path="loss-clock.html"><a href="loss-clock.html#annotate-clock-score"><i class="fa fa-check"></i><b>5.4</b> Annotate &quot;clock&quot; score</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="loss-clock.html"><a href="loss-clock.html#loci-annotation"><i class="fa fa-check"></i><b>5.4.1</b> Loci annotation</a></li>
+<li class="chapter" data-level="5.4.2" data-path="loss-clock.html"><a href="loss-clock.html#clinical-annotation"><i class="fa fa-check"></i><b>5.4.2</b> Clinical annotation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="loss-clock.html"><a href="loss-clock.html#plot-chromosomal-traces-of-clock-score"><i class="fa fa-check"></i><b>5.5</b> Plot chromosomal traces of clock score</a></li>
+<li class="chapter" data-level="5.6" data-path="loss-clock.html"><a href="loss-clock.html#correlation-of-gene-expression-to-clock"><i class="fa fa-check"></i><b>5.6</b> Correlation of gene expression to clock</a></li>
+<li class="chapter" data-level="5.7" data-path="loss-clock.html"><a href="loss-clock.html#plot-score-in-different-tor-regimes"><i class="fa fa-check"></i><b>5.7</b> Plot score in different TOR regimes</a></li>
+<li class="chapter" data-level="5.8" data-path="loss-clock.html"><a href="loss-clock.html#plot-high-low-clock-tumors-vs-tor"><i class="fa fa-check"></i><b>5.8</b> Plot High-Low clock tumors vs TOR</a></li>
+<li class="chapter" data-level="5.9" data-path="loss-clock.html"><a href="loss-clock.html#plot-correlation-of-loci-to-clock-methylation"><i class="fa fa-check"></i><b>5.9</b> Plot correlation of loci to clock methylation</a></li>
+<li class="chapter" data-level="5.10" data-path="loss-clock.html"><a href="loss-clock.html#plot-distribution-of-methylation-of-clock-in-normal-samples"><i class="fa fa-check"></i><b>5.10</b> Plot distribution of methylation of clock in normal samples</a></li>
+<li class="chapter" data-level="5.11" data-path="loss-clock.html"><a href="loss-clock.html#compare-clock-layer-to-biological-age"><i class="fa fa-check"></i><b>5.11</b> Compare clock layer to biological age</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html"><i class="fa fa-check"></i><b>6</b> Epigenomic instability</a><ul>
+<li class="chapter" data-level="6.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#compare-features-to-each-other"><i class="fa fa-check"></i><b>6.1</b> Compare features to each other</a></li>
+<li class="chapter" data-level="6.2" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#annotate-epignomic-instability-scores"><i class="fa fa-check"></i><b>6.2</b> Annotate epignomic instability scores</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#integrative-clusters"><i class="fa fa-check"></i><b>6.2.1</b> Integrative clusters</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#cross-correlation-methylation-expression-of-epigenomic-instability-loci"><i class="fa fa-check"></i><b>6.3</b> Cross correlation (methylation-expression) of epigenomic instability loci</a></li>
+<li class="chapter" data-level="6.4" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#epigenomic-instability-in-different-time-of-replication-tor-regimes"><i class="fa fa-check"></i><b>6.4</b> Epigenomic instability in different Time of replication (TOR) regimes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cna.html"><a href="cna.html"><i class="fa fa-check"></i><b>7</b> CNA</a></li>
+<li class="chapter" data-level="8" data-path="mutations.html"><a href="mutations.html"><i class="fa fa-check"></i><b>8</b> Mutations</a></li>
+<li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> Survival</a><ul>
+<li class="chapter" data-level="9.0.1" data-path="survival.html"><a href="survival.html#raw-methylation"><i class="fa fa-check"></i><b>9.0.1</b> Raw-methylation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html"><i class="fa fa-check"></i><b>10</b> Methylation - Expression <em>in cis</em></a><ul>
+<li class="chapter" data-level="10.0.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#remove-tme-genes"><i class="fa fa-check"></i><b>10.0.1</b> Remove TME genes</a></li>
+<li class="chapter" data-level="10.0.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#load-normalized-methylation-and-separate-it-to-promoters-and-non-promoters"><i class="fa fa-check"></i><b>10.0.2</b> Load normalized methylation and separate it to promoters and non-promoters</a></li>
+<li class="chapter" data-level="10.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-promoters"><i class="fa fa-check"></i><b>10.1</b> Cis candidates: promoters</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-correlation-of-top-cis-regulated-promoter-candidates"><i class="fa fa-check"></i><b>10.1.1</b> Plot correlation of top cis-regulated promoter candidates</a></li>
+<li class="chapter" data-level="10.1.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#annotation-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.2</b> Annotation of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#gene-expression-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.3</b> Gene expression of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#correlation-between-cis-regulated-genes"><i class="fa fa-check"></i><b>10.1.4</b> Correlation between cis-regulated genes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.2</b> Epipolymorphism of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#promoter-examples"><i class="fa fa-check"></i><b>10.3</b> Promoter examples</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#brca1"><i class="fa fa-check"></i><b>10.3.1</b> BRCA1</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-genomic"><i class="fa fa-check"></i><b>10.4</b> Cis candidates: genomic</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-cis"><i class="fa fa-check"></i><b>10.4.1</b> Plot % cis</a></li>
+<li class="chapter" data-level="10.4.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-distance-to-most-correlated-gene"><i class="fa fa-check"></i><b>10.4.2</b> Plot distance to most correlated gene</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-genomic"><i class="fa fa-check"></i><b>10.5</b> Epipolymorphism of cis-regulated genomic</a></li>
+<li class="chapter" data-level="10.6" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#examples-for-cis-regulation-non-promoters"><i class="fa fa-check"></i><b>10.6</b> Examples for cis regulation (non-promoters)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html"><i class="fa fa-check"></i><b>11</b> X dosage compensation</a><ul>
+<li class="chapter" data-level="11.1" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#x-analysis"><i class="fa fa-check"></i><b>11.1</b> X analysis</a></li>
+<li class="chapter" data-level="11.2" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#autosome-analysis"><i class="fa fa-check"></i><b>11.2</b> autosome analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#checking-dosage-compensation-on-all-x-loci"><i class="fa fa-check"></i><b>11.3</b> Checking dosage compensation on all X loci</a></li>
+<li class="chapter" data-level="11.4" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#of-x-lost"><i class="fa fa-check"></i><b>11.4</b> % of X lost</a></li>
+<li class="chapter" data-level="11.5" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#plot-expression-methylation-correlation-for-x"><i class="fa fa-check"></i><b>11.5</b> Plot Expression-Methylation correlation for X</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="finding-specific-dosage-compensation-examples.html"><a href="finding-specific-dosage-compensation-examples.html"><i class="fa fa-check"></i><b>12</b> Finding specific dosage compensation examples</a></li>
+<li class="chapter" data-level="13" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html"><i class="fa fa-check"></i><b>13</b> Export supplementary tables</a><ul>
+<li class="chapter" data-level="13.1" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-1-metabric-samples-metadata"><i class="fa fa-check"></i><b>13.1</b> Table 1: METABRIC samples metadata</a></li>
+<li class="chapter" data-level="13.2" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-2-immune-expression-signature"><i class="fa fa-check"></i><b>13.2</b> Table 2: Immune expression signature</a></li>
+<li class="chapter" data-level="13.3" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-3-caf-expression-signature"><i class="fa fa-check"></i><b>13.3</b> Table 3: CAF expression signature</a></li>
+<li class="chapter" data-level="13.4" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-4-expression-methylation-correlation"><i class="fa fa-check"></i><b>13.4</b> Table 4: Expression-Methylation correlation</a></li>
+<li class="chapter" data-level="13.5" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-5-methylation-scores"><i class="fa fa-check"></i><b>13.5</b> Table 5: Methylation scores</a></li>
+<li class="chapter" data-level="13.6" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-6-gene-expression-correlation-to-epigenomic-instability"><i class="fa fa-check"></i><b>13.6</b> Table 6: Gene expression correlation to epigenomic instability</a></li>
+<li class="chapter" data-level="13.7" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-7-methylation-layers-loci"><i class="fa fa-check"></i><b>13.7</b> Table 7: Methylation layers loci</a></li>
+<li class="chapter" data-level="13.8" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-8-cis-regulation-candidates"><i class="fa fa-check"></i><b>13.8</b> Table 8: Cis regulation candidates</a></li>
+<li class="chapter" data-level="13.9" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-9-dosage-compensation-in-autosomes"><i class="fa fa-check"></i><b>13.9</b> Table 9: Dosage compensation in autosomes</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html"><i class="fa fa-check"></i><b>14</b> Files needed for the analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#misha-db"><i class="fa fa-check"></i><b>14.1</b> Misha DB</a></li>
+<li class="chapter" data-level="14.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#additional-files"><i class="fa fa-check"></i><b>14.2</b> Additional files</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#metabric-data"><i class="fa fa-check"></i><b>14.2.1</b> METABRIC data</a></li>
+<li class="chapter" data-level="14.2.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#notable-generated-files"><i class="fa fa-check"></i><b>14.2.2</b> Notable generated files</a></li>
+<li class="chapter" data-level="14.2.3" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#spatial-methylation-distribution"><i class="fa fa-check"></i><b>14.2.3</b> Spatial methylation distribution</a></li>
+<li class="chapter" data-level="14.2.4" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#copy-number-abberations"><i class="fa fa-check"></i><b>14.2.4</b> Copy number abberations</a></li>
+<li class="chapter" data-level="14.2.5" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#genomic-annotations"><i class="fa fa-check"></i><b>14.2.5</b> Genomic annotations</a></li>
+<li class="chapter" data-level="14.2.6" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#external-resources"><i class="fa fa-check"></i><b>14.2.6</b> External resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="figures-key.html"><a href="figures-key.html"><i class="fa fa-check"></i><b>15</b> Figures key</a><ul>
+<li class="chapter" data-level="15.1" data-path="figures-key.html"><a href="figures-key.html#figure-1"><i class="fa fa-check"></i><b>15.1</b> Figure 1</a></li>
+<li class="chapter" data-level="15.2" data-path="figures-key.html"><a href="figures-key.html#figure-3"><i class="fa fa-check"></i><b>15.2</b> Figure 3</a></li>
+<li class="chapter" data-level="15.3" data-path="figures-key.html"><a href="figures-key.html#figure-4"><i class="fa fa-check"></i><b>15.3</b> Figure 4</a></li>
+<li class="chapter" data-level="15.4" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-1"><i class="fa fa-check"></i><b>15.4</b> Extended Data Figure 1</a></li>
+<li class="chapter" data-level="15.5" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-2"><i class="fa fa-check"></i><b>15.5</b> Extended Data Figure 2</a></li>
+<li class="chapter" data-level="15.6" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-3"><i class="fa fa-check"></i><b>15.6</b> Extended Data Figure 3</a></li>
+<li class="chapter" data-level="15.7" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-4"><i class="fa fa-check"></i><b>15.7</b> Extended Data Figure 4</a></li>
+<li class="chapter" data-level="15.8" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-5"><i class="fa fa-check"></i><b>15.8</b> Extended Data Figure 5</a></li>
+<li class="chapter" data-level="15.9" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-6"><i class="fa fa-check"></i><b>15.9</b> Extended Data Figure 6</a></li>
+<li class="chapter" data-level="15.10" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-7"><i class="fa fa-check"></i><b>15.10</b> Extended Data Figure 7</a></li>
+<li class="chapter" data-level="15.11" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-8"><i class="fa fa-check"></i><b>15.11</b> Extended Data Figure 8</a></li>
+<li class="chapter" data-level="15.12" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-9"><i class="fa fa-check"></i><b>15.12</b> Extended Data Figure 9</a></li>
+<li class="chapter" data-level="15.13" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-10"><i class="fa fa-check"></i><b>15.13</b> Extended Data Figure 10</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="loss-clock" class="section level1">
+<h1><span class="header-section-number">5</span> Loss clock</h1>
+<div id="introduction-2" class="section level2">
+<h2><span class="header-section-number">5.1</span> Introduction</h2>
+<p>We continue to characterize the highly correlated group of CpGs (see <code>Epigenomic-scores</code> notebook) we termed <strong>loss clock</strong>.</p>
+</div>
+<div id="initialize-2" class="section level2">
+<h2><span class="header-section-number">5.2</span> Initialize</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;scripts/init.R&quot;</span>))</code></pre></div>
+</div>
+<div id="plot-methylation-distribution-of-the-clock" class="section level2">
+<h2><span class="header-section-number">5.3</span> Plot methylation distribution of the clock</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_sum &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/epigenomic_features_raw_meth.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() </code></pre></div>
+<div id="figure-1i-1" class="section level4">
+<h4><span class="header-section-number">5.3.0.1</span> Figure 1i</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_avg_clock &lt;-<span class="st"> </span>df_sum <span class="op">%&gt;%</span><span class="st">         </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>clock, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Clock avg. methylation&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.4</span>, <span class="dv">1</span>))
+
+p_avg_clock <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.9</span>)    </code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ks.test</span>(df_sum[df_sum<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>, ]<span class="op">$</span>clock, df_sum[df_sum<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;normal&quot;</span>, ]<span class="op">$</span>clock)</code></pre></div>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  df_sum[df_sum$ER == &quot;ER+&quot;, ]$clock and df_sum[df_sum$ER == &quot;normal&quot;, ]$clock
+## D = 0.73803, p-value &lt; 2.2e-16
+## alternative hypothesis: two-sided</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ks.test</span>(df_sum[df_sum<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>, ]<span class="op">$</span>clock, df_sum[df_sum<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;normal&quot;</span>, ]<span class="op">$</span>clock)</code></pre></div>
+<pre><code>## 
+##  Two-sample Kolmogorov-Smirnov test
+## 
+## data:  df_sum[df_sum$ER == &quot;ER-&quot;, ]$clock and df_sum[df_sum$ER == &quot;normal&quot;, ]$clock
+## D = 0.68317, p-value &lt; 2.2e-16
+## alternative hypothesis: two-sided</code></pre>
+</div>
+</div>
+<div id="annotate-clock-score" class="section level2">
+<h2><span class="header-section-number">5.4</span> Annotate &quot;clock&quot; score</h2>
+<div id="loci-annotation" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Loci annotation</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci_annot &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/loci_annot_epigenomic_features.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cor_thresh &lt;-<span class="st"> </span><span class="fl">0.6</span></code></pre></div>
+<div id="figure-1k" class="section level4">
+<h4><span class="header-section-number">5.4.1.1</span> Figure 1k</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_tss_d &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(clock <span class="op">&gt;=</span><span class="st"> </span>cor_thresh, <span class="st">&quot;clock&quot;</span>, <span class="st">&quot;other&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">abs</span>(tss_d), <span class="dt">color=</span>type, <span class="dt">linetype =</span> type)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Distance from TSS&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>, <span class="dt">values=</span><span class="kw">c</span>(<span class="dt">clock =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">other =</span> <span class="st">&quot;gray&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_x_log10</span>(<span class="dt">label=</span>scales<span class="op">::</span>scientific) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_linetype_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>, <span class="dt">values=</span><span class="kw">c</span>(<span class="dt">clock =</span> <span class="st">&quot;solid&quot;</span>, <span class="dt">other =</span> <span class="st">&quot;dashed&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.8</span>)
+
+p_tss_d <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.8</span>)</code></pre></div>
+<pre><code>## Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+<pre><code>## Warning: Removed 21 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(clock <span class="op">&gt;=</span><span class="st"> </span>cor_thresh, <span class="st">&quot;clock&quot;</span>, <span class="st">&quot;other&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">pval =</span> <span class="kw">ks.test</span>(<span class="kw">abs</span>(tss_d)[type <span class="op">==</span><span class="st"> &quot;clock&quot;</span>], <span class="kw">abs</span>(tss_d)[type <span class="op">==</span><span class="st"> &quot;other&quot;</span>])<span class="op">$</span>p.value)</code></pre></div>
+<pre><code>## Warning in ks.test(abs(tss_d)[type == &quot;clock&quot;], abs(tss_d)[type == &quot;other&quot;]): p-
+## value will be approximate in the presence of ties</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   pval
+## 1    0</code></pre>
+</div>
+<div id="figure-1l" class="section level4">
+<h4><span class="header-section-number">5.4.1.2</span> Figure 1l</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_tor &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(clock <span class="op">&gt;=</span><span class="st"> </span>cor_thresh, <span class="st">&quot;clock&quot;</span>, <span class="st">&quot;other&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="op">-</span>tor, <span class="dt">color=</span>type, <span class="dt">linetype =</span> type)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Time of replication&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>, <span class="dt">values=</span><span class="kw">c</span>(<span class="dt">clock =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">other =</span> <span class="st">&quot;gray&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">80</span>, <span class="dv">0</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Early&quot;</span>, <span class="st">&quot;Late&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_linetype_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>, <span class="dt">values=</span><span class="kw">c</span>(<span class="dt">clock =</span> <span class="st">&quot;solid&quot;</span>, <span class="dt">other =</span> <span class="st">&quot;dashed&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.8</span>)
+
+p_tor  <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.8</span>)</code></pre></div>
+<pre><code>## Warning: Removed 28 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(clock <span class="op">&gt;=</span><span class="st"> </span>cor_thresh, <span class="st">&quot;clock&quot;</span>, <span class="st">&quot;other&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">pval =</span> <span class="kw">ks.test</span>(<span class="op">-</span>tor[type <span class="op">==</span><span class="st"> &quot;clock&quot;</span>], <span class="op">-</span>tor[type <span class="op">==</span><span class="st"> &quot;other&quot;</span>])<span class="op">$</span>p.value)</code></pre></div>
+<pre><code>## Warning in ks.test(-tor[type == &quot;clock&quot;], -tor[type == &quot;other&quot;]): p-value will
+## be approximate in the presence of ties</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   pval
+## 1    0</code></pre>
+</div>
+<div id="extended-data-figure-4d" class="section level4">
+<h4><span class="header-section-number">5.4.1.3</span> Extended Data Figure 4d</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_cg_cont_d &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(clock <span class="op">&gt;=</span><span class="st"> </span>cor_thresh, <span class="st">&quot;clock&quot;</span>, <span class="st">&quot;other&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>cg_cont, <span class="dt">color=</span>type, <span class="dt">linetype =</span> type)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;CpG content (500bp)&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>, <span class="dt">values=</span><span class="kw">c</span>(<span class="dt">clock =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">other =</span> <span class="st">&quot;gray&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_linetype_manual</span>(<span class="dt">name =</span> <span class="st">&quot;&quot;</span>, <span class="dt">values=</span><span class="kw">c</span>(<span class="dt">clock =</span> <span class="st">&quot;solid&quot;</span>, <span class="dt">other =</span> <span class="st">&quot;dashed&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.8</span>)
+
+p_cg_cont_d <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.8</span>)</code></pre></div>
+<pre><code>## Warning: Removed 8 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(clock <span class="op">&gt;=</span><span class="st"> </span>cor_thresh, <span class="st">&quot;clock&quot;</span>, <span class="st">&quot;other&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">pval =</span> <span class="kw">ks.test</span>(cg_cont[type <span class="op">==</span><span class="st"> &quot;clock&quot;</span>], cg_cont[type <span class="op">==</span><span class="st"> &quot;other&quot;</span>])<span class="op">$</span>p.value)</code></pre></div>
+<pre><code>## Warning in ks.test(cg_cont[type == &quot;clock&quot;], cg_cont[type == &quot;other&quot;]): p-value
+## will be approximate in the presence of ties</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   pval
+## 1    0</code></pre>
+</div>
+<div id="extended-data-figure-4c" class="section level4">
+<h4><span class="header-section-number">5.4.1.4</span> Extended Data Figure 4c</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+
+k4me1_names &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;k4me1&quot;</span>, <span class="kw">colnames</span>(loci_annot))
+
+clock_loci_annot &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(clock <span class="op">&gt;=</span><span class="st"> </span>cor_thresh, <span class="st">&quot;clock&quot;</span>, <span class="st">&quot;other&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(
+            <span class="dt">enh =</span> matrixStats<span class="op">::</span><span class="kw">rowAnys</span>((loci_annot[, k4me1_names] <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.97</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
+            <span class="dt">polycomb =</span> k27me3 <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.97</span>
+        ) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">context =</span> <span class="kw">case_when</span>(polycomb <span class="op">~</span><span class="st"> &quot;K27me3 peaks&quot;</span>, enh <span class="op">~</span><span class="st"> &quot;K4me1 peaks&quot;</span>, <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;Background&quot;</span>))
+
+p_enh_polycomb &lt;-<span class="st"> </span>clock_loci_annot <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">count</span>(type, context) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">group_by</span>(type) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">frac =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> context, <span class="dt">y =</span> frac, <span class="dt">fill =</span> type)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_col</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">other =</span> <span class="st">&quot;gray&quot;</span>, <span class="dt">clock =</span> <span class="st">&quot;red&quot;</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">label =</span> <span class="cf">function</span>(x) scales<span class="op">::</span><span class="kw">percent</span>(x, <span class="dt">accuracy =</span> <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Percent of sites&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">vertical_labs</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.8</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_enh_polycomb <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.8</span>)</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(clock_loci_annot<span class="op">$</span>type, clock_loci_annot<span class="op">$</span>context)</code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  clock_loci_annot$type and clock_loci_annot$context
+## X-squared = 4794, df = 2, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div id="clinical-annotation" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Clinical annotation</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feats &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/epigenomic_features.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ML =</span> <span class="op">-</span>ML, <span class="dt">clock =</span> <span class="op">-</span>clock, <span class="dt">immune.meth =</span> <span class="op">-</span>immune.meth, <span class="dt">caf.meth =</span> <span class="op">-</span>caf.meth) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+nbins &lt;-<span class="st"> </span><span class="dv">5</span>
+df &lt;-<span class="st"> </span>feats <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(
+        <span class="dt">clock =</span> <span class="kw">cut</span>(clock, <span class="kw">quantile</span>(clock, <span class="dv">0</span><span class="op">:</span>nbins<span class="op">/</span>nbins, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="dv">1</span><span class="op">:</span>nbins)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">left_join</span>(samp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, stage, grade), <span class="dt">by =</span> <span class="st">&quot;samp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">ifelse</span>(stage <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="st">&quot;DCIS&quot;</span>, <span class="dv">1</span>), <span class="st">&quot;0-1&quot;</span>, stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">ifelse</span>(ER <span class="op">==</span><span class="st"> &quot;normal&quot;</span>, <span class="st">&quot;N&quot;</span>, stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">ifelse</span>(ER <span class="op">==</span><span class="st"> &quot;normal&quot;</span>, <span class="st">&quot;N&quot;</span>, grade))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_pval &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ER <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="st">&quot;feat&quot;</span>, <span class="st">&quot;bin&quot;</span>, <span class="op">-</span>samp, <span class="op">-</span>ER, <span class="op">-</span>stage, <span class="op">-</span>grade) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(feat <span class="op">==</span><span class="st"> &quot;clock&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(ER, feat) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">grade_pval =</span> <span class="kw">chisq.test</span>(bin, grade)<span class="op">$</span>p.value, <span class="dt">stage_pval =</span> <span class="kw">chisq.test</span>(bin, stage)<span class="op">$</span>p.value) </code></pre></div>
+<pre><code>## Warning: attributes are not identical across measure variables;
+## they will be dropped</code></pre>
+<pre><code>## Warning in chisq.test(bin, grade): Chi-squared approximation may be incorrect</code></pre>
+<pre><code>## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.data.frame</span>(df_pval)</code></pre></div>
+<pre><code>##    ER  feat grade_pval stage_pval
+## 1 ER- clock  0.6348596 0.07094066
+## 2 ER+ clock  0.1471181 0.57227178</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_pval <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(grade_pval <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre></div>
+<pre><code>## # A tibble: 0 x 4
+## # groups: ER
+## [1] ER         feat       grade_pval stage_pval
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_pval <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(stage_pval <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre></div>
+<pre><code>## # A tibble: 0 x 4
+## # groups: ER
+## [1] ER         feat       grade_pval stage_pval
+## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">6</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_stage_clock &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">factor</span>(stage, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;0-1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(stage, clock) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(clock) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>clock, <span class="dt">y=</span>p, <span class="dt">fill=</span>stage)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Stage&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;0-1&quot;</span> =<span class="st"> &quot;black&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;blue&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;4&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_stage_clock <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div id="figure-1j" class="section level4">
+<h4><span class="header-section-number">5.4.2.1</span> Figure 1j</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">6</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_grade_clock_positive &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">factor</span>(grade, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(grade)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(grade, clock) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(clock) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>clock, <span class="dt">y=</span>p, <span class="dt">fill=</span>grade)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Grade&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;darkblue&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_grade_clock_negative &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">factor</span>(grade, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(grade)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(grade, clock) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(clock) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>clock, <span class="dt">y=</span>p, <span class="dt">fill=</span>grade)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Grade&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;darkblue&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_grade_clock_positive <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_grade_clock_negative <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="plot-chromosomal-traces-of-clock-score" class="section level2">
+<h2><span class="header-section-number">5.5</span> Plot chromosomal traces of clock score</h2>
+<p>We separate the samples to tumors with high and low clock score (top and bottom 30%). We then look at average methylation in bins of 10K along the chromosome.<br />
+We smooth the methylation traces with rolling average of 50 bins.</p>
+<div id="figure-1m" class="section level4">
+<h4><span class="header-section-number">5.5.0.1</span> Figure 1m</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">14</span>, <span class="dt">repr.plot.height =</span> <span class="dv">5</span>)
+p_trace &lt;-<span class="st"> </span><span class="kw">plot_tor_clock_chrom_track</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;ER+&quot;</span>, <span class="dt">iterator=</span><span class="fl">1e4</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.
+
+## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<pre><code>## Warning: Removed 147 row(s) containing missing values (geom_path).</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_trace<span class="op">$</span>p <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.77</span>))</code></pre></div>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="extended-data-figure-4f" class="section level4">
+<h4><span class="header-section-number">5.5.0.2</span> Extended Data Figure 4f</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">14</span>, <span class="dt">repr.plot.height =</span> <span class="dv">5</span>)
+p_trace_chr10 &lt;-<span class="st"> </span><span class="kw">plot_tor_clock_chrom_track</span>(<span class="st">&quot;chr10&quot;</span>, <span class="st">&quot;ER+&quot;</span>, <span class="dt">iterator=</span><span class="fl">1e4</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.
+
+## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<pre><code>## Warning: Removed 147 row(s) containing missing values (geom_path).</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_trace_chr10<span class="op">$</span>p <span class="op">+</span><span class="st"> </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.77</span>))</code></pre></div>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+</div>
+</div>
+<div id="correlation-of-gene-expression-to-clock" class="section level2">
+<h2><span class="header-section-number">5.6</span> Correlation of gene expression to clock</h2>
+<p>We calculate the correlation of all the genes to the clock score.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feat_gene_cors &lt;-<span class="st"> </span><span class="kw">get_expression_features_cors</span>()</code></pre></div>
+<div id="extended-data-figure-5a" class="section level4">
+<h4><span class="header-section-number">5.6.0.1</span> Extended Data Figure 5a</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">7</span>)
+
+top_genes &lt;-<span class="st"> </span>feat_gene_cors <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>clock) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>)
+p_top_genes &lt;-<span class="st"> </span>top_genes <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(name, clock), <span class="dt">y =</span> clock, <span class="dt">fill =</span> ER)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span>
+<span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;ER+&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Correlation of</span><span class="ch">\n</span><span class="st">expression with</span><span class="ch">\n</span><span class="st">clock score&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>))    
+
+p_top_genes <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>))    </code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="extended-data-figure-5b" class="section level4">
+<h4><span class="header-section-number">5.6.0.2</span> Extended Data Figure 5b</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene_feat_df &lt;-<span class="st"> </span><span class="kw">get_gene_features_df</span>(<span class="kw">c</span>(<span class="st">&quot;MAGEC2&quot;</span>, <span class="st">&quot;PAGE5&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(clock))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">7</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_mage_page &lt;-<span class="st"> </span>gene_feat_df <span class="op">%&gt;%</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>clock, <span class="dt">y=</span>expr, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st">             </span>
+<span class="st">            </span><span class="kw">xlab</span>(<span class="st">&quot;Clock&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">ylab</span>(<span class="st">&quot;Gene expression&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">facet_wrap</span>(ER<span class="op">~</span>name, <span class="dt">scales=</span><span class="st">&quot;free_y&quot;</span>, <span class="dt">nrow=</span><span class="dv">1</span>) <span class="op">+</span><span class="st">             </span>
+<span class="st">            </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="st">&quot;none&quot;</span>)
+p_mage_page <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plot-score-in-different-tor-regimes" class="section level2">
+<h2><span class="header-section-number">5.7</span> Plot score in different TOR regimes</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_mat_raw &lt;-<span class="st"> </span><span class="kw">get_all_meth</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tor_strata &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">tor_strata =</span> <span class="kw">cut</span>(tor, <span class="dt">breaks =</span> main_config<span class="op">$</span>genomic_regions<span class="op">$</span>tor_low_mid_high, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;late&quot;</span>, <span class="st">&quot;intermediate&quot;</span>, <span class="st">&quot;early&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(tor_strata) <span class="op">%&gt;%</span><span class="st"> </span>forcats<span class="op">::</span><span class="kw">fct_explicit_na</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samp_meth_tor &lt;-<span class="st"> </span><span class="kw">tgs_matrix_tapply</span>(<span class="kw">t</span>(all_mat_raw), tor_strata, mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="st">&quot;samp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_ER</span>() <span class="op">%cache_df%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/samp_meth_tor.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</code></pre></div>
+<div id="extended-data-figure-4e" class="section level4">
+<h4><span class="header-section-number">5.7.0.1</span> Extended Data Figure 4e</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">9</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_early_late &lt;-<span class="st"> </span>samp_meth_tor <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>early, <span class="dt">y=</span>late, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) 
+
+p_mid_early &lt;-<span class="st"> </span>samp_meth_tor <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>early, <span class="dt">y=</span>intermediate, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) 
+
+samp_meth_tor <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">cor_early_late =</span> <span class="kw">cor</span>(early, late, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>, <span class="dt">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>), <span class="dt">cor_early_mid =</span> <span class="kw">cor</span>(early, intermediate, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>, <span class="dt">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   cor_early_late cor_early_mid
+## 1      0.5723737     0.7680809</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(p_early_late <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) ) <span class="op">+</span><span class="st"> </span>(p_mid_early <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) )</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plot-high-low-clock-tumors-vs-tor" class="section level2">
+<h2><span class="header-section-number">5.8</span> Plot High-Low clock tumors vs TOR</h2>
+<div id="extended-data-figure-4g" class="section level4">
+<h4><span class="header-section-number">5.8.0.1</span> Extended Data Figure 4g</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+
+df &lt;-<span class="st"> </span><span class="kw">get_tor_clock_chrom_trace</span>(<span class="st">&quot;chr1&quot;</span>, <span class="st">&quot;ER+&quot;</span>, <span class="fl">1e5</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(high_loss_n <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50</span>, low_loss_n <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(tor), <span class="op">!</span><span class="kw">is.na</span>(high_loss), <span class="op">!</span><span class="kw">is.na</span>(low_loss)) 
+
+<span class="kw">cor</span>(<span class="op">-</span>df<span class="op">$</span>tor, df<span class="op">$</span>high_loss <span class="op">-</span><span class="st"> </span>df<span class="op">$</span>low_loss, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)</code></pre></div>
+<pre><code>## [1] -0.6187326</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_tor_high_low &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="op">-</span>tor, <span class="dt">y =</span> high_loss <span class="op">-</span><span class="st"> </span>low_loss)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.05</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="op">-</span><span class="fl">0.4</span>, <span class="fl">0.025</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Time of replication</span><span class="ch">\n</span><span class="st">(Early -&gt; Late)&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;High Clock - Low Clock&quot;</span>) 
+
+p_tor_high_low <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plot-correlation-of-loci-to-clock-methylation" class="section level2">
+<h2><span class="header-section-number">5.9</span> Plot correlation of loci to clock methylation</h2>
+<div id="extended-data-figure-4h" class="section level4">
+<h4><span class="header-section-number">5.9.0.1</span> Extended Data Figure 4h</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_loci_cor &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">left_join</span>(<span class="kw">get_all_summary_meth</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">normal_meth =</span> <span class="kw">cut</span>(normal, <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.3</span>,<span class="fl">0.7</span>,<span class="dv">1</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>clock)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">facet_grid</span>(.<span class="op">~</span>normal_meth) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Correlation of loci to clock methylation&quot;</span>)</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_loci_cor <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plot-distribution-of-methylation-of-clock-in-normal-samples" class="section level2">
+<h2><span class="header-section-number">5.10</span> Plot distribution of methylation of clock in normal samples</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">normal_mat &lt;-<span class="st"> </span><span class="kw">get_all_meth</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(normal_samples)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">intervs_to_mat</span>()
+loci_annot_f &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(cg_cont <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.02</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">tor =</span> <span class="kw">cut</span>(tor, <span class="dt">breaks=</span>main_config<span class="op">$</span>genomic_regions<span class="op">$</span>tor_low_mid_high, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;late&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;early&quot;</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">tor =</span> forcats<span class="op">::</span><span class="kw">fct_explicit_na</span>(tor)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">intervs_to_mat</span>()
+normal_clock &lt;-<span class="st"> </span><span class="kw">tgs_matrix_tapply</span>(<span class="kw">t</span>(normal_mat[<span class="kw">rownames</span>(loci_annot_f), ]), loci_annot_f[, <span class="st">&quot;tor&quot;</span>], mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">rownames_to_column</span>(<span class="st">&quot;samp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">as_tibble</span>() 
+<span class="kw">nrow</span>(loci_annot_f)</code></pre></div>
+<pre><code>## [1] 36420</code></pre>
+<div id="extended-data-figure-5b-1" class="section level4">
+<h4><span class="header-section-number">5.10.0.1</span> Extended Data Figure 5b</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+df &lt;-<span class="st"> </span>normal_clock <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">gather</span>(<span class="st">&quot;tor&quot;</span>, <span class="st">&quot;meth&quot;</span>, <span class="op">-</span>samp) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">tor =</span> <span class="kw">factor</span>(tor, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;early&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;late&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(tor)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="st">&quot;normal&quot;</span>)
+
+p_clock_normal &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> tor, <span class="dt">y =</span> meth, <span class="dt">fill =</span> ER)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.size=</span><span class="fl">0.1</span>, <span class="dt">lwd =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Time of replication&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">vertical_labs</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Methylation in normal samples</span><span class="ch">\n</span><span class="st">(CpG content &lt;= 2%)&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_clock_normal <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</code></pre></div>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+</div>
+</div>
+<div id="compare-clock-layer-to-biological-age" class="section level2">
+<h2><span class="header-section-number">5.11</span> Compare clock layer to biological age</h2>
+<div id="extended-data-figure-5c" class="section level4">
+<h4><span class="header-section-number">5.11.0.1</span> Extended Data Figure 5c</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">12</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+df &lt;-<span class="st"> </span>feats <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">left_join</span>(samp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, age)) </code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">cor =</span> <span class="kw">cor</span>(age, clock, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>, <span class="dt">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##          cor
+## 1 0.06042711</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_age &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>age, <span class="dt">y=</span>clock, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Biological age&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Clock&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">facet_grid</span>(.<span class="op">~</span>ER)
+
+p_age <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</code></pre></div>
+<pre><code>## Warning: Removed 30 rows containing missing values (geom_point).</code></pre>
+<p><img src="Loss-clock_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">gc</span>()</code></pre></div>
+<pre><code>##             used   (Mb) gc trigger    (Mb)   max used    (Mb)
+## Ncells   4907303  262.1    8028385   428.8    8028385   428.8
+## Vcells 834169869 6364.3 1673781729 12770.0 1576695863 12029.3</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="definition-of-clock-mg-and-ml-scores.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="epigenomic-instability.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

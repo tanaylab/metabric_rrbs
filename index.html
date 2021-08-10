@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</title>
+  <meta name="description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="tanaylab.github.io/metabric_rrbs" />
+  
+  <meta property="og:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="github-repo" content="tanaylab/metabric_rrbs" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+  <meta name="twitter:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+
+<meta name="author" content="Aviezer Lifshitz" />
+
+
+<meta name="date" content="2021-08-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="metabric-methylation-data-statistics.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#run-the-notebooks"><i class="fa fa-check"></i><b>1.1</b> Run the notebooks</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notebook-order"><i class="fa fa-check"></i><b>1.3</b> Notebook order</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#find-a-specific-figure"><i class="fa fa-check"></i><b>1.4</b> Find a specific figure</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html"><i class="fa fa-check"></i><b>2</b> METABRIC methylation data statistics</a><ul>
+<li class="chapter" data-level="2.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#breakdown-of-samples"><i class="fa fa-check"></i><b>2.1</b> Breakdown of samples</a></li>
+<li class="chapter" data-level="2.2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#number-of-samples"><i class="fa fa-check"></i><b>2.2</b> Number of samples</a></li>
+<li class="chapter" data-level="2.3" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#total-number-of-reads"><i class="fa fa-check"></i><b>2.3</b> Total number of reads</a></li>
+<li class="chapter" data-level="2.4" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-cpg-coverage-per-sample"><i class="fa fa-check"></i><b>2.4</b> Distribution of CpG coverage per sample</a></li>
+<li class="chapter" data-level="2.5" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-covered-cpgs"><i class="fa fa-check"></i><b>2.5</b> Distribution of covered CpGs</a></li>
+<li class="chapter" data-level="2.6" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#promoter-coverage"><i class="fa fa-check"></i><b>2.6</b> Promoter coverage</a></li>
+<li class="chapter" data-level="2.7" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#coverage-per-clinical-annotations"><i class="fa fa-check"></i><b>2.7</b> Coverage per clinical annotations</a></li>
+<li class="chapter" data-level="2.8" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage"><i class="fa fa-check"></i><b>2.8</b> Marginal CpG coverage</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage-of-k4me1-hotspots"><i class="fa fa-check"></i><b>2.8.1</b> Marginal CpG coverage of k4me1 hotspots</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#sample-cellularity"><i class="fa fa-check"></i><b>2.9</b> Sample cellularity</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html"><i class="fa fa-check"></i><b>3</b> Tumor microenvironment (TME) deconvolution</a><ul>
+<li class="chapter" data-level="3.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#initialize"><i class="fa fa-check"></i><b>3.2</b> Initialize</a></li>
+<li class="chapter" data-level="3.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#load-data"><i class="fa fa-check"></i><b>3.3</b> Load data</a></li>
+<li class="chapter" data-level="3.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#deconvolve-tme"><i class="fa fa-check"></i><b>3.4</b> Deconvolve TME</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er-samples"><i class="fa fa-check"></i><b>3.4.1</b> ER+ samples</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er--samples"><i class="fa fa-check"></i><b>3.4.2</b> ER- samples</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#normal-samples"><i class="fa fa-check"></i><b>3.4.3</b> Normal samples</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-normalized-methylation"><i class="fa fa-check"></i><b>3.4.4</b> Merge normalized methylation</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-tme-scores"><i class="fa fa-check"></i><b>3.4.5</b> Merge TME scores</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#caf-and-immune-genes"><i class="fa fa-check"></i><b>3.4.6</b> CAF and Immune genes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#expression-methylation-correlation-matrices"><i class="fa fa-check"></i><b>3.5</b> Expression-methylation correlation matrices</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#export-clustering"><i class="fa fa-check"></i><b>3.5.1</b> Export clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#diagnose-tme-normalization"><i class="fa fa-check"></i><b>3.6</b> Diagnose TME normalization</a></li>
+<li class="chapter" data-level="3.7" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#plot-cd3d-and-cav1-vs-immune-and-caf-methylation-modules"><i class="fa fa-check"></i><b>3.7</b> Plot CD3D and CAV1 vs immune and CAF methylation modules</a></li>
+<li class="chapter" data-level="3.8" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#annotate-tme-scores"><i class="fa fa-check"></i><b>3.8</b> Annotate TME scores</a></li>
+<li class="chapter" data-level="3.9" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#appendix-sensitivity-analysis-of-tme-normalization"><i class="fa fa-check"></i><b>3.9</b> Appendix: Sensitivity analysis of TME normalization</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html"><i class="fa fa-check"></i><b>4</b> Definition of Clock, MG and ML scores</a><ul>
+<li class="chapter" data-level="4.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#initialize-1"><i class="fa fa-check"></i><b>4.2</b> Initialize</a></li>
+<li class="chapter" data-level="4.3" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#load-data-1"><i class="fa fa-check"></i><b>4.3</b> Load data</a></li>
+<li class="chapter" data-level="4.4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#clustering-of-normalized-methylation-of-er-tumors"><i class="fa fa-check"></i><b>4.4</b> Clustering of normalized methylation of ER+ tumors</a></li>
+<li class="chapter" data-level="4.5" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-clustering-on-er--correlation-matrix"><i class="fa fa-check"></i><b>4.5</b> Project clustering on ER- correlation matrix</a></li>
+<li class="chapter" data-level="4.6" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#classify-loci-in-the-genome-to-epigenomic-features"><i class="fa fa-check"></i><b>4.6</b> Classify loci in the genome to epigenomic features</a></li>
+<li class="chapter" data-level="4.7" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#average-methylation-of-the-features"><i class="fa fa-check"></i><b>4.7</b> Average methylation of the features</a></li>
+<li class="chapter" data-level="4.8" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-distribution-over-samples-of-the-correlated-loci"><i class="fa fa-check"></i><b>4.8</b> Plot distribution over samples of the correlated loci</a></li>
+<li class="chapter" data-level="4.9" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-loci-classification"><i class="fa fa-check"></i><b>4.9</b> Plot loci classification</a></li>
+<li class="chapter" data-level="4.10" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-all-epigenomic-features-using-umap"><i class="fa fa-check"></i><b>4.10</b> Project all epigenomic features using UMAP</a></li>
+<li class="chapter" data-level="4.11" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#compare-epigenomic-scores-to-clinical-annotations"><i class="fa fa-check"></i><b>4.11</b> Compare epigenomic scores to clinical annotations</a></li>
+<li class="chapter" data-level="4.12" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#distribution-of-the-scores-in-ic10-integrative-clusters"><i class="fa fa-check"></i><b>4.12</b> Distribution of the scores in iC10 integrative clusters</a></li>
+<li class="chapter" data-level="4.13" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#epipolymorphism-of-the-epigenomic-layers"><i class="fa fa-check"></i><b>4.13</b> Epipolymorphism of the epigenomic layers</a></li>
+<li class="chapter" data-level="4.14" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#comparison-of-the-epigenomic-scores-with-existing-epigenomic-age-metrics"><i class="fa fa-check"></i><b>4.14</b> Comparison of the epigenomic scores with existing epigenomic age metrics</a><ul>
+<li class="chapter" data-level="4.14.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#phenoage"><i class="fa fa-check"></i><b>4.14.1</b> phenoAge</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="loss-clock.html"><a href="loss-clock.html"><i class="fa fa-check"></i><b>5</b> Loss clock</a><ul>
+<li class="chapter" data-level="5.1" data-path="loss-clock.html"><a href="loss-clock.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="loss-clock.html"><a href="loss-clock.html#initialize-2"><i class="fa fa-check"></i><b>5.2</b> Initialize</a></li>
+<li class="chapter" data-level="5.3" data-path="loss-clock.html"><a href="loss-clock.html#plot-methylation-distribution-of-the-clock"><i class="fa fa-check"></i><b>5.3</b> Plot methylation distribution of the clock</a></li>
+<li class="chapter" data-level="5.4" data-path="loss-clock.html"><a href="loss-clock.html#annotate-clock-score"><i class="fa fa-check"></i><b>5.4</b> Annotate &quot;clock&quot; score</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="loss-clock.html"><a href="loss-clock.html#loci-annotation"><i class="fa fa-check"></i><b>5.4.1</b> Loci annotation</a></li>
+<li class="chapter" data-level="5.4.2" data-path="loss-clock.html"><a href="loss-clock.html#clinical-annotation"><i class="fa fa-check"></i><b>5.4.2</b> Clinical annotation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="loss-clock.html"><a href="loss-clock.html#plot-chromosomal-traces-of-clock-score"><i class="fa fa-check"></i><b>5.5</b> Plot chromosomal traces of clock score</a></li>
+<li class="chapter" data-level="5.6" data-path="loss-clock.html"><a href="loss-clock.html#correlation-of-gene-expression-to-clock"><i class="fa fa-check"></i><b>5.6</b> Correlation of gene expression to clock</a></li>
+<li class="chapter" data-level="5.7" data-path="loss-clock.html"><a href="loss-clock.html#plot-score-in-different-tor-regimes"><i class="fa fa-check"></i><b>5.7</b> Plot score in different TOR regimes</a></li>
+<li class="chapter" data-level="5.8" data-path="loss-clock.html"><a href="loss-clock.html#plot-high-low-clock-tumors-vs-tor"><i class="fa fa-check"></i><b>5.8</b> Plot High-Low clock tumors vs TOR</a></li>
+<li class="chapter" data-level="5.9" data-path="loss-clock.html"><a href="loss-clock.html#plot-correlation-of-loci-to-clock-methylation"><i class="fa fa-check"></i><b>5.9</b> Plot correlation of loci to clock methylation</a></li>
+<li class="chapter" data-level="5.10" data-path="loss-clock.html"><a href="loss-clock.html#plot-distribution-of-methylation-of-clock-in-normal-samples"><i class="fa fa-check"></i><b>5.10</b> Plot distribution of methylation of clock in normal samples</a></li>
+<li class="chapter" data-level="5.11" data-path="loss-clock.html"><a href="loss-clock.html#compare-clock-layer-to-biological-age"><i class="fa fa-check"></i><b>5.11</b> Compare clock layer to biological age</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html"><i class="fa fa-check"></i><b>6</b> Epigenomic instability</a><ul>
+<li class="chapter" data-level="6.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#compare-features-to-each-other"><i class="fa fa-check"></i><b>6.1</b> Compare features to each other</a></li>
+<li class="chapter" data-level="6.2" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#annotate-epignomic-instability-scores"><i class="fa fa-check"></i><b>6.2</b> Annotate epignomic instability scores</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#integrative-clusters"><i class="fa fa-check"></i><b>6.2.1</b> Integrative clusters</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#cross-correlation-methylation-expression-of-epigenomic-instability-loci"><i class="fa fa-check"></i><b>6.3</b> Cross correlation (methylation-expression) of epigenomic instability loci</a></li>
+<li class="chapter" data-level="6.4" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#epigenomic-instability-in-different-time-of-replication-tor-regimes"><i class="fa fa-check"></i><b>6.4</b> Epigenomic instability in different Time of replication (TOR) regimes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cna.html"><a href="cna.html"><i class="fa fa-check"></i><b>7</b> CNA</a></li>
+<li class="chapter" data-level="8" data-path="mutations.html"><a href="mutations.html"><i class="fa fa-check"></i><b>8</b> Mutations</a></li>
+<li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> Survival</a><ul>
+<li class="chapter" data-level="9.0.1" data-path="survival.html"><a href="survival.html#raw-methylation"><i class="fa fa-check"></i><b>9.0.1</b> Raw-methylation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html"><i class="fa fa-check"></i><b>10</b> Methylation - Expression <em>in cis</em></a><ul>
+<li class="chapter" data-level="10.0.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#remove-tme-genes"><i class="fa fa-check"></i><b>10.0.1</b> Remove TME genes</a></li>
+<li class="chapter" data-level="10.0.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#load-normalized-methylation-and-separate-it-to-promoters-and-non-promoters"><i class="fa fa-check"></i><b>10.0.2</b> Load normalized methylation and separate it to promoters and non-promoters</a></li>
+<li class="chapter" data-level="10.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-promoters"><i class="fa fa-check"></i><b>10.1</b> Cis candidates: promoters</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-correlation-of-top-cis-regulated-promoter-candidates"><i class="fa fa-check"></i><b>10.1.1</b> Plot correlation of top cis-regulated promoter candidates</a></li>
+<li class="chapter" data-level="10.1.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#annotation-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.2</b> Annotation of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#gene-expression-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.3</b> Gene expression of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#correlation-between-cis-regulated-genes"><i class="fa fa-check"></i><b>10.1.4</b> Correlation between cis-regulated genes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.2</b> Epipolymorphism of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#promoter-examples"><i class="fa fa-check"></i><b>10.3</b> Promoter examples</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#brca1"><i class="fa fa-check"></i><b>10.3.1</b> BRCA1</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-genomic"><i class="fa fa-check"></i><b>10.4</b> Cis candidates: genomic</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-cis"><i class="fa fa-check"></i><b>10.4.1</b> Plot % cis</a></li>
+<li class="chapter" data-level="10.4.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-distance-to-most-correlated-gene"><i class="fa fa-check"></i><b>10.4.2</b> Plot distance to most correlated gene</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-genomic"><i class="fa fa-check"></i><b>10.5</b> Epipolymorphism of cis-regulated genomic</a></li>
+<li class="chapter" data-level="10.6" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#examples-for-cis-regulation-non-promoters"><i class="fa fa-check"></i><b>10.6</b> Examples for cis regulation (non-promoters)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html"><i class="fa fa-check"></i><b>11</b> X dosage compensation</a><ul>
+<li class="chapter" data-level="11.1" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#x-analysis"><i class="fa fa-check"></i><b>11.1</b> X analysis</a></li>
+<li class="chapter" data-level="11.2" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#autosome-analysis"><i class="fa fa-check"></i><b>11.2</b> autosome analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#checking-dosage-compensation-on-all-x-loci"><i class="fa fa-check"></i><b>11.3</b> Checking dosage compensation on all X loci</a></li>
+<li class="chapter" data-level="11.4" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#of-x-lost"><i class="fa fa-check"></i><b>11.4</b> % of X lost</a></li>
+<li class="chapter" data-level="11.5" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#plot-expression-methylation-correlation-for-x"><i class="fa fa-check"></i><b>11.5</b> Plot Expression-Methylation correlation for X</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="finding-specific-dosage-compensation-examples.html"><a href="finding-specific-dosage-compensation-examples.html"><i class="fa fa-check"></i><b>12</b> Finding specific dosage compensation examples</a></li>
+<li class="chapter" data-level="13" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html"><i class="fa fa-check"></i><b>13</b> Export supplementary tables</a><ul>
+<li class="chapter" data-level="13.1" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-1-metabric-samples-metadata"><i class="fa fa-check"></i><b>13.1</b> Table 1: METABRIC samples metadata</a></li>
+<li class="chapter" data-level="13.2" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-2-immune-expression-signature"><i class="fa fa-check"></i><b>13.2</b> Table 2: Immune expression signature</a></li>
+<li class="chapter" data-level="13.3" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-3-caf-expression-signature"><i class="fa fa-check"></i><b>13.3</b> Table 3: CAF expression signature</a></li>
+<li class="chapter" data-level="13.4" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-4-expression-methylation-correlation"><i class="fa fa-check"></i><b>13.4</b> Table 4: Expression-Methylation correlation</a></li>
+<li class="chapter" data-level="13.5" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-5-methylation-scores"><i class="fa fa-check"></i><b>13.5</b> Table 5: Methylation scores</a></li>
+<li class="chapter" data-level="13.6" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-6-gene-expression-correlation-to-epigenomic-instability"><i class="fa fa-check"></i><b>13.6</b> Table 6: Gene expression correlation to epigenomic instability</a></li>
+<li class="chapter" data-level="13.7" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-7-methylation-layers-loci"><i class="fa fa-check"></i><b>13.7</b> Table 7: Methylation layers loci</a></li>
+<li class="chapter" data-level="13.8" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-8-cis-regulation-candidates"><i class="fa fa-check"></i><b>13.8</b> Table 8: Cis regulation candidates</a></li>
+<li class="chapter" data-level="13.9" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-9-dosage-compensation-in-autosomes"><i class="fa fa-check"></i><b>13.9</b> Table 9: Dosage compensation in autosomes</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html"><i class="fa fa-check"></i><b>14</b> Files needed for the analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#misha-db"><i class="fa fa-check"></i><b>14.1</b> Misha DB</a></li>
+<li class="chapter" data-level="14.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#additional-files"><i class="fa fa-check"></i><b>14.2</b> Additional files</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#metabric-data"><i class="fa fa-check"></i><b>14.2.1</b> METABRIC data</a></li>
+<li class="chapter" data-level="14.2.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#notable-generated-files"><i class="fa fa-check"></i><b>14.2.2</b> Notable generated files</a></li>
+<li class="chapter" data-level="14.2.3" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#spatial-methylation-distribution"><i class="fa fa-check"></i><b>14.2.3</b> Spatial methylation distribution</a></li>
+<li class="chapter" data-level="14.2.4" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#copy-number-abberations"><i class="fa fa-check"></i><b>14.2.4</b> Copy number abberations</a></li>
+<li class="chapter" data-level="14.2.5" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#genomic-annotations"><i class="fa fa-check"></i><b>14.2.5</b> Genomic annotations</a></li>
+<li class="chapter" data-level="14.2.6" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#external-resources"><i class="fa fa-check"></i><b>14.2.6</b> External resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="figures-key.html"><a href="figures-key.html"><i class="fa fa-check"></i><b>15</b> Figures key</a><ul>
+<li class="chapter" data-level="15.1" data-path="figures-key.html"><a href="figures-key.html#figure-1"><i class="fa fa-check"></i><b>15.1</b> Figure 1</a></li>
+<li class="chapter" data-level="15.2" data-path="figures-key.html"><a href="figures-key.html#figure-3"><i class="fa fa-check"></i><b>15.2</b> Figure 3</a></li>
+<li class="chapter" data-level="15.3" data-path="figures-key.html"><a href="figures-key.html#figure-4"><i class="fa fa-check"></i><b>15.3</b> Figure 4</a></li>
+<li class="chapter" data-level="15.4" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-1"><i class="fa fa-check"></i><b>15.4</b> Extended Data Figure 1</a></li>
+<li class="chapter" data-level="15.5" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-2"><i class="fa fa-check"></i><b>15.5</b> Extended Data Figure 2</a></li>
+<li class="chapter" data-level="15.6" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-3"><i class="fa fa-check"></i><b>15.6</b> Extended Data Figure 3</a></li>
+<li class="chapter" data-level="15.7" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-4"><i class="fa fa-check"></i><b>15.7</b> Extended Data Figure 4</a></li>
+<li class="chapter" data-level="15.8" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-5"><i class="fa fa-check"></i><b>15.8</b> Extended Data Figure 5</a></li>
+<li class="chapter" data-level="15.9" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-6"><i class="fa fa-check"></i><b>15.9</b> Extended Data Figure 6</a></li>
+<li class="chapter" data-level="15.10" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-7"><i class="fa fa-check"></i><b>15.10</b> Extended Data Figure 7</a></li>
+<li class="chapter" data-level="15.11" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-8"><i class="fa fa-check"></i><b>15.11</b> Extended Data Figure 8</a></li>
+<li class="chapter" data-level="15.12" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-9"><i class="fa fa-check"></i><b>15.12</b> Extended Data Figure 9</a></li>
+<li class="chapter" data-level="15.13" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-10"><i class="fa fa-check"></i><b>15.13</b> Extended Data Figure 10</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</h1>
+<p class="author"><em>Aviezer Lifshitz</em></p>
+<p class="date"><em>2021-08-10</em></p>
+</div>
+<div id="dna-methylation-landscapes-of-1538-breast-cancers-reveal-a-replication-linked-clock-epigenomic-instability-and-cis-regulation" class="section level1">
+<p>Following is the code that generates the figures for the METABRIC RRBS paper. The code is splitted to jupyter notebooks that can be found at: <a href="https://github.com/tanaylab/metabric_rrbs" class="uri">https://github.com/tanaylab/metabric_rrbs</a></p>
+<div id="run-the-notebooks" class="section level2">
+<h2><span class="header-section-number">1.1</span> Run the notebooks</h2>
+<p>Due to the size of the METABRIC-RRBS dataset (~2.2TB full, 55GB pileup alone), we generated a few smaller processed files to help reproduce the analysis. Even this bundle is quite large (~50GB), and you can download it from:</p>
+<p><a href="https://tanaylab.weizmann.ac.il/metabric_rrbs/analysis_files.tar.gz" class="uri">https://tanaylab.weizmann.ac.il/metabric_rrbs/analysis_files.tar.gz</a></p>
+<p>The above file contains a folder named <code>db</code> and a folder named <code>data</code>. Please copy them to the main folder before running the notebooks.</p>
+<p>See <code>files.md</code> for a description of these files and <code>pipeline.Rmd</code> for the code that generated them.</p>
+</div>
+<div id="dependencies" class="section level2">
+<h2><span class="header-section-number">1.2</span> Dependencies</h2>
+<p>The initialization script (<code>scripts/init.R</code>) installs automatically the necessary R packages to run the notebooks.</p>
+</div>
+<div id="notebook-order" class="section level2">
+<h2><span class="header-section-number">1.3</span> Notebook order</h2>
+<p>It is recommended to run the notebooks in the following order:</p>
+<ol style="list-style-type: decimal">
+<li>coverage-stats</li>
+<li>TME</li>
+<li>Epigenomic-scores</li>
+<li>Loss-clock</li>
+<li>epigenomic-instability</li>
+<li>CNA</li>
+<li>mutations</li>
+<li>survival</li>
+<li>cis</li>
+<li>dosage-compensation</li>
+</ol>
+<p>Running in a different order might work for some of the notebooks, but it might fail for others due to dependencies to data that was generated in previous notebooks.</p>
+</div>
+<div id="find-a-specific-figure" class="section level2">
+<h2><span class="header-section-number">1.4</span> Find a specific figure</h2>
+<p><code>figures-key.md</code> lists where each figure in the paper was generated.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="metabric-methylation-data-statistics.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

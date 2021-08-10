@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6 Epigenomic instability | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</title>
+  <meta name="description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6 Epigenomic instability | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="tanaylab.github.io/metabric_rrbs" />
+  
+  <meta property="og:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="github-repo" content="tanaylab/metabric_rrbs" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6 Epigenomic instability | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+  <meta name="twitter:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+
+<meta name="author" content="Aviezer Lifshitz" />
+
+
+<meta name="date" content="2021-08-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="loss-clock.html"/>
+<link rel="next" href="cna.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#run-the-notebooks"><i class="fa fa-check"></i><b>1.1</b> Run the notebooks</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notebook-order"><i class="fa fa-check"></i><b>1.3</b> Notebook order</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#find-a-specific-figure"><i class="fa fa-check"></i><b>1.4</b> Find a specific figure</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html"><i class="fa fa-check"></i><b>2</b> METABRIC methylation data statistics</a><ul>
+<li class="chapter" data-level="2.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#breakdown-of-samples"><i class="fa fa-check"></i><b>2.1</b> Breakdown of samples</a></li>
+<li class="chapter" data-level="2.2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#number-of-samples"><i class="fa fa-check"></i><b>2.2</b> Number of samples</a></li>
+<li class="chapter" data-level="2.3" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#total-number-of-reads"><i class="fa fa-check"></i><b>2.3</b> Total number of reads</a></li>
+<li class="chapter" data-level="2.4" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-cpg-coverage-per-sample"><i class="fa fa-check"></i><b>2.4</b> Distribution of CpG coverage per sample</a></li>
+<li class="chapter" data-level="2.5" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-covered-cpgs"><i class="fa fa-check"></i><b>2.5</b> Distribution of covered CpGs</a></li>
+<li class="chapter" data-level="2.6" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#promoter-coverage"><i class="fa fa-check"></i><b>2.6</b> Promoter coverage</a></li>
+<li class="chapter" data-level="2.7" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#coverage-per-clinical-annotations"><i class="fa fa-check"></i><b>2.7</b> Coverage per clinical annotations</a></li>
+<li class="chapter" data-level="2.8" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage"><i class="fa fa-check"></i><b>2.8</b> Marginal CpG coverage</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage-of-k4me1-hotspots"><i class="fa fa-check"></i><b>2.8.1</b> Marginal CpG coverage of k4me1 hotspots</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#sample-cellularity"><i class="fa fa-check"></i><b>2.9</b> Sample cellularity</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html"><i class="fa fa-check"></i><b>3</b> Tumor microenvironment (TME) deconvolution</a><ul>
+<li class="chapter" data-level="3.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#initialize"><i class="fa fa-check"></i><b>3.2</b> Initialize</a></li>
+<li class="chapter" data-level="3.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#load-data"><i class="fa fa-check"></i><b>3.3</b> Load data</a></li>
+<li class="chapter" data-level="3.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#deconvolve-tme"><i class="fa fa-check"></i><b>3.4</b> Deconvolve TME</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er-samples"><i class="fa fa-check"></i><b>3.4.1</b> ER+ samples</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er--samples"><i class="fa fa-check"></i><b>3.4.2</b> ER- samples</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#normal-samples"><i class="fa fa-check"></i><b>3.4.3</b> Normal samples</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-normalized-methylation"><i class="fa fa-check"></i><b>3.4.4</b> Merge normalized methylation</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-tme-scores"><i class="fa fa-check"></i><b>3.4.5</b> Merge TME scores</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#caf-and-immune-genes"><i class="fa fa-check"></i><b>3.4.6</b> CAF and Immune genes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#expression-methylation-correlation-matrices"><i class="fa fa-check"></i><b>3.5</b> Expression-methylation correlation matrices</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#export-clustering"><i class="fa fa-check"></i><b>3.5.1</b> Export clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#diagnose-tme-normalization"><i class="fa fa-check"></i><b>3.6</b> Diagnose TME normalization</a></li>
+<li class="chapter" data-level="3.7" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#plot-cd3d-and-cav1-vs-immune-and-caf-methylation-modules"><i class="fa fa-check"></i><b>3.7</b> Plot CD3D and CAV1 vs immune and CAF methylation modules</a></li>
+<li class="chapter" data-level="3.8" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#annotate-tme-scores"><i class="fa fa-check"></i><b>3.8</b> Annotate TME scores</a></li>
+<li class="chapter" data-level="3.9" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#appendix-sensitivity-analysis-of-tme-normalization"><i class="fa fa-check"></i><b>3.9</b> Appendix: Sensitivity analysis of TME normalization</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html"><i class="fa fa-check"></i><b>4</b> Definition of Clock, MG and ML scores</a><ul>
+<li class="chapter" data-level="4.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#initialize-1"><i class="fa fa-check"></i><b>4.2</b> Initialize</a></li>
+<li class="chapter" data-level="4.3" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#load-data-1"><i class="fa fa-check"></i><b>4.3</b> Load data</a></li>
+<li class="chapter" data-level="4.4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#clustering-of-normalized-methylation-of-er-tumors"><i class="fa fa-check"></i><b>4.4</b> Clustering of normalized methylation of ER+ tumors</a></li>
+<li class="chapter" data-level="4.5" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-clustering-on-er--correlation-matrix"><i class="fa fa-check"></i><b>4.5</b> Project clustering on ER- correlation matrix</a></li>
+<li class="chapter" data-level="4.6" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#classify-loci-in-the-genome-to-epigenomic-features"><i class="fa fa-check"></i><b>4.6</b> Classify loci in the genome to epigenomic features</a></li>
+<li class="chapter" data-level="4.7" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#average-methylation-of-the-features"><i class="fa fa-check"></i><b>4.7</b> Average methylation of the features</a></li>
+<li class="chapter" data-level="4.8" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-distribution-over-samples-of-the-correlated-loci"><i class="fa fa-check"></i><b>4.8</b> Plot distribution over samples of the correlated loci</a></li>
+<li class="chapter" data-level="4.9" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-loci-classification"><i class="fa fa-check"></i><b>4.9</b> Plot loci classification</a></li>
+<li class="chapter" data-level="4.10" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-all-epigenomic-features-using-umap"><i class="fa fa-check"></i><b>4.10</b> Project all epigenomic features using UMAP</a></li>
+<li class="chapter" data-level="4.11" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#compare-epigenomic-scores-to-clinical-annotations"><i class="fa fa-check"></i><b>4.11</b> Compare epigenomic scores to clinical annotations</a></li>
+<li class="chapter" data-level="4.12" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#distribution-of-the-scores-in-ic10-integrative-clusters"><i class="fa fa-check"></i><b>4.12</b> Distribution of the scores in iC10 integrative clusters</a></li>
+<li class="chapter" data-level="4.13" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#epipolymorphism-of-the-epigenomic-layers"><i class="fa fa-check"></i><b>4.13</b> Epipolymorphism of the epigenomic layers</a></li>
+<li class="chapter" data-level="4.14" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#comparison-of-the-epigenomic-scores-with-existing-epigenomic-age-metrics"><i class="fa fa-check"></i><b>4.14</b> Comparison of the epigenomic scores with existing epigenomic age metrics</a><ul>
+<li class="chapter" data-level="4.14.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#phenoage"><i class="fa fa-check"></i><b>4.14.1</b> phenoAge</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="loss-clock.html"><a href="loss-clock.html"><i class="fa fa-check"></i><b>5</b> Loss clock</a><ul>
+<li class="chapter" data-level="5.1" data-path="loss-clock.html"><a href="loss-clock.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="loss-clock.html"><a href="loss-clock.html#initialize-2"><i class="fa fa-check"></i><b>5.2</b> Initialize</a></li>
+<li class="chapter" data-level="5.3" data-path="loss-clock.html"><a href="loss-clock.html#plot-methylation-distribution-of-the-clock"><i class="fa fa-check"></i><b>5.3</b> Plot methylation distribution of the clock</a></li>
+<li class="chapter" data-level="5.4" data-path="loss-clock.html"><a href="loss-clock.html#annotate-clock-score"><i class="fa fa-check"></i><b>5.4</b> Annotate &quot;clock&quot; score</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="loss-clock.html"><a href="loss-clock.html#loci-annotation"><i class="fa fa-check"></i><b>5.4.1</b> Loci annotation</a></li>
+<li class="chapter" data-level="5.4.2" data-path="loss-clock.html"><a href="loss-clock.html#clinical-annotation"><i class="fa fa-check"></i><b>5.4.2</b> Clinical annotation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="loss-clock.html"><a href="loss-clock.html#plot-chromosomal-traces-of-clock-score"><i class="fa fa-check"></i><b>5.5</b> Plot chromosomal traces of clock score</a></li>
+<li class="chapter" data-level="5.6" data-path="loss-clock.html"><a href="loss-clock.html#correlation-of-gene-expression-to-clock"><i class="fa fa-check"></i><b>5.6</b> Correlation of gene expression to clock</a></li>
+<li class="chapter" data-level="5.7" data-path="loss-clock.html"><a href="loss-clock.html#plot-score-in-different-tor-regimes"><i class="fa fa-check"></i><b>5.7</b> Plot score in different TOR regimes</a></li>
+<li class="chapter" data-level="5.8" data-path="loss-clock.html"><a href="loss-clock.html#plot-high-low-clock-tumors-vs-tor"><i class="fa fa-check"></i><b>5.8</b> Plot High-Low clock tumors vs TOR</a></li>
+<li class="chapter" data-level="5.9" data-path="loss-clock.html"><a href="loss-clock.html#plot-correlation-of-loci-to-clock-methylation"><i class="fa fa-check"></i><b>5.9</b> Plot correlation of loci to clock methylation</a></li>
+<li class="chapter" data-level="5.10" data-path="loss-clock.html"><a href="loss-clock.html#plot-distribution-of-methylation-of-clock-in-normal-samples"><i class="fa fa-check"></i><b>5.10</b> Plot distribution of methylation of clock in normal samples</a></li>
+<li class="chapter" data-level="5.11" data-path="loss-clock.html"><a href="loss-clock.html#compare-clock-layer-to-biological-age"><i class="fa fa-check"></i><b>5.11</b> Compare clock layer to biological age</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html"><i class="fa fa-check"></i><b>6</b> Epigenomic instability</a><ul>
+<li class="chapter" data-level="6.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#compare-features-to-each-other"><i class="fa fa-check"></i><b>6.1</b> Compare features to each other</a></li>
+<li class="chapter" data-level="6.2" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#annotate-epignomic-instability-scores"><i class="fa fa-check"></i><b>6.2</b> Annotate epignomic instability scores</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#integrative-clusters"><i class="fa fa-check"></i><b>6.2.1</b> Integrative clusters</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#cross-correlation-methylation-expression-of-epigenomic-instability-loci"><i class="fa fa-check"></i><b>6.3</b> Cross correlation (methylation-expression) of epigenomic instability loci</a></li>
+<li class="chapter" data-level="6.4" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#epigenomic-instability-in-different-time-of-replication-tor-regimes"><i class="fa fa-check"></i><b>6.4</b> Epigenomic instability in different Time of replication (TOR) regimes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cna.html"><a href="cna.html"><i class="fa fa-check"></i><b>7</b> CNA</a></li>
+<li class="chapter" data-level="8" data-path="mutations.html"><a href="mutations.html"><i class="fa fa-check"></i><b>8</b> Mutations</a></li>
+<li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> Survival</a><ul>
+<li class="chapter" data-level="9.0.1" data-path="survival.html"><a href="survival.html#raw-methylation"><i class="fa fa-check"></i><b>9.0.1</b> Raw-methylation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html"><i class="fa fa-check"></i><b>10</b> Methylation - Expression <em>in cis</em></a><ul>
+<li class="chapter" data-level="10.0.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#remove-tme-genes"><i class="fa fa-check"></i><b>10.0.1</b> Remove TME genes</a></li>
+<li class="chapter" data-level="10.0.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#load-normalized-methylation-and-separate-it-to-promoters-and-non-promoters"><i class="fa fa-check"></i><b>10.0.2</b> Load normalized methylation and separate it to promoters and non-promoters</a></li>
+<li class="chapter" data-level="10.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-promoters"><i class="fa fa-check"></i><b>10.1</b> Cis candidates: promoters</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-correlation-of-top-cis-regulated-promoter-candidates"><i class="fa fa-check"></i><b>10.1.1</b> Plot correlation of top cis-regulated promoter candidates</a></li>
+<li class="chapter" data-level="10.1.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#annotation-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.2</b> Annotation of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#gene-expression-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.3</b> Gene expression of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#correlation-between-cis-regulated-genes"><i class="fa fa-check"></i><b>10.1.4</b> Correlation between cis-regulated genes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.2</b> Epipolymorphism of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#promoter-examples"><i class="fa fa-check"></i><b>10.3</b> Promoter examples</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#brca1"><i class="fa fa-check"></i><b>10.3.1</b> BRCA1</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-genomic"><i class="fa fa-check"></i><b>10.4</b> Cis candidates: genomic</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-cis"><i class="fa fa-check"></i><b>10.4.1</b> Plot % cis</a></li>
+<li class="chapter" data-level="10.4.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-distance-to-most-correlated-gene"><i class="fa fa-check"></i><b>10.4.2</b> Plot distance to most correlated gene</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-genomic"><i class="fa fa-check"></i><b>10.5</b> Epipolymorphism of cis-regulated genomic</a></li>
+<li class="chapter" data-level="10.6" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#examples-for-cis-regulation-non-promoters"><i class="fa fa-check"></i><b>10.6</b> Examples for cis regulation (non-promoters)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html"><i class="fa fa-check"></i><b>11</b> X dosage compensation</a><ul>
+<li class="chapter" data-level="11.1" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#x-analysis"><i class="fa fa-check"></i><b>11.1</b> X analysis</a></li>
+<li class="chapter" data-level="11.2" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#autosome-analysis"><i class="fa fa-check"></i><b>11.2</b> autosome analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#checking-dosage-compensation-on-all-x-loci"><i class="fa fa-check"></i><b>11.3</b> Checking dosage compensation on all X loci</a></li>
+<li class="chapter" data-level="11.4" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#of-x-lost"><i class="fa fa-check"></i><b>11.4</b> % of X lost</a></li>
+<li class="chapter" data-level="11.5" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#plot-expression-methylation-correlation-for-x"><i class="fa fa-check"></i><b>11.5</b> Plot Expression-Methylation correlation for X</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="finding-specific-dosage-compensation-examples.html"><a href="finding-specific-dosage-compensation-examples.html"><i class="fa fa-check"></i><b>12</b> Finding specific dosage compensation examples</a></li>
+<li class="chapter" data-level="13" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html"><i class="fa fa-check"></i><b>13</b> Export supplementary tables</a><ul>
+<li class="chapter" data-level="13.1" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-1-metabric-samples-metadata"><i class="fa fa-check"></i><b>13.1</b> Table 1: METABRIC samples metadata</a></li>
+<li class="chapter" data-level="13.2" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-2-immune-expression-signature"><i class="fa fa-check"></i><b>13.2</b> Table 2: Immune expression signature</a></li>
+<li class="chapter" data-level="13.3" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-3-caf-expression-signature"><i class="fa fa-check"></i><b>13.3</b> Table 3: CAF expression signature</a></li>
+<li class="chapter" data-level="13.4" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-4-expression-methylation-correlation"><i class="fa fa-check"></i><b>13.4</b> Table 4: Expression-Methylation correlation</a></li>
+<li class="chapter" data-level="13.5" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-5-methylation-scores"><i class="fa fa-check"></i><b>13.5</b> Table 5: Methylation scores</a></li>
+<li class="chapter" data-level="13.6" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-6-gene-expression-correlation-to-epigenomic-instability"><i class="fa fa-check"></i><b>13.6</b> Table 6: Gene expression correlation to epigenomic instability</a></li>
+<li class="chapter" data-level="13.7" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-7-methylation-layers-loci"><i class="fa fa-check"></i><b>13.7</b> Table 7: Methylation layers loci</a></li>
+<li class="chapter" data-level="13.8" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-8-cis-regulation-candidates"><i class="fa fa-check"></i><b>13.8</b> Table 8: Cis regulation candidates</a></li>
+<li class="chapter" data-level="13.9" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-9-dosage-compensation-in-autosomes"><i class="fa fa-check"></i><b>13.9</b> Table 9: Dosage compensation in autosomes</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html"><i class="fa fa-check"></i><b>14</b> Files needed for the analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#misha-db"><i class="fa fa-check"></i><b>14.1</b> Misha DB</a></li>
+<li class="chapter" data-level="14.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#additional-files"><i class="fa fa-check"></i><b>14.2</b> Additional files</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#metabric-data"><i class="fa fa-check"></i><b>14.2.1</b> METABRIC data</a></li>
+<li class="chapter" data-level="14.2.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#notable-generated-files"><i class="fa fa-check"></i><b>14.2.2</b> Notable generated files</a></li>
+<li class="chapter" data-level="14.2.3" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#spatial-methylation-distribution"><i class="fa fa-check"></i><b>14.2.3</b> Spatial methylation distribution</a></li>
+<li class="chapter" data-level="14.2.4" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#copy-number-abberations"><i class="fa fa-check"></i><b>14.2.4</b> Copy number abberations</a></li>
+<li class="chapter" data-level="14.2.5" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#genomic-annotations"><i class="fa fa-check"></i><b>14.2.5</b> Genomic annotations</a></li>
+<li class="chapter" data-level="14.2.6" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#external-resources"><i class="fa fa-check"></i><b>14.2.6</b> External resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="figures-key.html"><a href="figures-key.html"><i class="fa fa-check"></i><b>15</b> Figures key</a><ul>
+<li class="chapter" data-level="15.1" data-path="figures-key.html"><a href="figures-key.html#figure-1"><i class="fa fa-check"></i><b>15.1</b> Figure 1</a></li>
+<li class="chapter" data-level="15.2" data-path="figures-key.html"><a href="figures-key.html#figure-3"><i class="fa fa-check"></i><b>15.2</b> Figure 3</a></li>
+<li class="chapter" data-level="15.3" data-path="figures-key.html"><a href="figures-key.html#figure-4"><i class="fa fa-check"></i><b>15.3</b> Figure 4</a></li>
+<li class="chapter" data-level="15.4" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-1"><i class="fa fa-check"></i><b>15.4</b> Extended Data Figure 1</a></li>
+<li class="chapter" data-level="15.5" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-2"><i class="fa fa-check"></i><b>15.5</b> Extended Data Figure 2</a></li>
+<li class="chapter" data-level="15.6" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-3"><i class="fa fa-check"></i><b>15.6</b> Extended Data Figure 3</a></li>
+<li class="chapter" data-level="15.7" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-4"><i class="fa fa-check"></i><b>15.7</b> Extended Data Figure 4</a></li>
+<li class="chapter" data-level="15.8" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-5"><i class="fa fa-check"></i><b>15.8</b> Extended Data Figure 5</a></li>
+<li class="chapter" data-level="15.9" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-6"><i class="fa fa-check"></i><b>15.9</b> Extended Data Figure 6</a></li>
+<li class="chapter" data-level="15.10" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-7"><i class="fa fa-check"></i><b>15.10</b> Extended Data Figure 7</a></li>
+<li class="chapter" data-level="15.11" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-8"><i class="fa fa-check"></i><b>15.11</b> Extended Data Figure 8</a></li>
+<li class="chapter" data-level="15.12" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-9"><i class="fa fa-check"></i><b>15.12</b> Extended Data Figure 9</a></li>
+<li class="chapter" data-level="15.13" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-10"><i class="fa fa-check"></i><b>15.13</b> Extended Data Figure 10</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="epigenomic-instability" class="section level1">
+<h1><span class="header-section-number">6</span> Epigenomic instability</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;scripts/init.R&quot;</span>))</code></pre></div>
+<div id="compare-features-to-each-other" class="section level2">
+<h2><span class="header-section-number">6.1</span> Compare features to each other</h2>
+<blockquote>
+<h5 id="we-change-the-direction-sign-of-the-clock-and-ml-in-order-for-it-to-be-aligned-with-mg-score-i.e.-more-progressed-always-equals-higher-score.-this-is-implemented-also-in-get_all_features-function."><span class="header-section-number">6.1</span> We change the direction (sign) of the <code>clock</code> and <code>ML</code> in order for it to be aligned with <code>MG</code> score, i.e. more progressed always equals higher score. This is implemented also in <code>get_all_features()</code> function.</h5>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feats_df_fixed &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/epigenomic_features.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ML =</span> <span class="op">-</span>ML, <span class="dt">clock =</span> <span class="op">-</span>clock) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</code></pre></div>
+<div id="figure-2e" class="section level4">
+<h4><span class="header-section-number">6.1.0.1</span> Figure 2E</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+rho_pos &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>MG[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], feats_df_fixed<span class="op">$</span>ML[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER+ = {rho_pos}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER+ = -0.166831861226654</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_MG_ML_scatter_ER_positive &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>ML, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;ML epigenomic instability&quot;</span>) <span class="op">+</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER+&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rho_neg &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>MG[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], feats_df_fixed<span class="op">$</span>ML[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER- = {rho_neg}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER- = -0.382303128930548</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_MG_ML_scatter_ER_negative &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>ML, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;ML epigenomic instability&quot;</span>) <span class="op">+</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER-&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(p_MG_ML_scatter_ER_positive <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span>(p_MG_ML_scatter_ER_negative <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>))</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="extended-data-figure-6a" class="section level4">
+<h4><span class="header-section-number">6.1.0.2</span> Extended Data Figure 6A</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+rho_pos &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>MG[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], feats_df_fixed<span class="op">$</span>clock[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER+ = {rho_pos}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER+ = -0.162654292782067</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_MG_clock_scatter_ER_positive &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>clock, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Clock&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER+&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rho_neg &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>MG[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], feats_df_fixed<span class="op">$</span>clock[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER- = {rho_neg}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER- = -0.28563668716636</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_MG_clock_scatter_ER_negative &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>clock, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Clock&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER-&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(p_MG_clock_scatter_ER_positive <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span>(p_MG_clock_scatter_ER_negative <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>))</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+rho_pos &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>ML[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], feats_df_fixed<span class="op">$</span>clock[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER+ = {rho_pos}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER+ = 0.353548126048103</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_ML_clock_scatter_ER_positive &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>clock, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;ML epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Clock&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER+&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rho_neg &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>ML[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], feats_df_fixed<span class="op">$</span>clock[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER- = {rho_neg}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER- = 0.64775559075671</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_ML_clock_scatter_ER_negative &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>clock, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;ML epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Clock&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER-&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(p_ML_clock_scatter_ER_positive <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span>(p_ML_clock_scatter_ER_negative <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>))</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="extended-data-figure-6b" class="section level4">
+<h4><span class="header-section-number">6.1.0.3</span> Extended Data Figure 6B</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+rho_pos &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>MG[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], feats_df_fixed<span class="op">$</span>immune[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER+ = {rho_pos}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER+ = 0.0256502058498626</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_MG_immune_scatter_ER_positive &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>immune, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;immune&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER+&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rho_neg &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>MG[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], feats_df_fixed<span class="op">$</span>immune[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER- = {rho_neg}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER- = -0.0505710341049502</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_MG_immune_scatter_ER_negative &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>immune, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;immune&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER-&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(p_MG_immune_scatter_ER_positive <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span>(p_MG_immune_scatter_ER_negative <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>))</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+rho_pos &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>ML[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], feats_df_fixed<span class="op">$</span>immune[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER+ = {rho_pos}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER+ = 0.0182424884995677</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_ML_immune_scatter_ER_positive &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>immune, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;ML epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;immune&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER+&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rho_neg &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>ML[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], feats_df_fixed<span class="op">$</span>immune[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER- = {rho_neg}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER- = -0.0483692724136299</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_ML_immune_scatter_ER_negative &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>immune, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;ML epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;immune&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER-&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(p_ML_immune_scatter_ER_positive <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span>(p_ML_immune_scatter_ER_negative <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>))</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+rho_pos &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>MG[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], feats_df_fixed<span class="op">$</span>caf[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER+ = {rho_pos}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER+ = 0.0201120969323973</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_MG_caf_scatter_ER_positive &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>caf, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;caf&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER+&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rho_neg &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>MG[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], feats_df_fixed<span class="op">$</span>caf[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER- = {rho_neg}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER- = -0.00276791172007093</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_MG_caf_scatter_ER_negative &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>caf, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;caf&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER-&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(p_MG_caf_scatter_ER_positive <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span>(p_MG_caf_scatter_ER_negative <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>))</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+rho_pos &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>ML[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], feats_df_fixed<span class="op">$</span>caf[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER+ = {rho_pos}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER+ = 0.0336682666159654</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_ML_caf_scatter_ER_positive &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>caf, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;ML epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;caf&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER+&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rho_neg &lt;-<span class="st"> </span><span class="kw">cor</span>(feats_df_fixed<span class="op">$</span>ML[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], feats_df_fixed<span class="op">$</span>caf[feats_df_fixed<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">message</span>(<span class="kw">glue</span>(<span class="st">&quot;rho ER- = {rho_neg}&quot;</span>))</code></pre></div>
+<pre><code>## rho ER- = 0.0020186843607852</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_ML_caf_scatter_ER_negative &lt;-<span class="st"> </span>feats_df_fixed <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>caf, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;ML epigenomic instability&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;caf&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;ER-&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(p_ML_caf_scatter_ER_positive <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span>(p_ML_caf_scatter_ER_negative <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>))</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+</div>
+<div id="annotate-epignomic-instability-scores" class="section level2">
+<h2><span class="header-section-number">6.2</span> Annotate epignomic instability scores</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feats &lt;-<span class="st"> </span><span class="kw">get_all_features</span>()
+nbins &lt;-<span class="st"> </span><span class="dv">5</span>
+df &lt;-<span class="st"> </span>feats <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(
+        <span class="dt">clock =</span> <span class="kw">cut</span>(clock, <span class="kw">quantile</span>(clock, <span class="dv">0</span><span class="op">:</span>nbins<span class="op">/</span>nbins, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="dv">1</span><span class="op">:</span>nbins), 
+        <span class="dt">immune =</span> <span class="kw">cut</span>(immune, <span class="kw">quantile</span>(immune, <span class="dv">0</span><span class="op">:</span>nbins<span class="op">/</span>nbins, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="dv">1</span><span class="op">:</span>nbins), 
+        <span class="dt">caf =</span> <span class="kw">cut</span>(caf, <span class="kw">quantile</span>(caf, <span class="dv">0</span><span class="op">:</span>nbins<span class="op">/</span>nbins, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="dv">1</span><span class="op">:</span>nbins), 
+        <span class="dt">immune.meth =</span> <span class="kw">cut</span>(immune.meth, <span class="kw">quantile</span>(immune.meth, <span class="dv">0</span><span class="op">:</span>nbins<span class="op">/</span>nbins, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="dv">1</span><span class="op">:</span>nbins), 
+        <span class="dt">caf.meth =</span> <span class="kw">cut</span>(caf.meth, <span class="kw">quantile</span>(caf.meth, <span class="dv">0</span><span class="op">:</span>nbins<span class="op">/</span>nbins, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="dv">1</span><span class="op">:</span>nbins), 
+        <span class="dt">MG =</span> <span class="kw">cut</span>(MG, <span class="kw">quantile</span>(MG, <span class="dv">0</span><span class="op">:</span>nbins<span class="op">/</span>nbins, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="dv">1</span><span class="op">:</span>nbins), 
+        <span class="dt">ML =</span> <span class="kw">cut</span>(ML, <span class="kw">quantile</span>(ML, <span class="dv">0</span><span class="op">:</span>nbins<span class="op">/</span>nbins, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="dv">1</span><span class="op">:</span>nbins)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">left_join</span>(samp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, stage, grade), <span class="dt">by =</span> <span class="st">&quot;samp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">ifelse</span>(stage <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="st">&quot;DCIS&quot;</span>, <span class="dv">1</span>), <span class="st">&quot;0-1&quot;</span>, stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">ifelse</span>(ER <span class="op">==</span><span class="st"> &quot;normal&quot;</span>, <span class="st">&quot;N&quot;</span>, stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">ifelse</span>(ER <span class="op">==</span><span class="st"> &quot;normal&quot;</span>, <span class="st">&quot;N&quot;</span>, grade))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_pval &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ER <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="st">&quot;feat&quot;</span>, <span class="st">&quot;bin&quot;</span>, <span class="op">-</span>samp, <span class="op">-</span>ER, <span class="op">-</span>stage, <span class="op">-</span>grade)  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(ER, feat) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">grade_pval =</span> <span class="kw">chisq.test</span>(bin, grade)<span class="op">$</span>p.value, <span class="dt">stage_pval =</span> <span class="kw">chisq.test</span>(bin, stage)<span class="op">$</span>p.value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">signif_grade =</span> <span class="kw">case_when</span>(grade_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.0001</span> <span class="op">~</span><span class="st"> &quot;****&quot;</span>, grade_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.001</span> <span class="op">~</span><span class="st"> &quot;***&quot;</span>, grade_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span> <span class="op">~</span><span class="st"> &quot;**&quot;</span>, grade_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">~</span><span class="st"> &quot;*&quot;</span>), <span class="dt">signif_stage =</span> <span class="kw">case_when</span>(stage_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.0001</span> <span class="op">~</span><span class="st"> &quot;****&quot;</span>, stage_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.001</span> <span class="op">~</span><span class="st"> &quot;***&quot;</span>,  stage_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span> <span class="op">~</span><span class="st"> &quot;**&quot;</span>, stage_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">~</span><span class="st"> &quot;*&quot;</span>))</code></pre></div>
+<pre><code>## Warning in chisq.test(bin, grade): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, grade): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, grade): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, grade): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, grade): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, grade): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, grade): Chi-squared approximation may be incorrect</code></pre>
+<pre><code>## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect
+
+## Warning in chisq.test(bin, stage): Chi-squared approximation may be incorrect</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.data.frame</span>(df_pval)</code></pre></div>
+<pre><code>##     ER        feat   grade_pval  stage_pval signif_grade signif_stage
+## 1  ER-         caf 2.264293e-04 0.001946125          ***           **
+## 2  ER-    caf.meth 3.081915e-03 0.209690818           **         &lt;NA&gt;
+## 3  ER-       clock 6.348596e-01 0.070940655         &lt;NA&gt;         &lt;NA&gt;
+## 4  ER-      immune 3.712915e-01 0.580276177         &lt;NA&gt;         &lt;NA&gt;
+## 5  ER- immune.meth 3.051790e-01 0.102242249         &lt;NA&gt;         &lt;NA&gt;
+## 6  ER-          MG 5.763868e-01 0.042991948         &lt;NA&gt;            *
+## 7  ER-          ML 6.479486e-01 0.873719290         &lt;NA&gt;         &lt;NA&gt;
+## 8  ER+         caf 6.512545e-05 0.060334718         ****         &lt;NA&gt;
+## 9  ER+    caf.meth 1.267372e-05 0.070515621         ****         &lt;NA&gt;
+## 10 ER+       clock 1.471181e-01 0.572271776         &lt;NA&gt;         &lt;NA&gt;
+## 11 ER+      immune 6.363196e-04 0.457202009          ***         &lt;NA&gt;
+## 12 ER+ immune.meth 5.579626e-03 0.293001516           **         &lt;NA&gt;
+## 13 ER+          MG 1.588818e-06 0.099708353         ****         &lt;NA&gt;
+## 14 ER+          ML 5.428637e-10 0.230225194         ****         &lt;NA&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_pval <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(grade_pval <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre></div>
+<pre><code>## # A tibble: 8 x 6
+## # groups: ER
+##    ER        feat    grade_pval  stage_pval signif_grade signif_stage
+## 1 ER-         caf 0.00022642925 0.001946125          ***           **
+## 2 ER-    caf.meth 0.00308191469 0.209690818           **         &lt;NA&gt;
+## 3 ER+         caf 0.00006512545 0.060334718         ****         &lt;NA&gt;
+## 4 ER+    caf.meth 0.00001267372 0.070515621         ****         &lt;NA&gt;
+## 5 ER+      immune 0.00063631960 0.457202009          ***         &lt;NA&gt;
+## 6 ER+ immune.meth 0.00557962596 0.293001516           **         &lt;NA&gt;
+## # ... with 2 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_pval <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(stage_pval <span class="op">&lt;=</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre></div>
+<pre><code>## # A tibble: 2 x 6
+## # groups: ER
+##    ER feat   grade_pval  stage_pval signif_grade signif_stage
+## 1 ER-  caf 0.0002264293 0.001946125          ***           **
+## 2 ER-   MG 0.5763867809 0.042991948         &lt;NA&gt;            *</code></pre>
+<div id="extended-data-figure-6d" class="section level4">
+<h4><span class="header-section-number">6.2.0.1</span> Extended Data Figure 6D</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">6</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_stage_MG &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">factor</span>(stage, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;0-1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(stage, MG) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(MG) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>p, <span class="dt">fill=</span>stage)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Stage&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;0-1&quot;</span> =<span class="st"> &quot;black&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;blue&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;4&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_stage_ML &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">factor</span>(stage, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;0-1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(stage, ML) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(ML) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>p, <span class="dt">fill=</span>stage)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Stage&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;0-1&quot;</span> =<span class="st"> &quot;black&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;blue&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;4&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_stage_MG <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_stage_ML <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p>Same for ER-:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">6</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_grade_MG_neg &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">factor</span>(grade, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(grade)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(grade, MG) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(MG) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>p, <span class="dt">fill=</span>grade)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Grade&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;darkblue&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_grade_ML_neg &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">factor</span>(grade, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(grade)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(grade, ML) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(ML) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>p, <span class="dt">fill=</span>grade)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Grade&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;darkblue&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_grade_MG_neg <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_grade_ML_neg <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">6</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_stage_MG_neg &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">factor</span>(stage, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;0-1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(stage, MG) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(MG) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>p, <span class="dt">fill=</span>stage)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Stage&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;0-1&quot;</span> =<span class="st"> &quot;black&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;blue&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;4&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_stage_ML_neg &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">stage =</span> <span class="kw">factor</span>(stage, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;0-1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(stage)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(stage, ML) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(ML) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>p, <span class="dt">fill=</span>stage)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Stage&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;0-1&quot;</span> =<span class="st"> &quot;black&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;blue&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;4&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_stage_MG_neg <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_stage_ML_neg <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+</div>
+<div id="figure-2d" class="section level4">
+<h4><span class="header-section-number">6.2.0.2</span> Figure 2D</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">6</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_grade_MG &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">factor</span>(grade, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(grade)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(grade, MG) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(MG) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>MG, <span class="dt">y=</span>p, <span class="dt">fill=</span>grade)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Grade&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;darkblue&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_grade_ML &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">grade =</span> <span class="kw">factor</span>(grade, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(grade)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(grade, ML) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(ML) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ML, <span class="dt">y=</span>p, <span class="dt">fill=</span>grade)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">name =</span> <span class="st">&quot;Grade&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;N&quot;</span> =<span class="st"> &quot;gray&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;darkblue&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;orange&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>)
+
+p_grade_MG <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_grade_ML <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+</div>
+<div id="integrative-clusters" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Integrative clusters</h3>
+<div id="extended-data-figure-7c" class="section level4">
+<h4><span class="header-section-number">6.2.1.1</span> Extended Data Figure 7C</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">6</span>)
+df &lt;-<span class="st"> </span>feats <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">left_join</span>(samp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, iC10)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(iC10)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">iC10 =</span> <span class="kw">factor</span>(iC10, <span class="dt">levels =</span> <span class="kw">names</span>(annot_colors<span class="op">$</span>iC10))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">select</span>(samp, ER, MG, ML, iC10) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">gather</span>(<span class="st">&quot;clust&quot;</span>, <span class="st">&quot;score&quot;</span>, <span class="op">-</span>ER, <span class="op">-</span>iC10, <span class="op">-</span>samp)</code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_iC10 &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iC10, <span class="dt">y =</span> score, <span class="dt">fill =</span> iC10)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_boxplot</span>(<span class="dt">lwd =</span> <span class="fl">0.2</span>, <span class="dt">outlier.size =</span> <span class="fl">0.2</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">facet_grid</span>(clust <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>iC10) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">vertical_labs</span>()</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_iC10 <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">vertical_labs</span>() <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw">stat_compare_means</span>(<span class="dt">method =</span> <span class="st">&quot;kruskal&quot;</span>)</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(samp, iC10) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(iC10)</code></pre></div>
+<pre><code>## # A tibble: 12 x 2
+##        iC10   n
+## 1 ADJNORMAL  92
+## 2         1  98
+## 3         2  54
+## 4         3 214
+## 5      4ER+ 172
+## 6      4ER-  50
+## # ... with 6 more rows</code></pre>
+</div>
+</div>
+</div>
+<div id="cross-correlation-methylation-expression-of-epigenomic-instability-loci" class="section level2">
+<h2><span class="header-section-number">6.3</span> Cross correlation (methylation-expression) of epigenomic instability loci</h2>
+<p>Create a matrix with methylation of loci that are part of MG or ML epigenmic instability and cross correlate it with gene expression in ER+:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_norm_meth &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/all_norm_meth.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+ER_positive_mat &lt;-<span class="st"> </span>all_norm_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(ER_positive_samples)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()
+loci_annot &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/loci_annot_epigenomic_features.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+cor_thresh &lt;-<span class="st"> </span><span class="fl">0.3</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coords &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="kw">abs</span>(MG) <span class="op">&gt;=</span><span class="st"> </span>cor_thresh <span class="op">|</span><span class="st"> </span><span class="kw">abs</span>(ML) <span class="op">&gt;=</span><span class="st"> </span>cor_thresh <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(clock) <span class="op">&lt;</span><span class="st"> </span>cor_thresh) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">select</span>(chrom<span class="op">:</span>end) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames</span>()
+meth_mat &lt;-<span class="st"> </span>ER_positive_mat[coords, ]
+
+expr_m &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/expression_matrix.csv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">any_of</span>(<span class="kw">c</span>(<span class="st">&quot;chrom&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;name3.chr&quot;</span>)))
+expr_mat &lt;-<span class="st"> </span>expr_m <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">column_to_rownames</span>(<span class="st">&quot;name&quot;</span>)
+f &lt;-<span class="st"> </span><span class="kw">rowSums</span>(<span class="op">!</span><span class="kw">is.na</span>(expr_mat)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>
+expr_mat &lt;-<span class="st"> </span>expr_mat[f, ]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">em_cross &lt;-<span class="st"> </span><span class="kw">em_cross_cor</span>(meth_mat, expr_mat, <span class="dt">meth_cor_thresh =</span> <span class="fl">0.25</span>, <span class="dt">expr_cor_thresh =</span> <span class="fl">0.25</span>) <span class="op">%cache_rds%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/MG_ML_em_cross_cor.rds&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">em_cross_clust &lt;-<span class="st"> </span><span class="kw">cluster_em_cross_cor</span>(em_cross, <span class="dt">k_meth =</span> <span class="dv">32</span>, <span class="dt">k_expr =</span> <span class="dv">32</span>) <span class="op">%cache_rds%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/MG_ML_em_cross_cor_clust.rds&quot;</span>)</code></pre></div>
+<div id="figure-2f" class="section level4">
+<h4><span class="header-section-number">6.3.0.1</span> Figure 2F</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">13</span>)
+<span class="kw">plot_em_cross_cor</span>(em_cross_clust)</code></pre></div>
+<pre><code>## plotting em cross</code></pre>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Annotating the methylation clusters we can see which are <code>MG</code> and which are <code>ML</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">10</span>, <span class="dt">repr.plot.height =</span> <span class="dv">7</span>)
+<span class="kw">cutree_order</span>(em_cross_clust<span class="op">$</span>hc_meth, <span class="dt">k=</span><span class="dv">32</span>)  <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mat_to_intervs</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="st">&quot;chrom&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;clust&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">left_join</span>(loci_annot <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom, start, end,clock, MG, ML)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">feat =</span> <span class="kw">case_when</span>(
+        clock <span class="op">&gt;=</span><span class="st"> </span>cor_thresh <span class="op">~</span><span class="st"> &quot;clock&quot;</span>, 
+        MG <span class="op">&gt;=</span><span class="st"> </span>cor_thresh <span class="op">~</span><span class="st"> &quot;MG&quot;</span>, 
+        ML <span class="op">&gt;=</span><span class="st"> </span>cor_thresh <span class="op">~</span><span class="st"> &quot;ML&quot;</span>, 
+        <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;other&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(clust, feat)  <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(clust) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">factor</span>(clust), <span class="dt">y=</span>n, <span class="dt">fill=</span>feat)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">13</span>)
+<span class="kw">plot_em_cross_cor</span>(em_cross_clust, <span class="dt">k_meth =</span> <span class="dv">3</span>, <span class="dt">k_exp =</span> <span class="dv">32</span>)</code></pre></div>
+<pre><code>## plotting em cross</code></pre>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">em_cross_clust<span class="op">$</span>expr_clust <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(clust) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">fwrite</span>(<span class="kw">here</span>(<span class="st">&quot;data/MG_ML_em_cross_gene_clust_id.tsv&quot;</span>), <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</code></pre></div>
+<p>Plot for each expression cluster the name of the gene with highest correlation to any locus.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top_genes &lt;-<span class="st"> </span>em_cross_clust<span class="op">$</span>em_cross <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">gather_matrix</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;locus&quot;</span>, <span class="st">&quot;cor&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(em_cross_clust<span class="op">$</span>expr_clust) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">arrange</span>(clust, cor) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(clust) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(em_cross_clust<span class="op">$</span>expr_clust <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">count</span>(clust) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">p =</span> <span class="kw">cumsum</span>(n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)), <span class="dt">pos =</span> p <span class="op">-</span><span class="st"> </span>(p <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(p, <span class="dt">default =</span> <span class="dv">0</span>)) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">select</span>(clust, pos)) <span class="op">%cache_df%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/MG_ML_em_cross_top_genes.tsv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_gene_names &lt;-<span class="st"> </span><span class="kw">ggplot</span>(top_genes, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> pos, <span class="dt">label =</span> name)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_text</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_void</span>(<span class="dt">base_size =</span> <span class="dv">3</span>, <span class="dt">base_family =</span> <span class="st">&quot;Arial&quot;</span>)</code></pre></div>
+<p>Plot barplots of MG gene expression correlations</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene_annots &lt;-<span class="st"> </span><span class="kw">get_gene_annots</span>()</code></pre></div>
+<pre><code>## Joining, by = &quot;type&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feat_gene_cors &lt;-<span class="st"> </span><span class="kw">get_expression_features_cors</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene_annots_cors &lt;-<span class="st"> </span>feat_gene_cors  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(gene_annots, <span class="dt">by =</span> <span class="st">&quot;name&quot;</span>)  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>, MG <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.15</span>)  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>() </code></pre></div>
+</div>
+<div id="figure-2g" class="section level4">
+<h4><span class="header-section-number">6.3.0.2</span> Figure 2G</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">8</span>)
+
+p_cc &lt;-<span class="st"> </span>gene_annots_cors <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(type <span class="op">==</span><span class="st"> &quot;Cell Cycle&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(name, MG), <span class="dt">y =</span> MG)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="dt">fill =</span> <span class="st">&quot;#008B45FF&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Correlation to MG&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">vertical_labs</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Cell Cycle&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">family =</span> <span class="st">&quot;Arial&quot;</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>), <span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>())
+p_emb &lt;-<span class="st"> </span>gene_annots_cors <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(type <span class="op">==</span><span class="st"> &quot;Embryonic TF&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(name, MG), <span class="dt">y =</span> MG)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="dt">fill =</span> <span class="st">&quot;#3B4992FF&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Correlation to MG&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">vertical_labs</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Embryonic TF&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">family =</span> <span class="st">&quot;Arial&quot;</span>), <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>), <span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>()) 
+p_other &lt;-<span class="st"> </span>gene_annots_cors <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(type <span class="op">==</span><span class="st"> &quot;Other&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(name, MG), <span class="dt">y =</span> MG)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="dt">fill =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Correlation to MG&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">vertical_labs</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;Other&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">family =</span> <span class="st">&quot;Arial&quot;</span>), <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>), <span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>()) 
+
+p_cc</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_emb</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-32-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_other</code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-32-3.png" width="672" /></p>
+</div>
+</div>
+<div id="epigenomic-instability-in-different-time-of-replication-tor-regimes" class="section level2">
+<h2><span class="header-section-number">6.4</span> Epigenomic instability in different Time of replication (TOR) regimes</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci_annot &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/loci_annot_epigenomic_features.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+loci_clust &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/ER_positive_loci_clust_df.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+loci_clust &lt;-<span class="st"> </span>loci_clust <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(loci_annot)</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci_clust_MG &lt;-<span class="st"> </span>loci_clust <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(clust <span class="op">==</span><span class="st"> &quot;MG&quot;</span>)
+loci_clust_ML &lt;-<span class="st"> </span>loci_clust <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(clust <span class="op">==</span><span class="st"> &quot;ML&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_mat_raw &lt;-<span class="st"> </span><span class="kw">get_all_meth</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tor_strata &lt;-<span class="st"> </span>loci_clust_MG <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">tor_strata =</span> <span class="kw">cut</span>(tor, <span class="dt">breaks =</span> main_config<span class="op">$</span>genomic_regions<span class="op">$</span>tor_low_mid_high, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;late&quot;</span>, <span class="st">&quot;intermediate&quot;</span>, <span class="st">&quot;early&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(tor_strata) <span class="op">%&gt;%</span><span class="st"> </span>forcats<span class="op">::</span><span class="kw">fct_explicit_na</span>()
+intervs &lt;-<span class="st"> </span>loci_clust_MG <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samp_meth_tor_MG &lt;-<span class="st"> </span><span class="kw">tgs_matrix_tapply</span>(<span class="kw">t</span>(all_mat_raw[intervs, ]), tor_strata, mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="st">&quot;samp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_ER</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</code></pre></div>
+<div id="extended-data-figure-7b" class="section level4">
+<h4><span class="header-section-number">6.4.0.1</span> Extended Data Figure 7B</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_early_late &lt;-<span class="st"> </span>samp_meth_tor_MG <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>early, <span class="dt">y=</span>late, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;MG loci: early replicating&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;MG loci: late replicating&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) 
+
+samp_meth_tor_MG <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">cor_early_late =</span> <span class="kw">cor</span>(early, late, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>, <span class="dt">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>), <span class="dt">cor_early_mid =</span> <span class="kw">cor</span>(early, intermediate, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>, <span class="dt">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   cor_early_late cor_early_mid
+## 1      0.8602804     0.9382058</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_early_late <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) </code></pre></div>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tor_strata &lt;-<span class="st"> </span>loci_clust_ML <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">tor_strata =</span> <span class="kw">cut</span>(tor, <span class="dt">breaks =</span> main_config<span class="op">$</span>genomic_regions<span class="op">$</span>tor_low_mid_high, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;late&quot;</span>, <span class="st">&quot;intermediate&quot;</span>, <span class="st">&quot;early&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(tor_strata) <span class="op">%&gt;%</span><span class="st"> </span>forcats<span class="op">::</span><span class="kw">fct_explicit_na</span>()
+intervs &lt;-<span class="st"> </span>loci_clust_ML <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samp_meth_tor_ML &lt;-<span class="st"> </span><span class="kw">tgs_matrix_tapply</span>(<span class="kw">t</span>(all_mat_raw[intervs, ]), tor_strata, mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">t</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rownames_to_column</span>(<span class="st">&quot;samp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_ER</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_early_late_ML &lt;-<span class="st"> </span>samp_meth_tor_ML <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>early, <span class="dt">y=</span>late, <span class="dt">color=</span>ER)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;ML loci: early replicating&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;ML loci: late replicating&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) 
+
+samp_meth_tor_ML <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">cor_early_late =</span> <span class="kw">cor</span>(early, late, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>, <span class="dt">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>), <span class="dt">cor_early_mid =</span> <span class="kw">cor</span>(early, intermediate, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>, <span class="dt">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   cor_early_late cor_early_mid
+## 1      0.8201663     0.9276362</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_early_late_ML <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) </code></pre></div>
+<pre><code>## Warning: Removed 32 rows containing missing values (geom_point).</code></pre>
+<p><img src="epigenomic-instability_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">gc</span>()</code></pre></div>
+<pre><code>##              used    (Mb) gc trigger    (Mb)   max used    (Mb)
+## Ncells    4690952   250.6    8042191   429.5    8042191   429.5
+## Vcells 1417529451 10814.9 2192953529 16731.0 1803628477 13760.6</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="loss-clock.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cna.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

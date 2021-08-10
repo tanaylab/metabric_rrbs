@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 Methylation - Expression in cis | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</title>
+  <meta name="description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 Methylation - Expression in cis | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="tanaylab.github.io/metabric_rrbs" />
+  
+  <meta property="og:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="github-repo" content="tanaylab/metabric_rrbs" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 Methylation - Expression in cis | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+  <meta name="twitter:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+
+<meta name="author" content="Aviezer Lifshitz" />
+
+
+<meta name="date" content="2021-08-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="survival.html"/>
+<link rel="next" href="x-dosage-compensation.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#run-the-notebooks"><i class="fa fa-check"></i><b>1.1</b> Run the notebooks</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notebook-order"><i class="fa fa-check"></i><b>1.3</b> Notebook order</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#find-a-specific-figure"><i class="fa fa-check"></i><b>1.4</b> Find a specific figure</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html"><i class="fa fa-check"></i><b>2</b> METABRIC methylation data statistics</a><ul>
+<li class="chapter" data-level="2.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#breakdown-of-samples"><i class="fa fa-check"></i><b>2.1</b> Breakdown of samples</a></li>
+<li class="chapter" data-level="2.2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#number-of-samples"><i class="fa fa-check"></i><b>2.2</b> Number of samples</a></li>
+<li class="chapter" data-level="2.3" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#total-number-of-reads"><i class="fa fa-check"></i><b>2.3</b> Total number of reads</a></li>
+<li class="chapter" data-level="2.4" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-cpg-coverage-per-sample"><i class="fa fa-check"></i><b>2.4</b> Distribution of CpG coverage per sample</a></li>
+<li class="chapter" data-level="2.5" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-covered-cpgs"><i class="fa fa-check"></i><b>2.5</b> Distribution of covered CpGs</a></li>
+<li class="chapter" data-level="2.6" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#promoter-coverage"><i class="fa fa-check"></i><b>2.6</b> Promoter coverage</a></li>
+<li class="chapter" data-level="2.7" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#coverage-per-clinical-annotations"><i class="fa fa-check"></i><b>2.7</b> Coverage per clinical annotations</a></li>
+<li class="chapter" data-level="2.8" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage"><i class="fa fa-check"></i><b>2.8</b> Marginal CpG coverage</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage-of-k4me1-hotspots"><i class="fa fa-check"></i><b>2.8.1</b> Marginal CpG coverage of k4me1 hotspots</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#sample-cellularity"><i class="fa fa-check"></i><b>2.9</b> Sample cellularity</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html"><i class="fa fa-check"></i><b>3</b> Tumor microenvironment (TME) deconvolution</a><ul>
+<li class="chapter" data-level="3.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#initialize"><i class="fa fa-check"></i><b>3.2</b> Initialize</a></li>
+<li class="chapter" data-level="3.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#load-data"><i class="fa fa-check"></i><b>3.3</b> Load data</a></li>
+<li class="chapter" data-level="3.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#deconvolve-tme"><i class="fa fa-check"></i><b>3.4</b> Deconvolve TME</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er-samples"><i class="fa fa-check"></i><b>3.4.1</b> ER+ samples</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er--samples"><i class="fa fa-check"></i><b>3.4.2</b> ER- samples</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#normal-samples"><i class="fa fa-check"></i><b>3.4.3</b> Normal samples</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-normalized-methylation"><i class="fa fa-check"></i><b>3.4.4</b> Merge normalized methylation</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-tme-scores"><i class="fa fa-check"></i><b>3.4.5</b> Merge TME scores</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#caf-and-immune-genes"><i class="fa fa-check"></i><b>3.4.6</b> CAF and Immune genes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#expression-methylation-correlation-matrices"><i class="fa fa-check"></i><b>3.5</b> Expression-methylation correlation matrices</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#export-clustering"><i class="fa fa-check"></i><b>3.5.1</b> Export clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#diagnose-tme-normalization"><i class="fa fa-check"></i><b>3.6</b> Diagnose TME normalization</a></li>
+<li class="chapter" data-level="3.7" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#plot-cd3d-and-cav1-vs-immune-and-caf-methylation-modules"><i class="fa fa-check"></i><b>3.7</b> Plot CD3D and CAV1 vs immune and CAF methylation modules</a></li>
+<li class="chapter" data-level="3.8" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#annotate-tme-scores"><i class="fa fa-check"></i><b>3.8</b> Annotate TME scores</a></li>
+<li class="chapter" data-level="3.9" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#appendix-sensitivity-analysis-of-tme-normalization"><i class="fa fa-check"></i><b>3.9</b> Appendix: Sensitivity analysis of TME normalization</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html"><i class="fa fa-check"></i><b>4</b> Definition of Clock, MG and ML scores</a><ul>
+<li class="chapter" data-level="4.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#initialize-1"><i class="fa fa-check"></i><b>4.2</b> Initialize</a></li>
+<li class="chapter" data-level="4.3" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#load-data-1"><i class="fa fa-check"></i><b>4.3</b> Load data</a></li>
+<li class="chapter" data-level="4.4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#clustering-of-normalized-methylation-of-er-tumors"><i class="fa fa-check"></i><b>4.4</b> Clustering of normalized methylation of ER+ tumors</a></li>
+<li class="chapter" data-level="4.5" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-clustering-on-er--correlation-matrix"><i class="fa fa-check"></i><b>4.5</b> Project clustering on ER- correlation matrix</a></li>
+<li class="chapter" data-level="4.6" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#classify-loci-in-the-genome-to-epigenomic-features"><i class="fa fa-check"></i><b>4.6</b> Classify loci in the genome to epigenomic features</a></li>
+<li class="chapter" data-level="4.7" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#average-methylation-of-the-features"><i class="fa fa-check"></i><b>4.7</b> Average methylation of the features</a></li>
+<li class="chapter" data-level="4.8" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-distribution-over-samples-of-the-correlated-loci"><i class="fa fa-check"></i><b>4.8</b> Plot distribution over samples of the correlated loci</a></li>
+<li class="chapter" data-level="4.9" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-loci-classification"><i class="fa fa-check"></i><b>4.9</b> Plot loci classification</a></li>
+<li class="chapter" data-level="4.10" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-all-epigenomic-features-using-umap"><i class="fa fa-check"></i><b>4.10</b> Project all epigenomic features using UMAP</a></li>
+<li class="chapter" data-level="4.11" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#compare-epigenomic-scores-to-clinical-annotations"><i class="fa fa-check"></i><b>4.11</b> Compare epigenomic scores to clinical annotations</a></li>
+<li class="chapter" data-level="4.12" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#distribution-of-the-scores-in-ic10-integrative-clusters"><i class="fa fa-check"></i><b>4.12</b> Distribution of the scores in iC10 integrative clusters</a></li>
+<li class="chapter" data-level="4.13" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#epipolymorphism-of-the-epigenomic-layers"><i class="fa fa-check"></i><b>4.13</b> Epipolymorphism of the epigenomic layers</a></li>
+<li class="chapter" data-level="4.14" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#comparison-of-the-epigenomic-scores-with-existing-epigenomic-age-metrics"><i class="fa fa-check"></i><b>4.14</b> Comparison of the epigenomic scores with existing epigenomic age metrics</a><ul>
+<li class="chapter" data-level="4.14.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#phenoage"><i class="fa fa-check"></i><b>4.14.1</b> phenoAge</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="loss-clock.html"><a href="loss-clock.html"><i class="fa fa-check"></i><b>5</b> Loss clock</a><ul>
+<li class="chapter" data-level="5.1" data-path="loss-clock.html"><a href="loss-clock.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="loss-clock.html"><a href="loss-clock.html#initialize-2"><i class="fa fa-check"></i><b>5.2</b> Initialize</a></li>
+<li class="chapter" data-level="5.3" data-path="loss-clock.html"><a href="loss-clock.html#plot-methylation-distribution-of-the-clock"><i class="fa fa-check"></i><b>5.3</b> Plot methylation distribution of the clock</a></li>
+<li class="chapter" data-level="5.4" data-path="loss-clock.html"><a href="loss-clock.html#annotate-clock-score"><i class="fa fa-check"></i><b>5.4</b> Annotate &quot;clock&quot; score</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="loss-clock.html"><a href="loss-clock.html#loci-annotation"><i class="fa fa-check"></i><b>5.4.1</b> Loci annotation</a></li>
+<li class="chapter" data-level="5.4.2" data-path="loss-clock.html"><a href="loss-clock.html#clinical-annotation"><i class="fa fa-check"></i><b>5.4.2</b> Clinical annotation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="loss-clock.html"><a href="loss-clock.html#plot-chromosomal-traces-of-clock-score"><i class="fa fa-check"></i><b>5.5</b> Plot chromosomal traces of clock score</a></li>
+<li class="chapter" data-level="5.6" data-path="loss-clock.html"><a href="loss-clock.html#correlation-of-gene-expression-to-clock"><i class="fa fa-check"></i><b>5.6</b> Correlation of gene expression to clock</a></li>
+<li class="chapter" data-level="5.7" data-path="loss-clock.html"><a href="loss-clock.html#plot-score-in-different-tor-regimes"><i class="fa fa-check"></i><b>5.7</b> Plot score in different TOR regimes</a></li>
+<li class="chapter" data-level="5.8" data-path="loss-clock.html"><a href="loss-clock.html#plot-high-low-clock-tumors-vs-tor"><i class="fa fa-check"></i><b>5.8</b> Plot High-Low clock tumors vs TOR</a></li>
+<li class="chapter" data-level="5.9" data-path="loss-clock.html"><a href="loss-clock.html#plot-correlation-of-loci-to-clock-methylation"><i class="fa fa-check"></i><b>5.9</b> Plot correlation of loci to clock methylation</a></li>
+<li class="chapter" data-level="5.10" data-path="loss-clock.html"><a href="loss-clock.html#plot-distribution-of-methylation-of-clock-in-normal-samples"><i class="fa fa-check"></i><b>5.10</b> Plot distribution of methylation of clock in normal samples</a></li>
+<li class="chapter" data-level="5.11" data-path="loss-clock.html"><a href="loss-clock.html#compare-clock-layer-to-biological-age"><i class="fa fa-check"></i><b>5.11</b> Compare clock layer to biological age</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html"><i class="fa fa-check"></i><b>6</b> Epigenomic instability</a><ul>
+<li class="chapter" data-level="6.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#compare-features-to-each-other"><i class="fa fa-check"></i><b>6.1</b> Compare features to each other</a></li>
+<li class="chapter" data-level="6.2" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#annotate-epignomic-instability-scores"><i class="fa fa-check"></i><b>6.2</b> Annotate epignomic instability scores</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#integrative-clusters"><i class="fa fa-check"></i><b>6.2.1</b> Integrative clusters</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#cross-correlation-methylation-expression-of-epigenomic-instability-loci"><i class="fa fa-check"></i><b>6.3</b> Cross correlation (methylation-expression) of epigenomic instability loci</a></li>
+<li class="chapter" data-level="6.4" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#epigenomic-instability-in-different-time-of-replication-tor-regimes"><i class="fa fa-check"></i><b>6.4</b> Epigenomic instability in different Time of replication (TOR) regimes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cna.html"><a href="cna.html"><i class="fa fa-check"></i><b>7</b> CNA</a></li>
+<li class="chapter" data-level="8" data-path="mutations.html"><a href="mutations.html"><i class="fa fa-check"></i><b>8</b> Mutations</a></li>
+<li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> Survival</a><ul>
+<li class="chapter" data-level="9.0.1" data-path="survival.html"><a href="survival.html#raw-methylation"><i class="fa fa-check"></i><b>9.0.1</b> Raw-methylation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html"><i class="fa fa-check"></i><b>10</b> Methylation - Expression <em>in cis</em></a><ul>
+<li class="chapter" data-level="10.0.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#remove-tme-genes"><i class="fa fa-check"></i><b>10.0.1</b> Remove TME genes</a></li>
+<li class="chapter" data-level="10.0.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#load-normalized-methylation-and-separate-it-to-promoters-and-non-promoters"><i class="fa fa-check"></i><b>10.0.2</b> Load normalized methylation and separate it to promoters and non-promoters</a></li>
+<li class="chapter" data-level="10.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-promoters"><i class="fa fa-check"></i><b>10.1</b> Cis candidates: promoters</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-correlation-of-top-cis-regulated-promoter-candidates"><i class="fa fa-check"></i><b>10.1.1</b> Plot correlation of top cis-regulated promoter candidates</a></li>
+<li class="chapter" data-level="10.1.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#annotation-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.2</b> Annotation of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#gene-expression-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.3</b> Gene expression of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#correlation-between-cis-regulated-genes"><i class="fa fa-check"></i><b>10.1.4</b> Correlation between cis-regulated genes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.2</b> Epipolymorphism of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#promoter-examples"><i class="fa fa-check"></i><b>10.3</b> Promoter examples</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#brca1"><i class="fa fa-check"></i><b>10.3.1</b> BRCA1</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-genomic"><i class="fa fa-check"></i><b>10.4</b> Cis candidates: genomic</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-cis"><i class="fa fa-check"></i><b>10.4.1</b> Plot % cis</a></li>
+<li class="chapter" data-level="10.4.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-distance-to-most-correlated-gene"><i class="fa fa-check"></i><b>10.4.2</b> Plot distance to most correlated gene</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-genomic"><i class="fa fa-check"></i><b>10.5</b> Epipolymorphism of cis-regulated genomic</a></li>
+<li class="chapter" data-level="10.6" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#examples-for-cis-regulation-non-promoters"><i class="fa fa-check"></i><b>10.6</b> Examples for cis regulation (non-promoters)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html"><i class="fa fa-check"></i><b>11</b> X dosage compensation</a><ul>
+<li class="chapter" data-level="11.1" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#x-analysis"><i class="fa fa-check"></i><b>11.1</b> X analysis</a></li>
+<li class="chapter" data-level="11.2" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#autosome-analysis"><i class="fa fa-check"></i><b>11.2</b> autosome analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#checking-dosage-compensation-on-all-x-loci"><i class="fa fa-check"></i><b>11.3</b> Checking dosage compensation on all X loci</a></li>
+<li class="chapter" data-level="11.4" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#of-x-lost"><i class="fa fa-check"></i><b>11.4</b> % of X lost</a></li>
+<li class="chapter" data-level="11.5" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#plot-expression-methylation-correlation-for-x"><i class="fa fa-check"></i><b>11.5</b> Plot Expression-Methylation correlation for X</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="finding-specific-dosage-compensation-examples.html"><a href="finding-specific-dosage-compensation-examples.html"><i class="fa fa-check"></i><b>12</b> Finding specific dosage compensation examples</a></li>
+<li class="chapter" data-level="13" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html"><i class="fa fa-check"></i><b>13</b> Export supplementary tables</a><ul>
+<li class="chapter" data-level="13.1" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-1-metabric-samples-metadata"><i class="fa fa-check"></i><b>13.1</b> Table 1: METABRIC samples metadata</a></li>
+<li class="chapter" data-level="13.2" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-2-immune-expression-signature"><i class="fa fa-check"></i><b>13.2</b> Table 2: Immune expression signature</a></li>
+<li class="chapter" data-level="13.3" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-3-caf-expression-signature"><i class="fa fa-check"></i><b>13.3</b> Table 3: CAF expression signature</a></li>
+<li class="chapter" data-level="13.4" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-4-expression-methylation-correlation"><i class="fa fa-check"></i><b>13.4</b> Table 4: Expression-Methylation correlation</a></li>
+<li class="chapter" data-level="13.5" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-5-methylation-scores"><i class="fa fa-check"></i><b>13.5</b> Table 5: Methylation scores</a></li>
+<li class="chapter" data-level="13.6" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-6-gene-expression-correlation-to-epigenomic-instability"><i class="fa fa-check"></i><b>13.6</b> Table 6: Gene expression correlation to epigenomic instability</a></li>
+<li class="chapter" data-level="13.7" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-7-methylation-layers-loci"><i class="fa fa-check"></i><b>13.7</b> Table 7: Methylation layers loci</a></li>
+<li class="chapter" data-level="13.8" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-8-cis-regulation-candidates"><i class="fa fa-check"></i><b>13.8</b> Table 8: Cis regulation candidates</a></li>
+<li class="chapter" data-level="13.9" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-9-dosage-compensation-in-autosomes"><i class="fa fa-check"></i><b>13.9</b> Table 9: Dosage compensation in autosomes</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html"><i class="fa fa-check"></i><b>14</b> Files needed for the analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#misha-db"><i class="fa fa-check"></i><b>14.1</b> Misha DB</a></li>
+<li class="chapter" data-level="14.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#additional-files"><i class="fa fa-check"></i><b>14.2</b> Additional files</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#metabric-data"><i class="fa fa-check"></i><b>14.2.1</b> METABRIC data</a></li>
+<li class="chapter" data-level="14.2.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#notable-generated-files"><i class="fa fa-check"></i><b>14.2.2</b> Notable generated files</a></li>
+<li class="chapter" data-level="14.2.3" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#spatial-methylation-distribution"><i class="fa fa-check"></i><b>14.2.3</b> Spatial methylation distribution</a></li>
+<li class="chapter" data-level="14.2.4" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#copy-number-abberations"><i class="fa fa-check"></i><b>14.2.4</b> Copy number abberations</a></li>
+<li class="chapter" data-level="14.2.5" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#genomic-annotations"><i class="fa fa-check"></i><b>14.2.5</b> Genomic annotations</a></li>
+<li class="chapter" data-level="14.2.6" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#external-resources"><i class="fa fa-check"></i><b>14.2.6</b> External resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="figures-key.html"><a href="figures-key.html"><i class="fa fa-check"></i><b>15</b> Figures key</a><ul>
+<li class="chapter" data-level="15.1" data-path="figures-key.html"><a href="figures-key.html#figure-1"><i class="fa fa-check"></i><b>15.1</b> Figure 1</a></li>
+<li class="chapter" data-level="15.2" data-path="figures-key.html"><a href="figures-key.html#figure-3"><i class="fa fa-check"></i><b>15.2</b> Figure 3</a></li>
+<li class="chapter" data-level="15.3" data-path="figures-key.html"><a href="figures-key.html#figure-4"><i class="fa fa-check"></i><b>15.3</b> Figure 4</a></li>
+<li class="chapter" data-level="15.4" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-1"><i class="fa fa-check"></i><b>15.4</b> Extended Data Figure 1</a></li>
+<li class="chapter" data-level="15.5" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-2"><i class="fa fa-check"></i><b>15.5</b> Extended Data Figure 2</a></li>
+<li class="chapter" data-level="15.6" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-3"><i class="fa fa-check"></i><b>15.6</b> Extended Data Figure 3</a></li>
+<li class="chapter" data-level="15.7" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-4"><i class="fa fa-check"></i><b>15.7</b> Extended Data Figure 4</a></li>
+<li class="chapter" data-level="15.8" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-5"><i class="fa fa-check"></i><b>15.8</b> Extended Data Figure 5</a></li>
+<li class="chapter" data-level="15.9" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-6"><i class="fa fa-check"></i><b>15.9</b> Extended Data Figure 6</a></li>
+<li class="chapter" data-level="15.10" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-7"><i class="fa fa-check"></i><b>15.10</b> Extended Data Figure 7</a></li>
+<li class="chapter" data-level="15.11" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-8"><i class="fa fa-check"></i><b>15.11</b> Extended Data Figure 8</a></li>
+<li class="chapter" data-level="15.12" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-9"><i class="fa fa-check"></i><b>15.12</b> Extended Data Figure 9</a></li>
+<li class="chapter" data-level="15.13" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-10"><i class="fa fa-check"></i><b>15.13</b> Extended Data Figure 10</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="methylation---expression-in-cis" class="section level1">
+<h1><span class="header-section-number">10</span> Methylation - Expression <em>in cis</em></h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;scripts/init.R&quot;</span>))</code></pre></div>
+<div id="remove-tme-genes" class="section level3">
+<h3><span class="header-section-number">10.0.1</span> Remove TME genes</h3>
+<p>We start by identifying genes that are strongly correlated to TME (immune and CAF) in the expression-methylation correlation clusters. Our TME normalization cleaned most of their correlations with methylation, but it is not perfect we don't want their <em>in cis</em> effects to mask other more interesting expression-methylation correlations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TME_genes &lt;-<span class="st"> </span>{
+    ER_pos_TME_genes &lt;-<span class="st"> </span><span class="kw">get_TME_genes</span>(readr<span class="op">::</span><span class="kw">read_rds</span>(<span class="kw">here</span>(<span class="st">&quot;data/ER_positive_norm_meth.rds&quot;</span>))<span class="op">$</span>em_cross_clust)
+    ER_neg_TME_genes &lt;-<span class="st"> </span><span class="kw">get_TME_genes</span>(readr<span class="op">::</span><span class="kw">read_rds</span>(<span class="kw">here</span>(<span class="st">&quot;data/ER_negative_norm_meth.rds&quot;</span>))<span class="op">$</span>em_cross_clust)
+    normal_TME_genes &lt;-<span class="st"> </span><span class="kw">get_TME_genes</span>(readr<span class="op">::</span><span class="kw">read_rds</span>(<span class="kw">here</span>(<span class="st">&quot;data/normal_norm_meth.rds&quot;</span>))<span class="op">$</span>em_cross_clust)
+
+    <span class="kw">unique</span>(<span class="kw">c</span>(ER_pos_TME_genes, ER_neg_TME_genes, normal_TME_genes)) 
+} <span class="op">%cache_rds%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/TME_genes.rds&quot;</span>)
+
+<span class="kw">length</span>(TME_genes)</code></pre></div>
+<pre><code>## [1] 2194</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expr_mat &lt;-<span class="st"> </span><span class="kw">get_gene_expression_mat</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">expr_intervs_to_mat</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expr_mat_f &lt;-<span class="st"> </span>expr_mat[<span class="op">!</span>(<span class="kw">rownames</span>(expr_mat) <span class="op">%in%</span><span class="st"> </span>TME_genes), ]</code></pre></div>
+</div>
+<div id="load-normalized-methylation-and-separate-it-to-promoters-and-non-promoters" class="section level3">
+<h3><span class="header-section-number">10.0.2</span> Load normalized methylation and separate it to promoters and non-promoters</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_norm_meth &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/all_norm_meth.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>() </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prom_meth &lt;-<span class="st"> </span>all_norm_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(promoter_intervs <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end), <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;chrom&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">non_prom_meth &lt;-<span class="st"> </span>all_norm_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(promoter_intervs <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end), <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;chrom&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prom_intervs_f &lt;-<span class="st"> </span><span class="kw">resolve_alt_promoters</span>(prom_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end))</code></pre></div>
+</div>
+<div id="cis-candidates-promoters" class="section level2">
+<h2><span class="header-section-number">10.1</span> Cis candidates: promoters</h2>
+<p>We use <code>methylayer</code> to identify promoters that are correlated <em>in cis</em> to the expression of their gene:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ER_positive_prom_mat &lt;-<span class="st"> </span>prom_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(ER_positive_samples)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()
+ER_negative_prom_mat &lt;-<span class="st"> </span>prom_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(ER_negative_samples)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()
+normal_prom_mat &lt;-<span class="st"> </span>prom_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(normal_samples)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()
+
+
+<span class="kw">dim</span>(ER_positive_prom_mat)</code></pre></div>
+<pre><code>## [1] 15693  1108</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(ER_negative_prom_mat)</code></pre></div>
+<pre><code>## [1] 15693   310</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(normal_prom_mat)</code></pre></div>
+<pre><code>## [1] 15693    92</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prom_cis_cands &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(
+    <span class="kw">cis_em_promoters</span>(ER_positive_prom_mat, expr_mat_f, prom_intervs_f, <span class="dt">min_samples=</span><span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="st">&quot;ER+&quot;</span>), 
+    <span class="kw">cis_em_promoters</span>(ER_negative_prom_mat, expr_mat_f, prom_intervs_f, <span class="dt">min_samples=</span><span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="st">&quot;ER-&quot;</span>),
+    <span class="kw">cis_em_promoters</span>(normal_prom_mat, expr_mat_f, prom_intervs_f, <span class="dt">min_samples=</span><span class="dv">50</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="st">&quot;normal&quot;</span>) ) <span class="op">%cache_df%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/promoter_cis_cands.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()  </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(prom_cis_cands<span class="op">$</span>r)</code></pre></div>
+<pre><code>## [1] 9360</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>prom_cis_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(r <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(fdr, n_fdr, ER)
+
+df_fdr &lt;-<span class="st"> </span>prom_cis_cands <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(fdr <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(ER) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(fdr <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(fdr)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">distinct</span>(fdr, n_fdr, ER)
+
+df</code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##           fdr n_fdr     ER
+## 1 0.002364066   423    ER+
+## 2 0.005405405   185    ER-
+## 3 0.250000000     4 normal</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_fdr</code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+## # groups: ER
+##          fdr n_fdr  ER
+## 1 0.04938272  1053 ER+
+## 2 0.04910714   448 ER-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glue</span>(<span class="st">&quot;we identified {n_top_ER_pos} promoters in ER+ and {n_top_ER_neg} in ER- (FDR&lt;0.01; {n_fdr_ER_pos} in ER+ and {n_fdr_ER_neg} in ER- if increasing FDR to &lt;0.05)&quot;</span>, 
+     <span class="dt">n_top_ER_pos =</span> df<span class="op">$</span>n_fdr[df<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], 
+     <span class="dt">n_top_ER_neg =</span> df<span class="op">$</span>n_fdr[df<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>], 
+     <span class="dt">n_fdr_ER_pos =</span> df_fdr<span class="op">$</span>n_fdr[df_fdr<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>], 
+     <span class="dt">n_fdr_ER_neg =</span> df_fdr<span class="op">$</span>n_fdr[df_fdr<span class="op">$</span>ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>])</code></pre></div>
+<pre><code>## we identified 423 promoters in ER+ and 185 in ER- (FDR&lt;0.01; 1053 in ER+ and 448 in ER- if increasing FDR to &lt;0.05)</code></pre>
+<div id="plot-correlation-of-top-cis-regulated-promoter-candidates" class="section level3">
+<h3><span class="header-section-number">10.1.1</span> Plot correlation of top cis-regulated promoter candidates</h3>
+<div id="figure-3a" class="section level4">
+<h4><span class="header-section-number">10.1.1.1</span> Figure 3A</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">12</span>, <span class="dt">repr.plot.height =</span> <span class="dv">3</span>)
+
+p_top_cands &lt;-<span class="st"> </span>prom_cis_cands <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(r <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff =</span> <span class="kw">abs</span>(best <span class="op">-</span><span class="st"> </span>kth)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">arrange</span>(cor) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(name, cor), <span class="dt">y =</span> kth)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;gray&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Correlation&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> cor), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))
+
+p_top_cands <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">vertical_labs</span>() <span class="op">+</span><span class="st">  </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.13</span>)</code></pre></div>
+<p><img src="cis_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="figure-3b" class="section level4">
+<h4><span class="header-section-number">10.1.1.2</span> Figure 3B</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_diff &lt;-<span class="st"> </span>prom_cis_cands <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff =</span> <span class="kw">ifelse</span>(r <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, kth <span class="op">-</span><span class="st"> </span>cor, best <span class="op">-</span><span class="st"> </span>cor)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diff, <span class="dt">y =</span> (<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>..y..) <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(prom_cis_cands))) <span class="op">+</span>
+<span class="st">        </span><span class="kw">stat_ecdf</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_y_log10</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;# of promoters&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Diff&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)
+
+p_diff <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+</div>
+<div id="annotation-of-cis-regulated-promoters" class="section level3">
+<h3><span class="header-section-number">10.1.2</span> Annotation of cis-regulated promoters</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci &lt;-<span class="st"> </span>prom_cis_cands <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(chrom, start, end, name) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(<span class="kw">any</span>(r <span class="op">==</span><span class="st"> </span><span class="dv">1</span>), <span class="st">&quot;reg&quot;</span>, <span class="st">&quot;bg&quot;</span>), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(chrom, start, end) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">type =</span> <span class="kw">ifelse</span>(<span class="kw">any</span>(type <span class="op">==</span><span class="st"> &quot;reg&quot;</span>), <span class="st">&quot;reg&quot;</span>, <span class="st">&quot;bg&quot;</span>), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>)
+
+
+loci_annot &lt;-<span class="st"> </span>loci <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(chrom, start, end, <span class="kw">everything</span>()) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">annotate_loci</span>() <span class="op">%cache_df%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/promoter_cis_cands_loci.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()</code></pre></div>
+<div id="extended-data-figure-8b" class="section level4">
+<h4><span class="header-section-number">10.1.2.1</span> Extended Data Figure 8B</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+
+p_cg_cont &lt;-<span class="st"> </span>loci_annot <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">distinct</span>(chrom, start, end, type, cg_cont) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cg_cont, <span class="dt">color =</span> type, <span class="dt">linetype =</span> type)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_density</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;darkgray&quot;</span>, <span class="st">&quot;darkred&quot;</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_linetype_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;dashed&quot;</span>, <span class="st">&quot;solid&quot;</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;CpG content (500 bp)&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)
+
+p_cg_cont</code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.
+
+## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loci_annot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(type <span class="op">==</span><span class="st"> &quot;reg&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cg_cont =</span> <span class="kw">cut</span>(cg_cont, <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.04</span>,<span class="fl">0.08</span>,<span class="fl">0.2</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">count</span>(cg_cont) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> scales<span class="op">::</span><span class="kw">percent</span>(n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)))</code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##       cg_cont   n   p
+## 1    [0,0.04]  79 16%
+## 2 (0.04,0.08] 254 50%
+## 3  (0.08,0.2] 170 34%</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_meth &lt;-<span class="st"> </span>loci <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">left_join</span>(<span class="kw">get_all_summary_meth</span>(), <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;chrom&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>))</code></pre></div>
+</div>
+<div id="extended-data-figure-8a" class="section level4">
+<h4><span class="header-section-number">10.1.2.2</span> Extended Data Figure 8A</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+df &lt;-<span class="st"> </span>mean_meth <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">gather</span>(<span class="st">&quot;ER&quot;</span>, <span class="st">&quot;meth&quot;</span>, <span class="op">-</span>(chrom<span class="op">:</span>end), <span class="op">-</span>type) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;normal&quot;</span>, <span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">type =</span> forcats<span class="op">::</span><span class="kw">fct_recode</span>(type, <span class="st">&quot;Background&quot;</span> =<span class="st"> &quot;bg&quot;</span>, <span class="st">&quot;Cis-regulated</span><span class="ch">\n</span><span class="st">promoters&quot;</span> =<span class="st"> &quot;reg&quot;</span>)) 
+p_meth &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> type, <span class="dt">y =</span> meth, <span class="dt">fill =</span> ER)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_boxplot</span>(<span class="dt">linewidth=</span><span class="fl">0.1</span>, <span class="dt">fatten=</span><span class="fl">0.5</span>, <span class="dt">outlier.size =</span> <span class="fl">0.05</span>) <span class="op">+</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Methylation&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">vertical_labs</span>()</code></pre></div>
+<pre><code>## Warning: Ignoring unknown parameters: linewidth</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_meth <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">vertical_labs</span>()</code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(type)</code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   type    n
+## 1   bg 8857
+## 2  reg  503</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_meth <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">gather</span>(<span class="st">&quot;ER&quot;</span>, <span class="st">&quot;meth&quot;</span>, <span class="op">-</span>(chrom<span class="op">:</span>type) ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(type, ER) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise</span>(
+        <span class="dt">m =</span> <span class="kw">mean</span>(meth, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+        <span class="dt">sd =</span> <span class="kw">sd</span>(meth, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+        <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>
+    )</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   type     ER          m        sd
+## 1   bg    ER- 0.08122300 0.1712618
+## 2   bg    ER+ 0.08793721 0.1776411
+## 3   bg normal 0.06807298 0.1683802
+## 4  reg    ER- 0.18820936 0.2144194
+## 5  reg    ER+ 0.20382981 0.2206950
+## 6  reg normal 0.15027054 0.2219690</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_meth <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">gather</span>(<span class="st">&quot;ER&quot;</span>, <span class="st">&quot;meth&quot;</span>, <span class="op">-</span>(chrom<span class="op">:</span>type) ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">tumor_normal =</span> <span class="kw">ifelse</span>(ER <span class="op">==</span><span class="st"> &quot;normal&quot;</span>, <span class="st">&quot;normal&quot;</span>, <span class="st">&quot;tumor&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(type, tumor_normal) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise</span>(
+        <span class="dt">m =</span> <span class="kw">mean</span>(meth, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+        <span class="dt">sd =</span> <span class="kw">sd</span>(meth, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+        <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>
+    )</code></pre></div>
+<pre><code>## # A tibble: 4 x 4
+##   type tumor_normal          m        sd
+## 1   bg       normal 0.06807298 0.1683802
+## 2   bg        tumor 0.08458010 0.1745080
+## 3  reg       normal 0.15027054 0.2219690
+## 4  reg        tumor 0.19601959 0.2176119</code></pre>
+</div>
+</div>
+<div id="gene-expression-of-cis-regulated-promoters" class="section level3">
+<h3><span class="header-section-number">10.1.3</span> Gene expression of cis-regulated promoters</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_expr &lt;-<span class="st"> </span><span class="kw">get_mean_expression</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">raw_meth &lt;-<span class="st"> </span><span class="kw">get_promoter_avg_meth</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top_cands &lt;-<span class="st"> </span>prom_cis_cands <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff =</span> <span class="kw">abs</span>(best <span class="op">-</span><span class="st"> </span>kth)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(r <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">matched_meth &lt;-<span class="st"> </span>top_cands <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">distinct</span>(chrom, start, end, name) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">inner_join</span>(raw_meth) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">gather</span>(<span class="st">&quot;samp&quot;</span>, <span class="st">&quot;meth&quot;</span>, <span class="op">-</span>(chrom<span class="op">:</span>name)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">left_join</span>(samp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, patient, <span class="dt">ER =</span> ER1)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">select</span>(<span class="op">-</span>samp) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">spread</span>(ER, meth) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(normal)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">left_join</span>(top_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(name, ER)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff =</span> <span class="kw">ifelse</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>, <span class="st">`</span><span class="dt">ER+</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>normal, <span class="st">`</span><span class="dt">ER-</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>normal))</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Joining, by = &quot;name&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">matched_meth_df &lt;-<span class="st"> </span>matched_meth <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(diff)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff_grp =</span> <span class="kw">cut</span>(diff, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="dv">1</span>), <span class="dt">include.lowest =</span> <span class="ot">TRUE</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;hypo&quot;</span>, <span class="st">&quot;stable&quot;</span>, <span class="st">&quot;hyper&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">unite</span>(<span class="st">&quot;name&quot;</span>, name, ER) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">count</span>(name, diff_grp) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">group_by</span>(name) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
+<span class="st">        </span>tidyr<span class="op">::</span><span class="kw">complete</span>(diff_grp, <span class="dt">fill =</span> <span class="kw">list</span>(<span class="dt">p =</span> <span class="dv">0</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(diff_grp)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">p_hypo =</span> p[diff_grp <span class="op">==</span><span class="st"> &quot;hypo&quot;</span>], <span class="dt">p_hyper =</span> p[diff_grp <span class="op">==</span><span class="st"> &quot;hyper&quot;</span>], <span class="dt">p_stable =</span> p[diff_grp <span class="op">==</span><span class="st"> &quot;stable&quot;</span>]) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">arrange</span>((p_hypo <span class="op">-</span><span class="st"> </span>p_hyper) <span class="op">/</span><span class="st"> </span>(p_stable <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">name =</span> forcats<span class="op">::</span><span class="kw">fct_inorder</span>(name)) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;# of meth genes: %s&quot;</span>, matched_meth_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(name) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>() ) )</code></pre></div>
+<pre><code>## # of meth genes: 612</code></pre>
+<div id="figure-3c" class="section level4">
+<h4><span class="header-section-number">10.1.3.1</span> Figure 3C</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">10</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_meth_dist &lt;-<span class="st"> </span>matched_meth_df <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> name, <span class="dt">y =</span> p, <span class="dt">fill =</span> diff_grp)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">hypo =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">stable =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="dt">hyper =</span> <span class="st">&quot;darkred&quot;</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.background =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(), <span class="dt">aspect.ratio =</span> <span class="fl">0.4</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Cis-regulated promoters&quot;</span>)
+
+p_meth_dist <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.background =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(), <span class="dt">aspect.ratio =</span> <span class="fl">0.2</span>)</code></pre></div>
+<p><img src="cis_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expr_mat &lt;-<span class="st"> </span><span class="kw">get_gene_expression_mat</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">matched_expr &lt;-<span class="st"> </span>expr_mat <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(name <span class="op">%in%</span><span class="st"> </span>top_cands<span class="op">$</span>name) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">gather</span>(<span class="st">&quot;samp&quot;</span>, <span class="st">&quot;expr&quot;</span>, <span class="op">-</span>(chrom<span class="op">:</span>name3.chr)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">left_join</span>(samp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, patient, <span class="dt">ER =</span> ER1)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">select</span>(<span class="op">-</span>samp) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">spread</span>(ER, expr) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(normal)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">left_join</span>(top_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(name, ER))</code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Joining, by = &quot;name&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">matched_expr &lt;-<span class="st"> </span>matched_expr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">diff =</span> <span class="kw">ifelse</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>, <span class="st">`</span><span class="dt">ER+</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>normal, <span class="st">`</span><span class="dt">ER-</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>normal))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">matched_expr_df &lt;-<span class="st"> </span>matched_expr <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(diff)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">diff_grp =</span> <span class="kw">cut</span>(diff, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">20</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">20</span>), <span class="dt">include.lowest =</span> <span class="ot">TRUE</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;repressed&quot;</span>, <span class="st">&quot;stable&quot;</span>, <span class="st">&quot;induced&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">unite</span>(<span class="st">&quot;name&quot;</span>, name, ER) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">count</span>(name, diff_grp) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(name) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span>
+<span class="st">    </span>tidyr<span class="op">::</span><span class="kw">complete</span>(diff_grp, <span class="dt">fill =</span> <span class="kw">list</span>(<span class="dt">p =</span> <span class="dv">0</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(diff_grp)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_repressed =</span> p[diff_grp <span class="op">==</span><span class="st"> &quot;repressed&quot;</span>], <span class="dt">p_induced =</span> p[diff_grp <span class="op">==</span><span class="st"> &quot;induced&quot;</span>], <span class="dt">p_stable =</span> p[diff_grp <span class="op">==</span><span class="st"> &quot;stable&quot;</span>]) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">arrange</span>((p_induced <span class="op">-</span><span class="st"> </span>p_repressed) <span class="op">/</span><span class="st"> </span>(p_stable <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">name =</span> forcats<span class="op">::</span><span class="kw">fct_inorder</span>(name))
+
+<span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;# of expr genes: %s&quot;</span>, matched_expr_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(name) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>() ) )</code></pre></div>
+<pre><code>## # of expr genes: 612</code></pre>
+</div>
+<div id="figure-3d" class="section level4">
+<h4><span class="header-section-number">10.1.3.2</span> Figure 3D</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">10</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_expr_dist &lt;-<span class="st"> </span>matched_expr_df <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff_grp =</span> <span class="kw">factor</span>(diff_grp, <span class="dt">levels =</span> <span class="kw">rev</span>(<span class="kw">c</span>(<span class="st">&quot;repressed&quot;</span>, <span class="st">&quot;stable&quot;</span>, <span class="st">&quot;induced&quot;</span>)))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> name, <span class="dt">y =</span> p, <span class="dt">fill =</span> diff_grp)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">repressed =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">stable =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="dt">induced =</span>  <span class="st">&quot;darkblue&quot;</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.background =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(), <span class="dt">aspect.ratio =</span> <span class="fl">0.4</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Cis-regulated promoters&quot;</span>)
+
+p_expr_dist <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.background =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(), <span class="dt">aspect.ratio =</span> <span class="fl">0.2</span>) </code></pre></div>
+<p><img src="cis_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+</div>
+</div>
+<div id="correlation-between-cis-regulated-genes" class="section level3">
+<h3><span class="header-section-number">10.1.4</span> Correlation between cis-regulated genes</h3>
+<div id="extended-data-figure-8c" class="section level4">
+<h4><span class="header-section-number">10.1.4.1</span> Extended Data Figure 8C</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cands_expr &lt;-<span class="st"> </span>expr_mat <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(name <span class="op">%in%</span><span class="st"> </span>(top_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER+&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(name))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">select</span>(<span class="kw">any_of</span>(<span class="kw">c</span>(<span class="st">&quot;name&quot;</span>, ER_positive_samples))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">column_to_rownames</span>(<span class="st">&quot;name&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">as.matrix</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cm &lt;-<span class="st"> </span><span class="kw">tgs_cor</span>(<span class="kw">t</span>(cands_expr), <span class="dt">pairwise.complete.obs =</span> <span class="ot">TRUE</span>)
+hc &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">tgs_dist</span>(cm), <span class="dt">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">10</span>, <span class="dt">repr.plot.height =</span> <span class="dv">10</span>)
+p_cor &lt;-<span class="st"> </span>tgutil<span class="op">::</span><span class="kw">tgplot_heatmap</span>(cm[hc<span class="op">$</span>order, hc<span class="op">$</span>order]) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_gradientn</span>(<span class="st">&quot;Correlation&quot;</span>, <span class="dt">colors =</span> <span class="kw">c</span>(<span class="st">&quot;darkred&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;darkblue&quot;</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(), <span class="dt">aspect.ratio =</span> <span class="dv">1</span>)</code></pre></div>
+<pre><code>## Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
+## Using compatibility `.name_repair`.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_cor</code></pre></div>
+<p><img src="cis_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(cm)</code></pre></div>
+<pre><code>## [1] 423 423</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+cm1 &lt;-<span class="st"> </span>cm
+<span class="kw">diag</span>(cm1) &lt;-<span class="st"> </span><span class="ot">NA</span>
+maxs &lt;-<span class="st"> </span>matrixStats<span class="op">::</span><span class="kw">rowMaxs</span>(cm1, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) 
+<span class="kw">sum</span>(maxs <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span>)</code></pre></div>
+<pre><code>## [1] 392</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">density</span>(maxs))</code></pre></div>
+<p><img src="cis_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="epipolymorphism-of-cis-regulated-promoters" class="section level2">
+<h2><span class="header-section-number">10.2</span> Epipolymorphism of cis-regulated promoters</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prom_epipoly &lt;-<span class="st"> </span><span class="kw">get_promoter_cis_reg_epipoly</span>()</code></pre></div>
+<div id="figure-3f" class="section level4">
+<h4><span class="header-section-number">10.2.0.1</span> Figure 3F</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">10</span>, <span class="dt">repr.plot.height =</span> <span class="dv">6</span>)
+p_prom_epipoly &lt;-<span class="st"> </span>prom_epipoly <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">pat_meth =</span> <span class="kw">cut</span>(pat_meth, <span class="kw">seq</span>(<span class="fl">0.05</span>, <span class="dv">1</span>, <span class="fl">0.1</span>), <span class="dt">include.lowest =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(pat_meth)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(epipoly), <span class="op">!</span><span class="kw">is.na</span>(type)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> pat_meth, <span class="dt">y =</span> epipoly, <span class="dt">fill =</span> type)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>, <span class="dt">outlier.size =</span> <span class="fl">0.05</span>, <span class="dt">lwd =</span><span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">bg =</span> <span class="st">&quot;gray&quot;</span>, <span class="dt">reg =</span> <span class="st">&quot;darkred&quot;</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">vertical_labs</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Promoter methylation&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Epipolymorphism&quot;</span>) <span class="op">+</span>
+<span class="st">        </span>ggpubr<span class="op">::</span><span class="kw">stat_compare_means</span>(<span class="dt">label =</span> <span class="st">&quot;p.signif&quot;</span>, <span class="dt">hide.ns =</span> <span class="ot">TRUE</span>, <span class="dt">method =</span> <span class="st">&quot;wilcox.test&quot;</span>, <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.6</span>)
+
+p_prom_epipoly <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">vertical_labs</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.6</span>)</code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+</div>
+</div>
+<div id="promoter-examples" class="section level2">
+<h2><span class="header-section-number">10.3</span> Promoter examples</h2>
+<div id="brca1" class="section level3">
+<h3><span class="header-section-number">10.3.1</span> BRCA1</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">brca_cors &lt;-<span class="st"> </span>methylayer<span class="op">:::</span><span class="kw">gene_promoter_cors</span>(<span class="st">&quot;BRCA1&quot;</span>, ER_negative_prom_mat, expr_mat_f, prom_intervs_f)</code></pre></div>
+<div id="extended-data-figure-8e" class="section level4">
+<h4><span class="header-section-number">10.3.1.1</span> Extended Data Figure 8E</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">7</span>)
+p_brca_gene_cors &lt;-<span class="st"> </span>brca_cors <span class="op">%&gt;%</span><span class="st">     </span>
+<span class="st">    </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">reorder</span>(promoter, <span class="op">-</span>cor), <span class="dt">y=</span>cor)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Correlation to BRCA1 expression in ER-&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Promoters&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">coord_flip</span>()
+
+p_brca_gene_cors <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="cis_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+</div>
+<div id="figure-3e" class="section level4">
+<h4><span class="header-section-number">10.3.1.2</span> Figure 3E</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;KRT7&quot;</span>, <span class="st">&quot;CABP4&quot;</span>, <span class="st">&quot;BRCA1&quot;</span>)
+prom_cis_cands &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/promoter_cis_cands.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+example_cands &lt;-<span class="st"> </span><span class="kw">map_dfr</span>(genes, <span class="op">~</span><span class="st"> </span><span class="kw">get_promoter_cand_interval</span>(prom_cis_cands, .x, <span class="st">&quot;ER+&quot;</span>))</code></pre></div>
+<pre><code>## Joining, by = c(&quot;name&quot;, &quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = &quot;full_name&quot;</code></pre>
+<pre><code>## Joining, by = c(&quot;name&quot;, &quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = &quot;full_name&quot;</code></pre>
+<pre><code>## Joining, by = c(&quot;name&quot;, &quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = &quot;full_name&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cg_meth &lt;-<span class="st"> </span><span class="kw">get_cis_promoter_examples_cg_meth</span>(<span class="dt">genes =</span> genes)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">12</span>, <span class="dt">repr.plot.height =</span> <span class="dv">7</span>)
+krt7_p &lt;-<span class="st"> </span><span class="kw">plot_cis_promoter_example</span>(example_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(name <span class="op">==</span><span class="st"> &quot;KRT7&quot;</span>), cg_meth, <span class="st">&quot;ER+&quot;</span>, <span class="dt">resolution =</span> <span class="fl">5e3</span>, <span class="dt">plot_all_tss_lines =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## Joining, by = c(&quot;samp&quot;, &quot;name&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<pre><code>## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database
+
+## Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): font family
+## &#39;Arial&#39; not found in PostScript font database</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">krt7_p</code></pre></div>
+<p><img src="cis_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">12</span>, <span class="dt">repr.plot.height =</span> <span class="dv">7</span>)
+
+brca1_p &lt;-<span class="st"> </span><span class="kw">plot_cis_promoter_example</span>(example_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(name <span class="op">==</span><span class="st"> &quot;BRCA1&quot;</span>), cg_meth, <span class="st">&quot;ER-&quot;</span>, <span class="dt">resolution =</span> <span class="fl">5e3</span>, <span class="dt">plot_all_tss_lines =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## Joining, by = c(&quot;samp&quot;, &quot;name&quot;)</code></pre>
+<pre><code>## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero
+
+## Warning in cor(expr, avg_m, use = &quot;pairwise.complete.obs&quot;): the standard
+## deviation is zero</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">brca1_p</code></pre></div>
+<p><img src="cis_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="cis-candidates-genomic" class="section level2">
+<h2><span class="header-section-number">10.4</span> Cis candidates: genomic</h2>
+<p>We use <code>methylayer</code> to identify non promoter regions that are correlated <em>in cis</em> to expression of <em>any</em> gene within their vicinity.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ER_positive_genomic_mat &lt;-<span class="st"> </span>non_prom_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(ER_positive_samples)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()
+ER_negative_genomic_mat &lt;-<span class="st"> </span>non_prom_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(ER_negative_samples)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()
+normal_genomic_mat &lt;-<span class="st"> </span>non_prom_meth <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(normal_samples)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()
+
+
+
+<span class="kw">dim</span>(ER_positive_genomic_mat)</code></pre></div>
+<pre><code>## [1] 185389   1108</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(ER_negative_genomic_mat)</code></pre></div>
+<pre><code>## [1] 185389    310</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(normal_genomic_mat)</code></pre></div>
+<pre><code>## [1] 185389     92</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene_tss &lt;-<span class="st"> </span><span class="kw">get_gene_tss_coord</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genomic_cands_ER_pos &lt;-<span class="st"> </span><span class="kw">cis_em_genomic</span>(ER_positive_genomic_mat, expr_mat_f, gene_tss, <span class="dt">min_samples=</span><span class="dv">50</span>, <span class="dt">max_dist =</span> <span class="fl">5e5</span>, <span class="dt">min_dist =</span> <span class="dv">200</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="st">&quot;ER+&quot;</span>) <span class="op">%cache_df%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/genomic_cis_cands_ER_positive.tsv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genomic_cands_ER_neg &lt;-<span class="st"> </span><span class="kw">cis_em_genomic</span>(ER_negative_genomic_mat, expr_mat_f, gene_tss, <span class="dt">min_samples=</span><span class="dv">50</span>, <span class="dt">max_dist =</span> <span class="fl">5e5</span>, <span class="dt">min_dist =</span> <span class="dv">200</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="st">&quot;ER-&quot;</span>) <span class="op">%cache_df%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/genomic_cis_cands_ER_negative.tsv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genomic_cands_normals &lt;-<span class="st"> </span><span class="kw">cis_em_genomic</span>(normal_genomic_mat, expr_mat_f, gene_tss, <span class="dt">min_samples=</span><span class="dv">50</span>, <span class="dt">max_dist =</span> <span class="fl">5e5</span>, <span class="dt">min_dist =</span> <span class="dv">200</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="st">&quot;normal&quot;</span>) <span class="op">%cache_df%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/genomic_cis_cands_normal.tsv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genomic_cis_cands &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(
+    genomic_cands_ER_pos,
+    genomic_cands_ER_neg,
+    genomic_cands_normals) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+<span class="kw">head</span>(genomic_cis_cands)</code></pre></div>
+<pre><code>## # A tibble: 6 x 16
+##   chrom  start    end type rank   gene        cor chrom_expr start_expr
+## 1  chr1  10496  10587  obs    1 CT45A3 -0.2446525       chrX  134883487
+## 2  chr1  10588  10639  obs    1  DSCR8 -0.1658337      chr21   39493544
+## 3  chr1 134998 135215  obs    1 MAGEC2 -0.2381125       chrX  141293076
+## 4  chr1 546168 546310  obs    1 MAGEA8 -0.2542376       chrX  149009940
+## 5  chr1 565396 565791  obs    1 RAD51C -0.2153869      chr17   56769933
+## 6  chr1 567121 567237  obs    1 TIMM23 -0.2271249      chr10   51623386
+##    end_expr strand_expr dist n_obs n_shuff        fdr  ER
+## 1 134883488           1   NA  2680      92 0.03432836 ER+
+## 2  39493545           1   NA  2680      92 0.03432836 ER+
+## 3 141293077          -1   NA  2680      92 0.03432836 ER+
+## 4 149009941           1   NA  2680      92 0.03432836 ER+
+## 5  56769934           1   NA  2680      92 0.03432836 ER+
+## 6  51623387          -1   NA  2680      92 0.03432836 ER+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(genomic_cis_cands)</code></pre></div>
+<pre><code>## [1] 55616700       16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(expr_mat_f)</code></pre></div>
+<pre><code>## [1] 24051  2124</code></pre>
+<div id="plot-cis" class="section level3">
+<h3><span class="header-section-number">10.4.1</span> Plot % cis</h3>
+<div id="figure-3g" class="section level4">
+<h4><span class="header-section-number">10.4.1.1</span> Figure 3G</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">4</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+
+p_cis &lt;-<span class="st"> </span>genomic_cis_cands <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st">    </span>
+<span class="st">        </span><span class="kw">filter</span>(rank <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">group_by</span>(type, ER) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">n_na =</span> <span class="kw">sum</span>(<span class="kw">is.na</span>(dist))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">p =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(n_na <span class="op">/</span><span class="st"> </span>n)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">label =</span> <span class="kw">glue</span>(<span class="st">&quot;{scales::comma(n_na)}/{scales::comma(n)}&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ER, <span class="dt">y =</span> p, <span class="dt">fill =</span> type, <span class="dt">label =</span> label)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_col</span>(<span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.8</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">label =</span> <span class="cf">function</span>(x) scales<span class="op">::</span><span class="kw">percent</span>(x, <span class="dt">accuracy =</span> <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% Cis&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">shuff =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="dt">obs =</span> <span class="st">&quot;darkred&quot;</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>)
+
+p_cis <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() </code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plot-distance-to-most-correlated-gene" class="section level3">
+<h3><span class="header-section-number">10.4.2</span> Plot distance to most correlated gene</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">10</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+
+p_cis_decay &lt;-<span class="st"> </span>genomic_cis_cands <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dist), <span class="kw">is.finite</span>(dist)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(rank <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">abs</span>(dist), <span class="dt">color =</span> type, <span class="dt">linetype =</span> type)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">stat_ecdf</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">shuff =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="dt">obs =</span> <span class="st">&quot;darkred&quot;</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_linetype_manual</span>(<span class="st">&quot;&quot;</span>, <span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">shuff =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">obs =</span> <span class="st">&quot;solid&quot;</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_x_log10</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;TSS&quot;</span>, <span class="st">&quot;100&quot;</span>, <span class="st">&quot;10K&quot;</span>, <span class="st">&quot;1M&quot;</span>, <span class="st">&quot;100M&quot;</span>), <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="fl">1e4</span>, <span class="fl">1e6</span>, <span class="fl">1e8</span>), <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">1e9</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.7</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Distance to gene (bp)&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of loci&quot;</span>) 
+
+p_cis_decay <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>ER) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.7</span>)</code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.
+
+## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">5</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p_cis_decay <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.7</span>)</code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.
+
+## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-55-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genomic_cis_cands <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dist), <span class="kw">is.finite</span>(dist)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(rank <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">group_by</span>(ER) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">summarise</span>(<span class="dt">pval =</span> <span class="kw">ks.test</span>(dist[type <span class="op">==</span><span class="st"> &quot;obs&quot;</span>], dist[type <span class="op">==</span><span class="st"> &quot;shuff&quot;</span>])<span class="op">$</span>p.value)</code></pre></div>
+<pre><code>## Warning in ks.test(dist[type == &quot;obs&quot;], dist[type == &quot;shuff&quot;]): p-value will be
+## approximate in the presence of ties
+
+## Warning in ks.test(dist[type == &quot;obs&quot;], dist[type == &quot;shuff&quot;]): p-value will be
+## approximate in the presence of ties</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##    ER pval
+## 1 ER+    0
+## 2 ER-    0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">min_dist &lt;-<span class="st"> </span><span class="dv">200</span>
+distances &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5e4</span>, <span class="fl">5e5</span>, <span class="fl">1e6</span>)
+<span class="kw">map_dfr</span>(distances, <span class="cf">function</span>(max_dist) 
+    genomic_cis_cands <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dist)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(rank <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">group_by</span>(ER, type) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">summarise</span>(<span class="dt">n_tot =</span> <span class="kw">n</span>(), <span class="dt">n =</span> <span class="kw">sum</span>(<span class="kw">abs</span>(dist) <span class="op">&lt;=</span><span class="st"> </span>max_dist <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(dist) <span class="op">&gt;=</span><span class="st"> </span>min_dist)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span>n_tot) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">pivot_wider</span>(<span class="dt">names_from=</span><span class="st">&quot;type&quot;</span>, <span class="dt">values_from =</span> <span class="kw">c</span>(<span class="st">&quot;n_tot&quot;</span>, <span class="st">&quot;p&quot;</span>, <span class="st">&quot;n&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">fdr =</span> n_shuff <span class="op">/</span><span class="st"> </span>n_obs, <span class="dt">max_dist =</span> max_dist)
+) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(ER, max_dist)</code></pre></div>
+<pre><code>## # A tibble: 6 x 9
+## # groups: ER
+##    ER n_tot_obs n_tot_shuff      p_obs     p_shuff n_obs n_shuff         fdr
+## 1 ER+     15798        8786 0.11893911 0.001479627  1879      13 0.006918574
+## 2 ER+     15798        8786 0.16964173 0.010471204  2680      92 0.034328358
+## 3 ER+     15798        8786 0.19230282 0.022877305  3038     201 0.066161949
+## 4 ER-     11951        8936 0.07271358 0.001342883   869      12 0.013808976
+## 5 ER-     11951        8936 0.11145511 0.010295434  1332      92 0.069069069
+## 6 ER-     11951        8936 0.13906786 0.020255148  1662     181 0.108904934
+##   max_dist
+## 1    50000
+## 2   500000
+## 3  1000000
+## 4    50000
+## 5   500000
+## 6  1000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genomic_cis_cands <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dist)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(rank <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">group_by</span>(ER, type) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">summarise</span>(<span class="dt">n_tot =</span> <span class="kw">n</span>(), <span class="dt">n =</span> <span class="kw">sum</span>(<span class="kw">abs</span>(dist) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">5e5</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(dist) <span class="op">&gt;=</span><span class="st"> </span><span class="fl">5e4</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span>n_tot) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">pivot_wider</span>(<span class="dt">names_from=</span><span class="st">&quot;type&quot;</span>, <span class="dt">values_from =</span> <span class="kw">c</span>(<span class="st">&quot;n_tot&quot;</span>, <span class="st">&quot;p&quot;</span>, <span class="st">&quot;n&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">fdr =</span> n_shuff <span class="op">/</span><span class="st"> </span>n_obs)</code></pre></div>
+<pre><code>## # A tibble: 2 x 8
+## # groups: ER
+##    ER n_tot_obs n_tot_shuff      p_obs     p_shuff n_obs n_shuff        fdr
+## 1 ER+     15798        8786 0.05070262 0.008991578   801      79 0.09862672
+## 2 ER-     11951        8936 0.03874153 0.008952551   463      80 0.17278618</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genomic_cis_cands <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dist)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(rank <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">group_by</span>(ER, type) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">summarise</span>(<span class="dt">n_tot =</span> <span class="kw">n</span>(), <span class="dt">n =</span> <span class="kw">sum</span>(<span class="kw">abs</span>(dist) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">5e5</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(dist) <span class="op">&gt;=</span><span class="st"> </span>min_dist)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span>n_tot) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">pivot_wider</span>(<span class="dt">names_from=</span><span class="st">&quot;type&quot;</span>, <span class="dt">values_from =</span> <span class="kw">c</span>(<span class="st">&quot;n_tot&quot;</span>, <span class="st">&quot;p&quot;</span>, <span class="st">&quot;n&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">fdr =</span> n_shuff <span class="op">/</span><span class="st"> </span>n_obs)</code></pre></div>
+<pre><code>## # A tibble: 2 x 8
+## # groups: ER
+##    ER n_tot_obs n_tot_shuff     p_obs    p_shuff n_obs n_shuff        fdr
+## 1 ER+     15798        8786 0.1696417 0.01047120  2680      92 0.03432836
+## 2 ER-     11951        8936 0.1114551 0.01029543  1332      92 0.06906907</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genomic_cands &lt;-<span class="st"> </span>genomic_cis_cands <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(ER <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(
+        rank <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, 
+        type <span class="op">==</span><span class="st"> &quot;obs&quot;</span>, 
+        <span class="op">!</span><span class="kw">is.na</span>(dist), 
+        <span class="kw">abs</span>(dist) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">200</span>
+    )
+
+genomic_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">abs</span>(dist) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">5e5</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end, ER)  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(ER)</code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##    ER    n
+## 1 ER- 1332
+## 2 ER+ 2680</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n_tot &lt;-<span class="st"> </span>genomic_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">abs</span>(dist) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">5e5</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()
+n_50k &lt;-<span class="st"> </span>genomic_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">abs</span>(dist) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">5e4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()
+n_50k_to_500k &lt;-<span class="st"> </span>genomic_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">abs</span>(dist) <span class="op">&gt;=</span><span class="st"> </span><span class="fl">5e4</span>, <span class="kw">abs</span>(dist) <span class="op">&lt;=</span><span class="st"> </span><span class="fl">5e5</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()
+
+<span class="kw">print</span>(<span class="kw">glue</span>(<span class="st">&quot;total number of candidates (dist &lt;= 500k): {n_tot}.</span><span class="ch">\n</span><span class="st">Out of which {scales::percent(n_50k / n_tot)} are located within 50kb of the promoter and {scales::percent(n_50k_to_500k / n_tot)} from 50kb to 500kb from the promoter&quot;</span>))</code></pre></div>
+<pre><code>## total number of candidates (dist &lt;= 500k): 3482.
+## Out of which 67% are located within 50kb of the promoter and 34% from 50kb to 500kb from the promoter</code></pre>
+</div>
+</div>
+<div id="epipolymorphism-of-cis-regulated-genomic" class="section level2">
+<h2><span class="header-section-number">10.5</span> Epipolymorphism of cis-regulated genomic</h2>
+<div id="extended-data-figure-8d" class="section level4">
+<h4><span class="header-section-number">10.5.0.1</span> Extended Data Figure 8D</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gen_epi &lt;-<span class="st"> </span><span class="kw">get_genomic_cis_reg_epipoly</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">10</span>, <span class="dt">repr.plot.height =</span> <span class="dv">6</span>)
+p_gen_epipoly &lt;-<span class="st"> </span>gen_epi <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">pat_meth =</span> <span class="kw">cut</span>(pat_meth, <span class="kw">seq</span>(<span class="fl">0.05</span>, <span class="dv">1</span>, <span class="fl">0.1</span>), <span class="dt">include.lowest =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(pat_meth)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(epipoly), <span class="op">!</span><span class="kw">is.na</span>(type)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> pat_meth, <span class="dt">y =</span> epipoly, <span class="dt">fill =</span> type)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>, <span class="dt">outlier.size =</span> <span class="fl">0.05</span>, <span class="dt">lwd =</span><span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dt">bg =</span> <span class="st">&quot;gray&quot;</span>, <span class="dt">reg =</span> <span class="st">&quot;darkred&quot;</span>), <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">vertical_labs</span>() <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;Loci methylation&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;Epipolymorphism&quot;</span>) <span class="op">+</span>
+<span class="st">        </span>ggpubr<span class="op">::</span><span class="kw">stat_compare_means</span>(<span class="dt">label =</span> <span class="st">&quot;p.signif&quot;</span>, <span class="dt">hide.ns =</span> <span class="ot">TRUE</span>, <span class="dt">method =</span> <span class="st">&quot;wilcox.test&quot;</span>, <span class="dt">method.args =</span> <span class="kw">list</span>(<span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.6</span>)
+
+p_gen_epipoly <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">vertical_labs</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="fl">0.6</span>)</code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+</div>
+</div>
+<div id="examples-for-cis-regulation-non-promoters" class="section level2">
+<h2><span class="header-section-number">10.6</span> Examples for cis regulation (non-promoters)</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;DNMT3A&quot;</span>, <span class="st">&quot;GATA3&quot;</span>, <span class="st">&quot;TBX1&quot;</span>, <span class="st">&quot;FGFR4&quot;</span>, <span class="st">&quot;PAX8&quot;</span>)
+min_dist &lt;-<span class="st"> </span><span class="fl">1e5</span>
+min_tss_dist &lt;-<span class="st"> </span><span class="fl">2e3</span>
+top_cands &lt;-<span class="st"> </span>genomic_cis_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(gene <span class="op">%in%</span><span class="st"> </span>genes, type <span class="op">==</span><span class="st"> &quot;obs&quot;</span>, rank <span class="op">==</span><span class="st"> </span><span class="dv">1</span>,  <span class="op">!</span><span class="kw">is.na</span>(dist),<span class="kw">abs</span>(dist) <span class="op">&lt;=</span><span class="st"> </span>min_dist, <span class="kw">abs</span>(dist) <span class="op">&gt;=</span><span class="st"> </span>min_tss_dist) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(gene, cor) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top_cands</code></pre></div>
+<pre><code>## # A tibble: 5 x 16
+##   chrom     start       end type rank   gene        cor chrom_expr start_expr
+## 1  chr2  25500066  25500185  obs    1 DNMT3A -0.4868497       chr2   25475184
+## 2  chr5 176536239 176536567  obs    1  FGFR4 -0.5220844       chr5  176513872
+## 3 chr10   8110463   8110569  obs    1  GATA3 -0.5098628      chr10    8096666
+## 4  chr2 113993163 113993302  obs    1   PAX8 -0.6831847       chr2  114036498
+## 5 chr22  19749606  19749740  obs    1   TBX1 -0.5967496      chr22   19744225
+##    end_expr strand_expr   dist n_obs n_shuff        fdr  ER
+## 1  25475185          -1 -24881  2680      92 0.03432836 ER+
+## 2 176513873           1  22366  1331      92 0.06912096 ER-
+## 3   8096667           1  13796  1331      92 0.06912096 ER-
+## 4 114036499          -1  43196  2680      92 0.03432836 ER+
+## 5  19744226           1   5380  2680      92 0.03432836 ER+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">meth_df &lt;-<span class="st"> </span><span class="kw">get_cis_genomic_examples_cg_meth</span>(<span class="dt">genes =</span> genes, <span class="dt">scope =</span> <span class="fl">2e4</span>, <span class="dt">min_dist =</span> min_dist, <span class="dt">min_tss_dist =</span> min_tss_dist) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end, samp, cov, meth, ER)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expr_mat &lt;-<span class="st"> </span><span class="kw">get_gene_expression_mat</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(name <span class="op">%in%</span><span class="st"> </span>genes) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>(chrom<span class="op">:</span>end), <span class="op">-</span>name3.chr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">column_to_rownames</span>(<span class="st">&#39;name&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expr_df &lt;-<span class="st"> </span>expr_mat <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather_matrix</span>(<span class="dt">x =</span> <span class="st">&quot;samp&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;gene&quot;</span>, <span class="dt">val =</span> <span class="st">&quot;expr&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">top_cands</code></pre></div>
+<pre><code>## # A tibble: 5 x 16
+##   chrom     start       end type rank   gene        cor chrom_expr start_expr
+## 1  chr2  25500066  25500185  obs    1 DNMT3A -0.4868497       chr2   25475184
+## 2  chr5 176536239 176536567  obs    1  FGFR4 -0.5220844       chr5  176513872
+## 3 chr10   8110463   8110569  obs    1  GATA3 -0.5098628      chr10    8096666
+## 4  chr2 113993163 113993302  obs    1   PAX8 -0.6831847       chr2  114036498
+## 5 chr22  19749606  19749740  obs    1   TBX1 -0.5967496      chr22   19744225
+##    end_expr strand_expr   dist n_obs n_shuff        fdr  ER
+## 1  25475185          -1 -24881  2680      92 0.03432836 ER+
+## 2 176513873           1  22366  1331      92 0.06912096 ER-
+## 3   8096667           1  13796  1331      92 0.06912096 ER-
+## 4 114036499          -1  43196  2680      92 0.03432836 ER+
+## 5  19744226           1   5380  2680      92 0.03432836 ER+</code></pre>
+<div id="figure-3h" class="section level4">
+<h4><span class="header-section-number">10.6.0.1</span> Figure 3H</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes &lt;-<span class="st"> </span>top_cands<span class="op">$</span>gene
+ERs &lt;-<span class="st"> </span>top_cands<span class="op">$</span>ER
+<span class="kw">print</span>(genes)</code></pre></div>
+<pre><code>## [1] &quot;DNMT3A&quot; &quot;FGFR4&quot;  &quot;GATA3&quot;  &quot;PAX8&quot;   &quot;TBX1&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(ERs)</code></pre></div>
+<pre><code>## [1] &quot;ER+&quot; &quot;ER-&quot; &quot;ER-&quot; &quot;ER+&quot; &quot;ER+&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cis_examples &lt;-<span class="st"> </span><span class="kw">list</span>()
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(genes)){
+    <span class="kw">print</span>(genes[i])
+    <span class="kw">try</span>(cis_examples[[genes[i]]] &lt;-<span class="st"> </span><span class="kw">plot_cis_genomic_example</span>(<span class="dt">df =</span> top_cands, <span class="dt">gene =</span> genes[i], <span class="dt">expr_df =</span> expr_df, <span class="dt">meth_df =</span> meth_df, <span class="dt">ofn=</span><span class="ot">NULL</span>, <span class="dt">k_smooth =</span> <span class="dv">40</span>, <span class="dt">ER =</span> ERs[i], <span class="dt">scope_start =</span> <span class="fl">8e3</span>, <span class="dt">scope_end =</span> <span class="fl">1e4</span>, <span class="dt">add_pval =</span> <span class="ot">FALSE</span>)    )
+    <span class="kw">print</span>(cis_examples[[genes[i]]] )
+}</code></pre></div>
+<pre><code>## [1] &quot;DNMT3A&quot;</code></pre>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<pre><code>## [1] &quot;FGFR4&quot;</code></pre>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<pre><code>## [1] &quot;GATA3&quot;</code></pre>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-69-2.png" width="672" /></p>
+<pre><code>## [1] &quot;PAX8&quot;</code></pre>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Error : Problem with `mutate()` column `cor`.
+## ℹ `cor = cor(meth, expr, use = &quot;pairwise.complete.obs&quot;, method = &quot;spearman&quot;)`.
+## ✖ both &#39;x&#39; and &#39;y&#39; must be non-empty
+## NULL
+## [1] &quot;TBX1&quot;</code></pre>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<p><img src="cis_files/figure-html/unnamed-chunk-69-3.png" width="672" /><img src="cis_files/figure-html/unnamed-chunk-69-4.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">gc</span>()</code></pre></div>
+<pre><code>##              used    (Mb) gc trigger    (Mb)   max used    (Mb)
+## Ncells    4757123   254.1    8047402   429.8    8047402   429.8
+## Vcells 3046602467 23243.8 4790175246 36546.2 3990373295 30444.2</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="survival.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="x-dosage-compensation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>11 X dosage compensation | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</title>
+  <meta name="description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="11 X dosage compensation | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="tanaylab.github.io/metabric_rrbs" />
+  
+  <meta property="og:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  <meta name="github-repo" content="tanaylab/metabric_rrbs" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="11 X dosage compensation | DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+  <meta name="twitter:description" content="Analysis and code for the paper: DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation" />
+  
+
+<meta name="author" content="Aviezer Lifshitz" />
+
+
+<meta name="date" content="2021-08-10" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="methylation-expression-in-cis.html"/>
+<link rel="next" href="finding-specific-dosage-compensation-examples.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#run-the-notebooks"><i class="fa fa-check"></i><b>1.1</b> Run the notebooks</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#notebook-order"><i class="fa fa-check"></i><b>1.3</b> Notebook order</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#find-a-specific-figure"><i class="fa fa-check"></i><b>1.4</b> Find a specific figure</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html"><i class="fa fa-check"></i><b>2</b> METABRIC methylation data statistics</a><ul>
+<li class="chapter" data-level="2.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#breakdown-of-samples"><i class="fa fa-check"></i><b>2.1</b> Breakdown of samples</a></li>
+<li class="chapter" data-level="2.2" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#number-of-samples"><i class="fa fa-check"></i><b>2.2</b> Number of samples</a></li>
+<li class="chapter" data-level="2.3" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#total-number-of-reads"><i class="fa fa-check"></i><b>2.3</b> Total number of reads</a></li>
+<li class="chapter" data-level="2.4" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-cpg-coverage-per-sample"><i class="fa fa-check"></i><b>2.4</b> Distribution of CpG coverage per sample</a></li>
+<li class="chapter" data-level="2.5" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#distribution-of-covered-cpgs"><i class="fa fa-check"></i><b>2.5</b> Distribution of covered CpGs</a></li>
+<li class="chapter" data-level="2.6" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#promoter-coverage"><i class="fa fa-check"></i><b>2.6</b> Promoter coverage</a></li>
+<li class="chapter" data-level="2.7" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#coverage-per-clinical-annotations"><i class="fa fa-check"></i><b>2.7</b> Coverage per clinical annotations</a></li>
+<li class="chapter" data-level="2.8" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage"><i class="fa fa-check"></i><b>2.8</b> Marginal CpG coverage</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#marginal-cpg-coverage-of-k4me1-hotspots"><i class="fa fa-check"></i><b>2.8.1</b> Marginal CpG coverage of k4me1 hotspots</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="metabric-methylation-data-statistics.html"><a href="metabric-methylation-data-statistics.html#sample-cellularity"><i class="fa fa-check"></i><b>2.9</b> Sample cellularity</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html"><i class="fa fa-check"></i><b>3</b> Tumor microenvironment (TME) deconvolution</a><ul>
+<li class="chapter" data-level="3.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#initialize"><i class="fa fa-check"></i><b>3.2</b> Initialize</a></li>
+<li class="chapter" data-level="3.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#load-data"><i class="fa fa-check"></i><b>3.3</b> Load data</a></li>
+<li class="chapter" data-level="3.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#deconvolve-tme"><i class="fa fa-check"></i><b>3.4</b> Deconvolve TME</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er-samples"><i class="fa fa-check"></i><b>3.4.1</b> ER+ samples</a></li>
+<li class="chapter" data-level="3.4.2" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#er--samples"><i class="fa fa-check"></i><b>3.4.2</b> ER- samples</a></li>
+<li class="chapter" data-level="3.4.3" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#normal-samples"><i class="fa fa-check"></i><b>3.4.3</b> Normal samples</a></li>
+<li class="chapter" data-level="3.4.4" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-normalized-methylation"><i class="fa fa-check"></i><b>3.4.4</b> Merge normalized methylation</a></li>
+<li class="chapter" data-level="3.4.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#merge-tme-scores"><i class="fa fa-check"></i><b>3.4.5</b> Merge TME scores</a></li>
+<li class="chapter" data-level="3.4.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#caf-and-immune-genes"><i class="fa fa-check"></i><b>3.4.6</b> CAF and Immune genes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#expression-methylation-correlation-matrices"><i class="fa fa-check"></i><b>3.5</b> Expression-methylation correlation matrices</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#export-clustering"><i class="fa fa-check"></i><b>3.5.1</b> Export clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#diagnose-tme-normalization"><i class="fa fa-check"></i><b>3.6</b> Diagnose TME normalization</a></li>
+<li class="chapter" data-level="3.7" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#plot-cd3d-and-cav1-vs-immune-and-caf-methylation-modules"><i class="fa fa-check"></i><b>3.7</b> Plot CD3D and CAV1 vs immune and CAF methylation modules</a></li>
+<li class="chapter" data-level="3.8" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#annotate-tme-scores"><i class="fa fa-check"></i><b>3.8</b> Annotate TME scores</a></li>
+<li class="chapter" data-level="3.9" data-path="tumor-microenvironment-tme-deconvolution.html"><a href="tumor-microenvironment-tme-deconvolution.html#appendix-sensitivity-analysis-of-tme-normalization"><i class="fa fa-check"></i><b>3.9</b> Appendix: Sensitivity analysis of TME normalization</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html"><i class="fa fa-check"></i><b>4</b> Definition of Clock, MG and ML scores</a><ul>
+<li class="chapter" data-level="4.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#initialize-1"><i class="fa fa-check"></i><b>4.2</b> Initialize</a></li>
+<li class="chapter" data-level="4.3" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#load-data-1"><i class="fa fa-check"></i><b>4.3</b> Load data</a></li>
+<li class="chapter" data-level="4.4" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#clustering-of-normalized-methylation-of-er-tumors"><i class="fa fa-check"></i><b>4.4</b> Clustering of normalized methylation of ER+ tumors</a></li>
+<li class="chapter" data-level="4.5" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-clustering-on-er--correlation-matrix"><i class="fa fa-check"></i><b>4.5</b> Project clustering on ER- correlation matrix</a></li>
+<li class="chapter" data-level="4.6" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#classify-loci-in-the-genome-to-epigenomic-features"><i class="fa fa-check"></i><b>4.6</b> Classify loci in the genome to epigenomic features</a></li>
+<li class="chapter" data-level="4.7" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#average-methylation-of-the-features"><i class="fa fa-check"></i><b>4.7</b> Average methylation of the features</a></li>
+<li class="chapter" data-level="4.8" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-distribution-over-samples-of-the-correlated-loci"><i class="fa fa-check"></i><b>4.8</b> Plot distribution over samples of the correlated loci</a></li>
+<li class="chapter" data-level="4.9" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#plot-loci-classification"><i class="fa fa-check"></i><b>4.9</b> Plot loci classification</a></li>
+<li class="chapter" data-level="4.10" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#project-all-epigenomic-features-using-umap"><i class="fa fa-check"></i><b>4.10</b> Project all epigenomic features using UMAP</a></li>
+<li class="chapter" data-level="4.11" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#compare-epigenomic-scores-to-clinical-annotations"><i class="fa fa-check"></i><b>4.11</b> Compare epigenomic scores to clinical annotations</a></li>
+<li class="chapter" data-level="4.12" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#distribution-of-the-scores-in-ic10-integrative-clusters"><i class="fa fa-check"></i><b>4.12</b> Distribution of the scores in iC10 integrative clusters</a></li>
+<li class="chapter" data-level="4.13" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#epipolymorphism-of-the-epigenomic-layers"><i class="fa fa-check"></i><b>4.13</b> Epipolymorphism of the epigenomic layers</a></li>
+<li class="chapter" data-level="4.14" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#comparison-of-the-epigenomic-scores-with-existing-epigenomic-age-metrics"><i class="fa fa-check"></i><b>4.14</b> Comparison of the epigenomic scores with existing epigenomic age metrics</a><ul>
+<li class="chapter" data-level="4.14.1" data-path="definition-of-clock-mg-and-ml-scores.html"><a href="definition-of-clock-mg-and-ml-scores.html#phenoage"><i class="fa fa-check"></i><b>4.14.1</b> phenoAge</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="loss-clock.html"><a href="loss-clock.html"><i class="fa fa-check"></i><b>5</b> Loss clock</a><ul>
+<li class="chapter" data-level="5.1" data-path="loss-clock.html"><a href="loss-clock.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="loss-clock.html"><a href="loss-clock.html#initialize-2"><i class="fa fa-check"></i><b>5.2</b> Initialize</a></li>
+<li class="chapter" data-level="5.3" data-path="loss-clock.html"><a href="loss-clock.html#plot-methylation-distribution-of-the-clock"><i class="fa fa-check"></i><b>5.3</b> Plot methylation distribution of the clock</a></li>
+<li class="chapter" data-level="5.4" data-path="loss-clock.html"><a href="loss-clock.html#annotate-clock-score"><i class="fa fa-check"></i><b>5.4</b> Annotate &quot;clock&quot; score</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="loss-clock.html"><a href="loss-clock.html#loci-annotation"><i class="fa fa-check"></i><b>5.4.1</b> Loci annotation</a></li>
+<li class="chapter" data-level="5.4.2" data-path="loss-clock.html"><a href="loss-clock.html#clinical-annotation"><i class="fa fa-check"></i><b>5.4.2</b> Clinical annotation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="loss-clock.html"><a href="loss-clock.html#plot-chromosomal-traces-of-clock-score"><i class="fa fa-check"></i><b>5.5</b> Plot chromosomal traces of clock score</a></li>
+<li class="chapter" data-level="5.6" data-path="loss-clock.html"><a href="loss-clock.html#correlation-of-gene-expression-to-clock"><i class="fa fa-check"></i><b>5.6</b> Correlation of gene expression to clock</a></li>
+<li class="chapter" data-level="5.7" data-path="loss-clock.html"><a href="loss-clock.html#plot-score-in-different-tor-regimes"><i class="fa fa-check"></i><b>5.7</b> Plot score in different TOR regimes</a></li>
+<li class="chapter" data-level="5.8" data-path="loss-clock.html"><a href="loss-clock.html#plot-high-low-clock-tumors-vs-tor"><i class="fa fa-check"></i><b>5.8</b> Plot High-Low clock tumors vs TOR</a></li>
+<li class="chapter" data-level="5.9" data-path="loss-clock.html"><a href="loss-clock.html#plot-correlation-of-loci-to-clock-methylation"><i class="fa fa-check"></i><b>5.9</b> Plot correlation of loci to clock methylation</a></li>
+<li class="chapter" data-level="5.10" data-path="loss-clock.html"><a href="loss-clock.html#plot-distribution-of-methylation-of-clock-in-normal-samples"><i class="fa fa-check"></i><b>5.10</b> Plot distribution of methylation of clock in normal samples</a></li>
+<li class="chapter" data-level="5.11" data-path="loss-clock.html"><a href="loss-clock.html#compare-clock-layer-to-biological-age"><i class="fa fa-check"></i><b>5.11</b> Compare clock layer to biological age</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html"><i class="fa fa-check"></i><b>6</b> Epigenomic instability</a><ul>
+<li class="chapter" data-level="6.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#compare-features-to-each-other"><i class="fa fa-check"></i><b>6.1</b> Compare features to each other</a></li>
+<li class="chapter" data-level="6.2" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#annotate-epignomic-instability-scores"><i class="fa fa-check"></i><b>6.2</b> Annotate epignomic instability scores</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#integrative-clusters"><i class="fa fa-check"></i><b>6.2.1</b> Integrative clusters</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#cross-correlation-methylation-expression-of-epigenomic-instability-loci"><i class="fa fa-check"></i><b>6.3</b> Cross correlation (methylation-expression) of epigenomic instability loci</a></li>
+<li class="chapter" data-level="6.4" data-path="epigenomic-instability.html"><a href="epigenomic-instability.html#epigenomic-instability-in-different-time-of-replication-tor-regimes"><i class="fa fa-check"></i><b>6.4</b> Epigenomic instability in different Time of replication (TOR) regimes</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cna.html"><a href="cna.html"><i class="fa fa-check"></i><b>7</b> CNA</a></li>
+<li class="chapter" data-level="8" data-path="mutations.html"><a href="mutations.html"><i class="fa fa-check"></i><b>8</b> Mutations</a></li>
+<li class="chapter" data-level="9" data-path="survival.html"><a href="survival.html"><i class="fa fa-check"></i><b>9</b> Survival</a><ul>
+<li class="chapter" data-level="9.0.1" data-path="survival.html"><a href="survival.html#raw-methylation"><i class="fa fa-check"></i><b>9.0.1</b> Raw-methylation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html"><i class="fa fa-check"></i><b>10</b> Methylation - Expression <em>in cis</em></a><ul>
+<li class="chapter" data-level="10.0.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#remove-tme-genes"><i class="fa fa-check"></i><b>10.0.1</b> Remove TME genes</a></li>
+<li class="chapter" data-level="10.0.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#load-normalized-methylation-and-separate-it-to-promoters-and-non-promoters"><i class="fa fa-check"></i><b>10.0.2</b> Load normalized methylation and separate it to promoters and non-promoters</a></li>
+<li class="chapter" data-level="10.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-promoters"><i class="fa fa-check"></i><b>10.1</b> Cis candidates: promoters</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-correlation-of-top-cis-regulated-promoter-candidates"><i class="fa fa-check"></i><b>10.1.1</b> Plot correlation of top cis-regulated promoter candidates</a></li>
+<li class="chapter" data-level="10.1.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#annotation-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.2</b> Annotation of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#gene-expression-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.1.3</b> Gene expression of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.1.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#correlation-between-cis-regulated-genes"><i class="fa fa-check"></i><b>10.1.4</b> Correlation between cis-regulated genes</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-promoters"><i class="fa fa-check"></i><b>10.2</b> Epipolymorphism of cis-regulated promoters</a></li>
+<li class="chapter" data-level="10.3" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#promoter-examples"><i class="fa fa-check"></i><b>10.3</b> Promoter examples</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#brca1"><i class="fa fa-check"></i><b>10.3.1</b> BRCA1</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#cis-candidates-genomic"><i class="fa fa-check"></i><b>10.4</b> Cis candidates: genomic</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-cis"><i class="fa fa-check"></i><b>10.4.1</b> Plot % cis</a></li>
+<li class="chapter" data-level="10.4.2" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#plot-distance-to-most-correlated-gene"><i class="fa fa-check"></i><b>10.4.2</b> Plot distance to most correlated gene</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#epipolymorphism-of-cis-regulated-genomic"><i class="fa fa-check"></i><b>10.5</b> Epipolymorphism of cis-regulated genomic</a></li>
+<li class="chapter" data-level="10.6" data-path="methylation-expression-in-cis.html"><a href="methylation-expression-in-cis.html#examples-for-cis-regulation-non-promoters"><i class="fa fa-check"></i><b>10.6</b> Examples for cis regulation (non-promoters)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html"><i class="fa fa-check"></i><b>11</b> X dosage compensation</a><ul>
+<li class="chapter" data-level="11.1" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#x-analysis"><i class="fa fa-check"></i><b>11.1</b> X analysis</a></li>
+<li class="chapter" data-level="11.2" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#autosome-analysis"><i class="fa fa-check"></i><b>11.2</b> autosome analysis</a></li>
+<li class="chapter" data-level="11.3" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#checking-dosage-compensation-on-all-x-loci"><i class="fa fa-check"></i><b>11.3</b> Checking dosage compensation on all X loci</a></li>
+<li class="chapter" data-level="11.4" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#of-x-lost"><i class="fa fa-check"></i><b>11.4</b> % of X lost</a></li>
+<li class="chapter" data-level="11.5" data-path="x-dosage-compensation.html"><a href="x-dosage-compensation.html#plot-expression-methylation-correlation-for-x"><i class="fa fa-check"></i><b>11.5</b> Plot Expression-Methylation correlation for X</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="finding-specific-dosage-compensation-examples.html"><a href="finding-specific-dosage-compensation-examples.html"><i class="fa fa-check"></i><b>12</b> Finding specific dosage compensation examples</a></li>
+<li class="chapter" data-level="13" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html"><i class="fa fa-check"></i><b>13</b> Export supplementary tables</a><ul>
+<li class="chapter" data-level="13.1" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-1-metabric-samples-metadata"><i class="fa fa-check"></i><b>13.1</b> Table 1: METABRIC samples metadata</a></li>
+<li class="chapter" data-level="13.2" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-2-immune-expression-signature"><i class="fa fa-check"></i><b>13.2</b> Table 2: Immune expression signature</a></li>
+<li class="chapter" data-level="13.3" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-3-caf-expression-signature"><i class="fa fa-check"></i><b>13.3</b> Table 3: CAF expression signature</a></li>
+<li class="chapter" data-level="13.4" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-4-expression-methylation-correlation"><i class="fa fa-check"></i><b>13.4</b> Table 4: Expression-Methylation correlation</a></li>
+<li class="chapter" data-level="13.5" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-5-methylation-scores"><i class="fa fa-check"></i><b>13.5</b> Table 5: Methylation scores</a></li>
+<li class="chapter" data-level="13.6" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-6-gene-expression-correlation-to-epigenomic-instability"><i class="fa fa-check"></i><b>13.6</b> Table 6: Gene expression correlation to epigenomic instability</a></li>
+<li class="chapter" data-level="13.7" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-7-methylation-layers-loci"><i class="fa fa-check"></i><b>13.7</b> Table 7: Methylation layers loci</a></li>
+<li class="chapter" data-level="13.8" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-8-cis-regulation-candidates"><i class="fa fa-check"></i><b>13.8</b> Table 8: Cis regulation candidates</a></li>
+<li class="chapter" data-level="13.9" data-path="export-supplementary-tables.html"><a href="export-supplementary-tables.html#table-9-dosage-compensation-in-autosomes"><i class="fa fa-check"></i><b>13.9</b> Table 9: Dosage compensation in autosomes</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html"><i class="fa fa-check"></i><b>14</b> Files needed for the analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#misha-db"><i class="fa fa-check"></i><b>14.1</b> Misha DB</a></li>
+<li class="chapter" data-level="14.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#additional-files"><i class="fa fa-check"></i><b>14.2</b> Additional files</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#metabric-data"><i class="fa fa-check"></i><b>14.2.1</b> METABRIC data</a></li>
+<li class="chapter" data-level="14.2.2" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#notable-generated-files"><i class="fa fa-check"></i><b>14.2.2</b> Notable generated files</a></li>
+<li class="chapter" data-level="14.2.3" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#spatial-methylation-distribution"><i class="fa fa-check"></i><b>14.2.3</b> Spatial methylation distribution</a></li>
+<li class="chapter" data-level="14.2.4" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#copy-number-abberations"><i class="fa fa-check"></i><b>14.2.4</b> Copy number abberations</a></li>
+<li class="chapter" data-level="14.2.5" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#genomic-annotations"><i class="fa fa-check"></i><b>14.2.5</b> Genomic annotations</a></li>
+<li class="chapter" data-level="14.2.6" data-path="files-needed-for-the-analysis.html"><a href="files-needed-for-the-analysis.html#external-resources"><i class="fa fa-check"></i><b>14.2.6</b> External resources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="figures-key.html"><a href="figures-key.html"><i class="fa fa-check"></i><b>15</b> Figures key</a><ul>
+<li class="chapter" data-level="15.1" data-path="figures-key.html"><a href="figures-key.html#figure-1"><i class="fa fa-check"></i><b>15.1</b> Figure 1</a></li>
+<li class="chapter" data-level="15.2" data-path="figures-key.html"><a href="figures-key.html#figure-3"><i class="fa fa-check"></i><b>15.2</b> Figure 3</a></li>
+<li class="chapter" data-level="15.3" data-path="figures-key.html"><a href="figures-key.html#figure-4"><i class="fa fa-check"></i><b>15.3</b> Figure 4</a></li>
+<li class="chapter" data-level="15.4" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-1"><i class="fa fa-check"></i><b>15.4</b> Extended Data Figure 1</a></li>
+<li class="chapter" data-level="15.5" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-2"><i class="fa fa-check"></i><b>15.5</b> Extended Data Figure 2</a></li>
+<li class="chapter" data-level="15.6" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-3"><i class="fa fa-check"></i><b>15.6</b> Extended Data Figure 3</a></li>
+<li class="chapter" data-level="15.7" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-4"><i class="fa fa-check"></i><b>15.7</b> Extended Data Figure 4</a></li>
+<li class="chapter" data-level="15.8" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-5"><i class="fa fa-check"></i><b>15.8</b> Extended Data Figure 5</a></li>
+<li class="chapter" data-level="15.9" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-6"><i class="fa fa-check"></i><b>15.9</b> Extended Data Figure 6</a></li>
+<li class="chapter" data-level="15.10" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-7"><i class="fa fa-check"></i><b>15.10</b> Extended Data Figure 7</a></li>
+<li class="chapter" data-level="15.11" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-8"><i class="fa fa-check"></i><b>15.11</b> Extended Data Figure 8</a></li>
+<li class="chapter" data-level="15.12" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-9"><i class="fa fa-check"></i><b>15.12</b> Extended Data Figure 9</a></li>
+<li class="chapter" data-level="15.13" data-path="figures-key.html"><a href="figures-key.html#extended-data-figure-10"><i class="fa fa-check"></i><b>15.13</b> Extended Data Figure 10</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">DNA methylation landscapes of 1538 breast cancers reveal a replication-linked clock, epigenomic instability and cis-regulation</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="x-dosage-compensation" class="section level1">
+<h1><span class="header-section-number">11</span> X dosage compensation</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;scripts/init.R&quot;</span>))</code></pre></div>
+<p>We start by looking at the CNA data</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">4</span>)
+p1 &lt;-<span class="st"> </span>cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>cna_val)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="dv">5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="fl">3.5</span>, <span class="fl">4.5</span>), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) 
+p2 &lt;-<span class="st"> </span>cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>cna_val, <span class="dt">color=</span><span class="kw">factor</span>(cna_round))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="dv">5</span>)  <span class="op">+</span><span class="st"> </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 <span class="op">+</span><span class="st"> </span>p2</code></pre></div>
+<pre><code>## Warning: Removed 12192 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>## Warning: Removed 12192 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div id="x-analysis" class="section level2">
+<h2><span class="header-section-number">11.1</span> X analysis</h2>
+<p>We then go to extract loci that are associated with xist expression</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xist_loci &lt;-<span class="st"> </span><span class="kw">get_xist_loci</span>()
+
+xist_loci_meth &lt;-<span class="st"> </span><span class="kw">get_xist_loci_meth</span>()</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xist_meth &lt;-<span class="st"> </span>xist_loci_meth <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(samp) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">meth =</span> <span class="kw">mean</span>(meth, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))
+
+xist_expr &lt;-<span class="st"> </span><span class="kw">get_gene_expression_mat</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(name <span class="op">==</span><span class="st"> &quot;XIST&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">gather</span>(<span class="st">&quot;samp&quot;</span>, <span class="st">&quot;expr&quot;</span>, <span class="op">-</span>(chrom<span class="op">:</span>name3.chr))
+
+xist_loci_expr &lt;-<span class="st"> </span><span class="kw">get_xist_loci_expr</span>()</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>xist_meth <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(xist_expr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, expr)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(samp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, <span class="dt">ER =</span> ER1)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER))</code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(xist_loci)</code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   chrom    start      end
+## 1  chrX  9983293  9983844
+## 2  chrX 11776199 11776750
+## 3  chrX 14891025 14891576
+## 4  chrX 16964312 16964863
+## 5  chrX 17393041 17393592
+## 6  chrX 18443223 18443774</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(xist_loci, chrom)</code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   chrom   n
+## 1  chrX 615</code></pre>
+<p>We show that Xist expression is correlated with XIST loci methylation</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(df)</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##      samp      meth     expr  ER
+## 1 MB_0006 0.3131481 8.088802 ER+
+## 2 MB_0028 0.1560928 6.482577 ER+
+## 3 MB_0030 0.3030659       NA ER+
+## 4 MB_0035 0.1877706 6.406843 ER-
+## 5 MB_0040 0.2148237       NA ER+
+## 6 MB_0046 0.1631259 6.652839 ER+</code></pre>
+<div id="extended-data-figure-9b" class="section level4">
+<h4><span class="header-section-number">11.1.0.1</span> Extended Data Figure 9B</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">7</span>, <span class="dt">repr.plot.height =</span> <span class="dv">7</span>)
+df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(ER) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">cor =</span> <span class="kw">cor</span>(meth, expr, <span class="dt">use=</span><span class="st">&quot;pairwise.complete.obs&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##       ER       cor
+## 1    ER- 0.6021123
+## 2    ER+ 0.5171663
+## 3 normal 0.4914330</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_xist_meth_cor &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">arrange</span>(<span class="kw">sample</span>(samp)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> meth, <span class="dt">y =</span> expr, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Methylation&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Xist expression&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="fl">0.45</span>, <span class="dt">y =</span> <span class="dv">6</span>, <span class="dt">label =</span> <span class="kw">sprintf</span>(<span class="st">&quot;~ rho == %0.2f&quot;</span>, <span class="kw">cor</span>(df<span class="op">$</span>meth, df<span class="op">$</span>expr, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>, <span class="dt">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>)), <span class="dt">parse =</span> <span class="ot">TRUE</span>, <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">family =</span> <span class="st">&quot;Arial&quot;</span>)
+p_xist_meth_cor</code></pre></div>
+<pre><code>## Warning: Removed 263 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Moving on to look at the methylation in different CNA regimes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_xist_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     xist_cna &lt;- get_xist_loci() %&gt;% gintervals.neighbors1(cna %&gt;% 
+##         mutate(end = ifelse(start == end, start + 1, end)) %&gt;% 
+##         filter(chrom == &quot;chrX&quot;), maxneighbors = nrow(samp_data)) %&gt;% 
+##         filter(dist == 0) %&gt;% select(chrom, start, end, samp, 
+##         cna = cna_round)
+##     xist_cna &lt;- xist_cna %&gt;% mutate(cna_grp = cut(cna, breaks = c(-1, 
+##         0, 1, 2, 10), labels = c(&quot;0N&quot;, &quot;1N&quot;, &quot;2N&quot;, &quot;&gt;=3N&quot;))) %&gt;% 
+##         filter(cna_grp != &quot;0N&quot;) %&gt;% left_join(samp_data %&gt;% select(samp, 
+##         ER = ER1))
+##     return(xist_cna)
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xist_cna &lt;-<span class="st"> </span><span class="kw">get_xist_cna</span>()</code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xist_cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(cna) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">factor</span>(cna), <span class="dt">y=</span>n)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Plotting the distribution of loci</p>
+</div>
+<div id="extended-data-figure-9d" class="section level4">
+<h4><span class="header-section-number">11.1.0.2</span> Extended Data Figure 9D</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">5</span>)
+df &lt;-<span class="st"> </span>xist_cna <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(<span class="kw">get_xist_loci_meth</span>()) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(cna_grp, ER, chrom, start, end) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">meth =</span> <span class="kw">mean</span>(meth, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cna_grp =</span> <span class="kw">factor</span>(cna_grp, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>)))</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;samp&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_boxp_meth_cna &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cna_grp, <span class="dt">y =</span> meth, <span class="dt">fill =</span> ER, <span class="dt">group =</span> cna_grp)) <span class="op">+</span>
+<span class="co">#     ggrastr::geom_boxplot_jitter(outlier.size = 0.1, outlier.jitter.width = 0.01, raster=TRUE) +</span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">linewidth=</span><span class="fl">0.1</span>, <span class="dt">fatten=</span><span class="fl">0.5</span>, <span class="dt">outlier.size=</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Methylation in Xist</span><span class="ch">\n</span><span class="st">associated promoters&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>ER) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">1.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">theme</span>(
+                <span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),
+                <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>()
+            )</code></pre></div>
+<pre><code>## Warning: Ignoring unknown parameters: linewidth</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_boxp_meth_cna  <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw">stat_compare_means</span>(<span class="dt">label =</span> <span class="st">&quot;p.signif&quot;</span>, <span class="dt">comparisons =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>)))<span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<pre><code>## Warning: Removed 2016 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>## Warning: Removed 2016 rows containing non-finite values (stat_signif).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_boxp_meth_cna  <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw">stat_compare_means</span>(<span class="dt">comparisons =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>)))<span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</code></pre></div>
+<pre><code>## Warning: Removed 2016 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>## Warning: Removed 2016 rows containing non-finite values (stat_signif).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end, ER, cna_grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(ER, cna_grp)</code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##    ER cna_grp   n
+## 1 ER+      1N 615
+## 2 ER+      2N 615
+## 3 ER+    &gt;=3N 615
+## 4 ER-      1N 615
+## 5 ER-      2N 615
+## 6 ER-    &gt;=3N 615</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xist_cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(cna_grp, samp, ER) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(cna_grp, ER) </code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   cna_grp  ER   n
+## 1      1N ER- 181
+## 2      1N ER+ 444
+## 3      2N ER- 269
+## 4      2N ER+ 988
+## 5    &gt;=3N ER- 135
+## 6    &gt;=3N ER+ 413</code></pre>
+<p>We now move to show scatters of loci in different CNA regimes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_xist_meth_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     get_xist_cna() %&gt;% inner_join(get_xist_loci_meth()) %&gt;% group_by(chrom, 
+##         start, end, ER, cna_grp) %&gt;% summarise(meth = mean(meth, 
+##         na.rm = TRUE)) %&gt;% ungroup() %&gt;% spread(cna_grp, meth)
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xist_meth_cna &lt;-<span class="st"> </span><span class="kw">get_xist_meth_cna</span>()</code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;samp&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(xist_meth_cna)</code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   chrom    start      end  ER        1N        2N      &gt;=3N
+## 1  chrX  9983293  9983844 ER- 0.2078918 0.3067645 0.3205268
+## 2  chrX  9983293  9983844 ER+ 0.1944013 0.3302692 0.3235067
+## 3  chrX 11683770 11684321 ER- 0.2001634 0.2802105 0.2939960
+## 4  chrX 11683770 11684321 ER+ 0.2885676 0.3238455 0.3123392
+## 5  chrX 11776199 11776750 ER- 0.3316496 0.4977368 0.5313945
+## 6  chrX 11776199 11776750 ER+ 0.3403706 0.5048260 0.5023405</code></pre>
+</div>
+<div id="extended-data-figure-9e" class="section level4">
+<h4><span class="header-section-number">11.1.0.3</span> Extended Data Figure 9E</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_scatter_meth_cna_2_<span class="dv">3</span> &lt;-<span class="st"> </span>xist_meth_cna <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">&gt;=3N</span><span class="st">`</span>, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="co">#         ggrastr::geom_point_rast(size = 0.2, raster.width = 1, raster.height = 1) +</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="fl">0.65</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.65</span>) <span class="co">#+</span>
+<span class="co">#         annotate(&quot;text&quot;, x = 0.5, y = 0.1, label = paste(&quot;rho = &quot;, round(cor(xist_meth_cna$`2N`, xist_meth_cna$`&gt;=3N`, use = &quot;pairwise.complete.obs&quot;), digits = 3)), size = 2, family = &quot;Arial&quot;)</span>
+p_scatter_meth_cna_1_<span class="dv">2</span> &lt;-<span class="st"> </span>xist_meth_cna <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">1N</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="co">#         ggrastr::geom_point_rast(size = 0.2, raster.width = 1, raster.height = 1) +</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="fl">0.65</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">0.65</span>) <span class="co">#+</span>
+<span class="co">#         annotate(&quot;text&quot;, x = 0.5, y = 0.1, label = paste(&quot;rho = &quot;, round(cor(xist_meth_cna$`1N`, xist_meth_cna$`2N`, use = &quot;pairwise.complete.obs&quot;), digits = 3)), size = 2, family = &quot;Arial&quot;)</span>
+(p_scatter_meth_cna_1_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)) <span class="op">+</span><span class="st"> </span>(p_scatter_meth_cna_2_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>))</code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.
+
+## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_scatter_meth_cna_2_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>ER) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) </code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Same with expression:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_xist_expr_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     get_xist_cna() %&gt;% inner_join(get_xist_loci_expr()) %&gt;% group_by(chrom, 
+##         start, end, ER, cna_grp) %&gt;% summarise(expr = mean(expr, 
+##         na.rm = TRUE)) %&gt;% ungroup() %&gt;% spread(cna_grp, expr)
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xist_expr_cna &lt;-<span class="st"> </span><span class="kw">get_xist_expr_cna</span>()</code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;samp&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(xist_expr_cna)</code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   chrom    start      end  ER       1N       2N     &gt;=3N
+## 1  chrX  9983293  9983844 ER- 7.880753 7.976930 8.193818
+## 2  chrX  9983293  9983844 ER+ 7.770670 7.811101 8.114064
+## 3  chrX 14891025 14891576 ER- 7.175153 7.258638 7.427273
+## 4  chrX 14891025 14891576 ER+ 7.268545 7.233742 7.451081
+## 5  chrX 14891133 14891684 ER- 6.111207 6.018312 6.172959
+## 6  chrX 14891133 14891684 ER+ 5.900340 5.859142 5.912923</code></pre>
+</div>
+<div id="extended-data-figure-9f" class="section level4">
+<h4><span class="header-section-number">11.1.0.4</span> Extended Data Figure 9F</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_scatter_expr_cna_2_<span class="dv">3</span> &lt;-<span class="st"> </span>xist_expr_cna <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">&gt;=3N</span><span class="st">`</span>, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="dv">5</span>, <span class="dv">14</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="dv">5</span>, <span class="dv">14</span>)
+
+ p_scatter_expr_cna_1_<span class="dv">2</span> &lt;-<span class="st"> </span>xist_expr_cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">1N</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="dv">5</span>, <span class="dv">14</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="dv">5</span>, <span class="dv">14</span>) 
+
+p_scatter_expr_cna_1_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>p_scatter_expr_cna_2_<span class="dv">3</span></code></pre></div>
+<pre><code>## Warning: Removed 60 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<pre><code>## Warning: Removed 60 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+</div>
+<div id="autosome-analysis" class="section level2">
+<h2><span class="header-section-number">11.2</span> autosome analysis</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_autosome_loci</code></pre></div>
+<pre><code>## function () 
+## {
+##     get_promoter_avg_meth() %&gt;% select(chrom, start, end) %&gt;% 
+##         filter(chrom != &quot;chrX&quot;, chrom != &quot;chrY&quot;) %&gt;% anti_join(get_xist_loci(), 
+##         by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;))
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autosome_loci &lt;-<span class="st"> </span><span class="kw">get_autosome_loci</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_autosome_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     {
+##         autosome_cna &lt;- get_autosome_loci() %&gt;% gintervals.neighbors1(cna %&gt;% 
+##             mutate(end = ifelse(start == end, start + 1, end)) %&gt;% 
+##             filter(chrom != &quot;chrX&quot;), maxneighbors = nrow(samp_data)) %&gt;% 
+##             filter(dist == 0) %&gt;% select(chrom, start, end, samp, 
+##             cna = cna_round)
+##         autosome_cna &lt;- autosome_cna %&gt;% mutate(cna_grp = cut(cna, 
+##             breaks = c(-1, 0, 1, 2, 10), labels = c(&quot;0N&quot;, &quot;1N&quot;, 
+##                 &quot;2N&quot;, &quot;&gt;=3N&quot;))) %&gt;% filter(cna_grp != &quot;0N&quot;) %&gt;% 
+##             left_join(samp_data %&gt;% select(samp, ER = ER1))
+##         autosome_cna
+##     } %cache_df% here(&quot;data/autosome_cna.tsv&quot;) %&gt;% as_tibble()
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autosome_cna &lt;-<span class="st"> </span><span class="kw">get_autosome_cna</span>()
+<span class="kw">head</span>(autosome_cna)</code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   chrom  start    end    samp cna cna_grp  ER
+## 1  chr1 762469 763020 MB_0006   2      2N ER+
+## 2  chr1 762469 763020 MB_0028   1      1N ER+
+## 3  chr1 762469 763020 MB_0035   2      2N ER-
+## 4  chr1 762469 763020 MB_0046   2      2N ER+
+## 5  chr1 762469 763020 MB_0050   2      2N ER+
+## 6  chr1 762469 763020 MB_0053   1      1N ER+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_autosome_loci_meth</code></pre></div>
+<pre><code>## function () 
+## {
+##     get_autosome_loci() %&gt;% inner_join(get_promoter_avg_meth()) %&gt;% 
+##         gather(&quot;samp&quot;, &quot;meth&quot;, -(chrom:end))
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autosome_loci_meth &lt;-<span class="st"> </span><span class="kw">get_autosome_loci_meth</span>()</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(autosome_loci_meth)</code></pre></div>
+<pre><code>##   chrom  start    end    samp        meth
+## 1  chr1 762469 763020 MB_0006 0.000000000
+## 2  chr1 762676 763227 MB_0006 0.021929825
+## 3  chr1 860619 861170 MB_0006 0.001870324
+## 4  chr1 895465 896016 MB_0006 0.014367816
+## 5  chr1 901375 901926 MB_0006 0.024253731
+## 6  chr1 948345 948896 MB_0006 0.000000000</code></pre>
+<p>Plotting the distribution of loci</p>
+<div id="extended-data-figure-9g" class="section level4">
+<h4><span class="header-section-number">11.2.0.1</span> Extended Data Figure 9G</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">5</span>)
+df &lt;-<span class="st"> </span>autosome_cna <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(autosome_loci_meth) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(cna_grp, ER, chrom, start, end) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">meth =</span> <span class="kw">mean</span>(meth, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cna_grp =</span> <span class="kw">factor</span>(cna_grp, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>)))</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;samp&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_boxp_meth_cna_autosome &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cna_grp, <span class="dt">y =</span> meth, <span class="dt">fill =</span> ER, <span class="dt">group =</span> cna_grp)) <span class="op">+</span>
+<span class="co">#     ggrastr::geom_boxplot_jitter(outlier.size = 0.1, outlier.jitter.width = 0.01, raster=TRUE) + </span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">linewidth=</span><span class="fl">0.1</span>, <span class="dt">fatten=</span><span class="fl">0.5</span>, <span class="dt">outlier.size =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Methylation in autosomes&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>ER) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">1.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">theme</span>(
+                <span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),
+                <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>()
+            )</code></pre></div>
+<pre><code>## Warning: Ignoring unknown parameters: linewidth</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_boxp_meth_cna_autosome <span class="op">+</span><span class="st"> </span>ggpubr<span class="op">::</span><span class="kw">stat_compare_means</span>(<span class="dt">comparisons =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>)))</code></pre></div>
+<pre><code>## Warning: Removed 6 rows containing missing values (geom_signif).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_boxp_meth_cna_autosome <span class="op">+</span>
+<span class="st">     </span>ggpubr<span class="op">::</span><span class="kw">stat_compare_means</span>(<span class="dt">label =</span> <span class="st">&quot;p.signif&quot;</span>, <span class="dt">comparisons =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>))) </code></pre></div>
+<pre><code>## Warning: Removed 6 rows containing missing values (geom_signif).
+
+## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_boxp_meth_cna_autosome</code></pre></div>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-19-3.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end, ER) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(ER)</code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##    ER     n
+## 1 ER+ 15207
+## 2 ER- 15207</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autosome_cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(cna_grp, samp, ER) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(ER, cna_grp)</code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##    ER cna_grp    n
+## 1 ER-    &gt;=3N  296
+## 2 ER-      1N  278
+## 3 ER-      2N  293
+## 4 ER+    &gt;=3N 1077
+## 5 ER+      1N 1060
+## 6 ER+      2N 1085</code></pre>
+<p>We now move to show scatters of loci in different CNA regimes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_autosome_meth_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     {
+##         auto_df &lt;- get_autosome_cna() %&gt;% inner_join(get_autosome_loci_meth()) %&gt;% 
+##             group_by(chrom, start, end, ER, cna_grp) %&gt;% summarise(meth = mean(meth, 
+##             na.rm = TRUE)) %&gt;% ungroup() %&gt;% spread(cna_grp, 
+##             meth)
+##         auto_df
+##     } %cache_df% here(&quot;data/autosome_meth_cna.tsv&quot;) %&gt;% as_tibble()
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autosome_meth_cna &lt;-<span class="st"> </span><span class="kw">get_autosome_meth_cna</span>()
+<span class="kw">head</span>(autosome_meth_cna)</code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   chrom  start    end  ER        &gt;=3N          1N          2N
+## 1  chr1 762469 763020 ER- 0.007852706 0.008341878 0.007857689
+## 2  chr1 762469 763020 ER+ 0.006506879 0.008089050 0.008125402
+## 3  chr1 762676 763227 ER- 0.028412915 0.021358769 0.026941446
+## 4  chr1 762676 763227 ER+ 0.028590166 0.070967669 0.042346185
+## 5  chr1 762851 763402 ER- 0.029766663 0.022340914 0.029069381
+## 6  chr1 762851 763402 ER+ 0.032413643 0.078736553 0.047128295</code></pre>
+</div>
+<div id="extended-data-figure-9h" class="section level4">
+<h4><span class="header-section-number">11.2.0.2</span> Extended Data Figure 9H</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">5</span>, <span class="dt">repr.plot.height =</span> <span class="dv">3</span>)
+p_scatter_meth_cna_2_3_autosome &lt;-<span class="st"> </span>autosome_meth_cna <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">&gt;=3N</span><span class="st">`</span>, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">intercept =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">intercept =</span> <span class="op">-</span><span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)
+p_scatter_meth_cna_1_2_autosome &lt;-<span class="st"> </span>autosome_meth_cna <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">1N</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">        </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">intercept =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">intercept =</span> <span class="op">-</span><span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>)          
+        
+p_scatter_meth_cna_1_2_autosome <span class="op">+</span><span class="st"> </span>p_scatter_meth_cna_2_3_autosome</code></pre></div>
+<pre><code>## Warning: Removed 5 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.
+
+## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Same with expression:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_autosome_expr_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     {
+##         auto_df &lt;- get_autosome_cna() %&gt;% inner_join(get_autosome_loci_expr()) %&gt;% 
+##             group_by(chrom, start, end, ER, cna_grp) %&gt;% summarise(expr = mean(expr, 
+##             na.rm = TRUE)) %&gt;% ungroup() %&gt;% spread(cna_grp, 
+##             expr)
+##         auto_df
+##     } %cache_df% here(&quot;data/autosome_expr_cna.tsv&quot;) %&gt;% as_tibble()
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autosome_expr_cna &lt;-<span class="st"> </span><span class="kw">get_autosome_expr_cna</span>()
+<span class="kw">head</span>(autosome_expr_cna)</code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   chrom  start    end  ER     &gt;=3N       1N       2N
+## 1  chr1 762469 763020 ER-       NA       NA       NA
+## 2  chr1 762469 763020 ER+       NA       NA       NA
+## 3  chr1 762851 763402 ER-       NA       NA       NA
+## 4  chr1 762851 763402 ER+       NA       NA       NA
+## 5  chr1 860619 861170 ER- 5.598424 5.685151 5.844717
+## 6  chr1 860619 861170 ER+ 5.816428 5.804565 5.811422</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_scatter_expr_cna_2_<span class="dv">3</span> &lt;-<span class="st"> </span>autosome_expr_cna <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">&gt;=3N</span><span class="st">`</span>, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="dv">5</span>, <span class="dv">14</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="dv">5</span>, <span class="dv">14</span>)
+
+ p_scatter_expr_cna_1_<span class="dv">2</span> &lt;-<span class="st"> </span>autosome_expr_cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">`</span><span class="dt">1N</span><span class="st">`</span>, <span class="dt">y =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">color =</span> ER)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">geom_abline</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlim</span>(<span class="dv">5</span>, <span class="dv">14</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylim</span>(<span class="dv">5</span>, <span class="dv">14</span>) 
+
+p_scatter_expr_cna_1_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>p_scatter_expr_cna_2_<span class="dv">3</span></code></pre></div>
+<pre><code>## Warning: Removed 5366 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<pre><code>## Warning: Removed 5369 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Looking at the distribution of loci in 2N / &gt;=3N (averaging the samples expression per ER and CNA)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_xist_expr_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     get_xist_cna() %&gt;% inner_join(get_xist_loci_expr()) %&gt;% group_by(chrom, 
+##         start, end, ER, cna_grp) %&gt;% summarise(expr = mean(expr, 
+##         na.rm = TRUE)) %&gt;% ungroup() %&gt;% spread(cna_grp, expr)
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_autosome_expr_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     {
+##         auto_df &lt;- get_autosome_cna() %&gt;% inner_join(get_autosome_loci_expr()) %&gt;% 
+##             group_by(chrom, start, end, ER, cna_grp) %&gt;% summarise(expr = mean(expr, 
+##             na.rm = TRUE)) %&gt;% ungroup() %&gt;% spread(cna_grp, 
+##             expr)
+##         auto_df
+##     } %cache_df% here(&quot;data/autosome_expr_cna.tsv&quot;) %&gt;% as_tibble()
+## }</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_fc &lt;-<span class="st"> </span><span class="kw">get_xist_expr_cna</span>() <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;X&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">bind_rows</span>(<span class="kw">get_autosome_expr_cna</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;auto&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff =</span> <span class="st">`</span><span class="dt">&gt;=3N</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">2N</span><span class="st">`</span>, <span class="dt">diff1 =</span> <span class="st">`</span><span class="dt">2N</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">1N</span><span class="st">`</span>) <span class="op">%&gt;%</span>
+<span class="co">#         filter(ER == &quot;ER+&quot;)</span>
+<span class="st">        </span><span class="kw">filter</span>(ER <span class="op">==</span><span class="st"> &quot;ER-&quot;</span>)</code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;samp&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(df_fc)</code></pre></div>
+<pre><code>## # A tibble: 6 x 10
+##   chrom    start      end  ER       1N       2N     &gt;=3N type        diff
+## 1  chrX  9983293  9983844 ER- 7.880753 7.976930 8.193818    X 0.216887405
+## 2  chrX 14891025 14891576 ER- 7.175153 7.258638 7.427273    X 0.168634811
+## 3  chrX 14891133 14891684 ER- 6.111207 6.018312 6.172959    X 0.154646592
+## 4  chrX 15353625 15354176 ER- 7.884146 7.926416 8.264637    X 0.338220886
+## 5  chrX 16964312 16964863 ER- 6.916974 7.004652 7.381009    X 0.376356425
+## 6  chrX 17393041 17393592 ER- 6.256066 6.338770 6.347885    X 0.009114449
+##         diff1
+## 1  0.09617691
+## 2  0.08348508
+## 3 -0.09289491
+## 4  0.04227070
+## 5  0.08767872
+## 6  0.08270411</code></pre>
+</div>
+<div id="extended-data-figure-9i" class="section level4">
+<h4><span class="header-section-number">11.2.0.3</span> Extended Data Figure 9I</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pval &lt;-<span class="st"> </span><span class="kw">ks.test</span>(df_fc<span class="op">$</span>diff[df_fc<span class="op">$</span>type <span class="op">==</span><span class="st"> &quot;X&quot;</span>], df_fc<span class="op">$</span>diff[df_fc<span class="op">$</span>type <span class="op">==</span><span class="st"> &quot;auto&quot;</span>])<span class="op">$</span>p.value
+<span class="kw">message</span>(pval)</code></pre></div>
+<pre><code>## 2.47357689886485e-12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fc_p &lt;-<span class="st"> </span>df_fc <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type, <span class="dt">x =</span> diff)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_density</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;log expression fold change (&gt;=3N/2N)&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;X&quot;</span> =<span class="st"> &quot;darkblue&quot;</span>, <span class="st">&quot;auto&quot;</span> =<span class="st"> &quot;red&quot;</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) 
+<span class="co">#         annotate(&quot;text&quot;, x = 0.5, y = 4, label = &quot;p&lt;&lt;0.001 (KS)&quot;, size = 2, family = &quot;Arial&quot;)</span>
+
+fc_p</code></pre></div>
+<pre><code>## Warning: Removed 2710 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pval &lt;-<span class="st"> </span><span class="kw">ks.test</span>(df_fc<span class="op">$</span>diff1[df_fc<span class="op">$</span>type <span class="op">==</span><span class="st"> &quot;X&quot;</span>], df_fc<span class="op">$</span>diff1[df_fc<span class="op">$</span>type <span class="op">==</span><span class="st"> &quot;auto&quot;</span>])<span class="op">$</span>p.value
+<span class="kw">message</span>(pval)</code></pre></div>
+<pre><code>## 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fc_p &lt;-<span class="st"> </span>df_fc <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type, <span class="dt">x =</span> <span class="op">-</span>diff1)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_density</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;log expression fold change (1N/2N)&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;X&quot;</span> =<span class="st"> &quot;darkblue&quot;</span>, <span class="st">&quot;auto&quot;</span> =<span class="st"> &quot;red&quot;</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) 
+<span class="co">#         annotate(&quot;text&quot;, x = 0.5, y = 4, label = &quot;p&lt;&lt;0.001 (KS)&quot;, size = 2, family = &quot;Arial&quot;)</span>
+
+fc_p</code></pre></div>
+<pre><code>## Warning: Removed 2710 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(df_fc)</code></pre></div>
+<pre><code>## # A tibble: 6 x 10
+##   chrom    start      end  ER       1N       2N     &gt;=3N type        diff
+## 1  chrX  9983293  9983844 ER- 7.880753 7.976930 8.193818    X 0.216887405
+## 2  chrX 14891025 14891576 ER- 7.175153 7.258638 7.427273    X 0.168634811
+## 3  chrX 14891133 14891684 ER- 6.111207 6.018312 6.172959    X 0.154646592
+## 4  chrX 15353625 15354176 ER- 7.884146 7.926416 8.264637    X 0.338220886
+## 5  chrX 16964312 16964863 ER- 6.916974 7.004652 7.381009    X 0.376356425
+## 6  chrX 17393041 17393592 ER- 6.256066 6.338770 6.347885    X 0.009114449
+##         diff1
+## 1  0.09617691
+## 2  0.08348508
+## 3 -0.09289491
+## 4  0.04227070
+## 5  0.08767872
+## 6  0.08270411</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">thresh &lt;-<span class="st"> </span><span class="fl">0.1</span>
+autosome_cna_meth_expr &lt;-<span class="st"> </span><span class="kw">get_autosome_cna_meth_expr</span>()
+    dosage_cands &lt;-<span class="st"> </span>autosome_cna_meth_expr <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">&gt;=3N</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> </span>(<span class="st">`</span><span class="dt">2N</span><span class="st">`</span> <span class="op">+</span><span class="st"> </span>thresh) ) <span class="op">%&gt;%</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">n_&gt;=3N</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>, <span class="st">`</span><span class="dt">n_2N</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) 
+
+    dosage_cands_1N &lt;-<span class="st"> </span>autosome_cna_meth_expr <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">1N</span><span class="st">`</span> <span class="op">&lt;=</span><span class="st"> </span>(<span class="st">`</span><span class="dt">2N</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>thresh) ) <span class="op">%&gt;%</span><span class="st">         </span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">n_1N</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>, <span class="st">`</span><span class="dt">n_2N</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>)     
+
+    dosage_cands_expr &lt;-<span class="st"> </span>dosage_cands <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom, start, end, ER, <span class="st">`</span><span class="dt">1N</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">expr_1N</span><span class="st">`</span>, <span class="st">`</span><span class="dt">2N</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">expr_2N</span><span class="st">`</span>, <span class="st">`</span><span class="dt">&gt;=3N</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">expr_&gt;=3N</span><span class="st">`</span>)
+    dosage_cands_expr_1N &lt;-<span class="st"> </span>dosage_cands_1N <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom, start, end, ER, <span class="st">`</span><span class="dt">1N</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">expr_1N</span><span class="st">`</span>, <span class="st">`</span><span class="dt">2N</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">expr_2N</span><span class="st">`</span>)
+
+    df_fc &lt;-<span class="st"> </span><span class="kw">get_xist_expr_cna</span>() <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;X&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">bind_rows</span>(autosome_expr_cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(dosage_cands_expr) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;auto&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">bind_rows</span>(dosage_cands_expr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;auto-dosage&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">factor</span>(type, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;auto&quot;</span>, <span class="st">&quot;auto-dosage&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">arrange</span>(type) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff =</span> <span class="st">`</span><span class="dt">&gt;=3N</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">2N</span><span class="st">`</span>) </code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;samp&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;ER&quot;, &quot;&gt;=3N&quot;, &quot;1N&quot;, &quot;2N&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    fc_p &lt;-<span class="st"> </span>df_fc <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type, <span class="dt">x =</span> diff)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_density</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;log expression fold change (&gt;=3N/2N)&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;auto&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;auto-dosage&quot;</span> =<span class="st"> &quot;blue&quot;</span>, <span class="st">&quot;X&quot;</span> =<span class="st"> &quot;gray&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="co"># ggsci::scale_color_npg() +         </span>
+<span class="st">        </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.6</span>, <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">facet_wrap</span>(<span class="op">~</span>ER, <span class="dt">scale=</span><span class="st">&quot;free_y&quot;</span>, <span class="dt">nrow=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    df_fc <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(ER) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p_x_auto =</span> <span class="kw">ks.test</span>(diff[type <span class="op">==</span><span class="st"> &quot;X&quot;</span>], diff[type <span class="op">==</span><span class="st"> &quot;auto&quot;</span>])<span class="op">$</span>p.value, <span class="dt">p_auto_dosage =</span>  <span class="kw">ks.test</span>(diff[type <span class="op">==</span><span class="st"> &quot;auto-dosage&quot;</span>], diff[type <span class="op">==</span><span class="st"> &quot;auto&quot;</span>])<span class="op">$</span>p.value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>()</code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##    ER     p_x_auto p_auto_dosage
+## 1 ER+ 5.535245e-03             0
+## 2 ER- 1.049272e-12             0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    df_fc_1N &lt;-<span class="st"> </span><span class="kw">get_xist_expr_cna</span>() <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;X&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">bind_rows</span>(autosome_expr_cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(dosage_cands_expr_1N) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;auto&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">bind_rows</span>(dosage_cands_expr_1N <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="st">&quot;auto-dosage&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">factor</span>(type, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;auto&quot;</span>, <span class="st">&quot;auto-dosage&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">arrange</span>(type) <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">mutate</span>(<span class="dt">diff =</span> <span class="st">`</span><span class="dt">1N</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">2N</span><span class="st">`</span>) </code></pre></div>
+<pre><code>## Joining, by = &quot;samp&quot;</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;samp&quot;)</code></pre>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;ER&quot;, &quot;1N&quot;, &quot;2N&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    fc_p_1N &lt;-<span class="st"> </span>df_fc_1N <span class="op">%&gt;%</span>
+<span class="st">        </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">color =</span> type, <span class="dt">x =</span> diff)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">geom_density</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;log expression fold change (1N/2N)&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;auto&quot;</span> =<span class="st"> &quot;red&quot;</span>, <span class="st">&quot;auto-dosage&quot;</span> =<span class="st"> &quot;blue&quot;</span>, <span class="st">&quot;X&quot;</span> =<span class="st"> &quot;gray&quot;</span>)) <span class="op">+</span><span class="st">           </span>
+<span class="st">        </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.6</span>, <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">facet_wrap</span>(<span class="op">~</span>ER, <span class="dt">scale=</span><span class="st">&quot;free_y&quot;</span>, <span class="dt">nrow=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## Warning: `guides(&lt;scale&gt; = FALSE)` is deprecated. Please use `guides(&lt;scale&gt; =
+## &quot;none&quot;)` instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">    df_fc_1N <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(ER) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">p_x_auto =</span> <span class="kw">ks.test</span>(diff[type <span class="op">==</span><span class="st"> &quot;X&quot;</span>], diff[type <span class="op">==</span><span class="st"> &quot;auto&quot;</span>])<span class="op">$</span>p.value, <span class="dt">p_auto_dosage =</span>  <span class="kw">ks.test</span>(diff[type <span class="op">==</span><span class="st"> &quot;auto-dosage&quot;</span>], diff[type <span class="op">==</span><span class="st"> &quot;auto&quot;</span>])<span class="op">$</span>p.value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>() </code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##    ER p_x_auto p_auto_dosage
+## 1 ER+        0   0.025082963
+## 2 ER-        0   0.006876647</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fc_p</code></pre></div>
+<pre><code>## Warning: Removed 5500 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fc_p_1N</code></pre></div>
+<pre><code>## Warning: Removed 5431 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-30-2.png" width="672" /></p>
+</div>
+</div>
+<div id="checking-dosage-compensation-on-all-x-loci" class="section level2">
+<h2><span class="header-section-number">11.3</span> Checking dosage compensation on all X loci</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_xist_loci</code></pre></div>
+<pre><code>## function () 
+## {
+##     {
+##         xist_expr &lt;- get_gene_expression_mat() %&gt;% filter(name == 
+##             &quot;XIST&quot;) %&gt;% gather(&quot;samp&quot;, &quot;expr&quot;, -(chrom:name3.chr)) %&gt;% 
+##             as_tibble()
+##         all_norm_meth &lt;- fread(here(&quot;data/all_norm_meth.tsv&quot;)) %&gt;% 
+##             filter(chrom == &quot;chrX&quot;) %&gt;% as_tibble()
+##         ER_positive_mat &lt;- all_norm_meth %&gt;% select(chrom:end, 
+##             any_of(ER_positive_samples)) %&gt;% intervs_to_mat()
+##         ER_negative_mat &lt;- all_norm_meth %&gt;% select(chrom:end, 
+##             any_of(ER_negative_samples)) %&gt;% intervs_to_mat()
+##         xist_expr_vec &lt;- xist_expr %&gt;% select(samp, expr) %&gt;% 
+##             deframe()
+##         samples &lt;- intersect(names(xist_expr_vec), colnames(ER_positive_mat))
+##         ER_pos_cors &lt;- tgs_cor(t(ER_positive_mat[, samples]), 
+##             as.matrix(xist_expr_vec[samples]), pairwise.complete.obs = TRUE)
+##         samples &lt;- intersect(names(xist_expr_vec), colnames(ER_negative_mat))
+##         ER_neg_cors &lt;- tgs_cor(t(ER_negative_mat[, samples]), 
+##             as.matrix(xist_expr_vec[samples]), pairwise.complete.obs = TRUE)
+##         xist_loci &lt;- cbind(ER_pos_cors, ER_neg_cors) %&gt;% mat_to_intervs() %&gt;% 
+##             filter(V1 &gt;= 0.2 | V2 &gt;= 0.2) %&gt;% distinct(chrom, 
+##             start, end)
+##     } %cache_df% here(&quot;data/xist_loci.tsv&quot;) %&gt;% as_tibble()
+## }
+## &lt;bytecode: 0xfcb8860&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_norm_meth_x &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="kw">here</span>(<span class="st">&quot;data/all_norm_meth.tsv&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">filter</span>(chrom <span class="op">==</span><span class="st"> &quot;chrX&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+X_loci &lt;-<span class="st"> </span>all_norm_meth_x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(chrom, start, end)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_xist_cna</code></pre></div>
+<pre><code>## function () 
+## {
+##     xist_cna &lt;- get_xist_loci() %&gt;% gintervals.neighbors1(cna %&gt;% 
+##         mutate(end = ifelse(start == end, start + 1, end)) %&gt;% 
+##         filter(chrom == &quot;chrX&quot;), maxneighbors = nrow(samp_data)) %&gt;% 
+##         filter(dist == 0) %&gt;% select(chrom, start, end, samp, 
+##         cna = cna_round)
+##     xist_cna &lt;- xist_cna %&gt;% mutate(cna_grp = cut(cna, breaks = c(-1, 
+##         0, 1, 2, 10), labels = c(&quot;0N&quot;, &quot;1N&quot;, &quot;2N&quot;, &quot;&gt;=3N&quot;))) %&gt;% 
+##         filter(cna_grp != &quot;0N&quot;) %&gt;% left_join(samp_data %&gt;% select(samp, 
+##         ER = ER1))
+##     return(xist_cna)
+## }
+## &lt;bytecode: 0x1612c170&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X_cna &lt;-<span class="st"> </span>X_loci <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gintervals.neighbors1</span>(cna <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">end =</span> <span class="kw">ifelse</span>(start <span class="op">==</span><span class="st"> </span>end, start <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, end)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(chrom <span class="op">==</span><span class="st"> &quot;chrX&quot;</span>), <span class="dt">maxneighbors =</span> <span class="kw">nrow</span>(samp_data)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(dist <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom, start, end, samp, 
+    <span class="dt">cna =</span> cna_round)
+X_cna &lt;-<span class="st"> </span>X_cna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">cna_grp =</span> <span class="kw">cut</span>(cna, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, 
+        <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">10</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;0N&quot;</span>, <span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">filter</span>(cna_grp <span class="op">!=</span><span class="st"> &quot;0N&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(samp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(samp, 
+        <span class="dt">ER =</span> ER1)) <span class="op">%cache_df%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/X_cna.tsv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as_tibble</span>()
+<span class="kw">head</span>(X_cna)</code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   chrom  start    end    samp cna cna_grp  ER
+## 1  chrX 192489 193040 MB_0006   2      2N ER+
+## 2  chrX 192489 193040 MB_0028   1      1N ER+
+## 3  chrX 192489 193040 MB_0046   1      1N ER+
+## 4  chrX 192489 193040 MB_0050   1      1N ER+
+## 5  chrX 192489 193040 MB_0053   1      1N ER+
+## 6  chrX 192489 193040 MB_0054   2      2N ER+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_xist_loci_meth</code></pre></div>
+<pre><code>## function () 
+## {
+##     get_xist_loci() %&gt;% inner_join(get_promoter_avg_meth()) %&gt;% 
+##         gather(&quot;samp&quot;, &quot;meth&quot;, -(chrom:end))
+## }
+## &lt;bytecode: 0x498253b0&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X_loci_meth &lt;-<span class="st"> </span>X_loci <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(<span class="kw">get_promoter_avg_meth</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">gather</span>(<span class="st">&quot;samp&quot;</span>, <span class="st">&quot;meth&quot;</span>, <span class="op">-</span>(chrom<span class="op">:</span>end))</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">5</span>, <span class="dt">repr.plot.height =</span> <span class="dv">3</span>)
+p_boxp_meth_cna_all &lt;-<span class="st"> </span>X_cna <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">left_join</span>(X_loci_meth) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(cna_grp, ER, chrom, start, end) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">meth =</span> <span class="kw">mean</span>(meth, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cna_grp =</span> <span class="kw">factor</span>(cna_grp, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ER =</span> <span class="kw">factor</span>(ER, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ER+&quot;</span>, <span class="st">&quot;ER-&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> cna_grp, <span class="dt">y =</span> meth, <span class="dt">fill =</span> ER, <span class="dt">group =</span> cna_grp)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">linewidth=</span><span class="fl">0.1</span>, <span class="dt">fatten=</span><span class="fl">0.5</span>, <span class="dt">outlier.size =</span> <span class="fl">0.1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> annot_colors<span class="op">$</span>ER1, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Methylation in X promoters&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>ER) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="fl">1.1</span>) <span class="op">+</span>
+<span class="st">    </span>ggpubr<span class="op">::</span><span class="kw">stat_compare_means</span>(<span class="dt">label =</span> <span class="st">&quot;p.signif&quot;</span>, <span class="dt">comparisons =</span> <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&quot;1N&quot;</span>, <span class="st">&quot;2N&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;2N&quot;</span>, <span class="st">&quot;&gt;=3N&quot;</span>))) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span><span class="kw">theme</span>(
+                <span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),
+                <span class="dt">panel.grid.minor.x =</span> <span class="kw">element_blank</span>()
+            )</code></pre></div>
+<pre><code>## Joining, by = c(&quot;chrom&quot;, &quot;start&quot;, &quot;end&quot;, &quot;samp&quot;)</code></pre>
+<pre><code>## Warning: Ignoring unknown parameters: linewidth</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p_boxp_meth_cna_all</code></pre></div>
+<pre><code>## Warning: Removed 41928 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>## Warning: Removed 41928 rows containing non-finite values (stat_signif).</code></pre>
+<pre><code>## Warning: Removed 6 rows containing missing values (geom_signif).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<blockquote>
+<p>Looks very similar to the XIST associated version</p>
+</blockquote>
+</div>
+<div id="of-x-lost" class="section level2">
+<h2><span class="header-section-number">11.4</span> % of X lost</h2>
+<div id="extended-data-figure-9c" class="section level4">
+<h4><span class="header-section-number">11.4.0.1</span> Extended Data Figure 9C</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">chr_x_len &lt;-<span class="st"> </span><span class="kw">gintervals.all</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(chrom <span class="op">==</span><span class="st"> &quot;chrX&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(end)
+p_x_perc &lt;-<span class="st"> </span>cna <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(chrom <span class="op">==</span><span class="st"> &quot;chrX&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">l =</span> end <span class="op">-</span><span class="st"> </span>start) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cna =</span> <span class="kw">cut</span>(cna_round, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">20</span>), <span class="dt">include.lowest=</span><span class="ot">TRUE</span>, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Loss&quot;</span>, <span class="st">&quot;normal&quot;</span>, <span class="st">&quot;Gain&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">group_by</span>(samp, cna) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">p =</span> <span class="kw">sum</span>(l) <span class="op">/</span><span class="st"> </span>chr_x_len) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(cna <span class="op">!=</span><span class="st"> &quot;normal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">add_ER</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ER)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>p, <span class="dt">color=</span>ER, <span class="dt">y=</span><span class="dv">1</span><span class="op">-</span>..y..)) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">stat_ecdf</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cna) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span>annot_colors<span class="op">$</span>ER1) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">theme</span>(<span class="dt">aspect.ratio=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">xlab</span>(<span class="st">&quot;% of X&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">ylab</span>(<span class="st">&quot;% of samples&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">        </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels=</span>scales<span class="op">::</span>percent)
+p_x_perc</code></pre></div>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+</div>
+</div>
+<div id="plot-expression-methylation-correlation-for-x" class="section level2">
+<h2><span class="header-section-number">11.5</span> Plot Expression-Methylation correlation for X</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">meth_mat &lt;-<span class="st"> </span>all_norm_meth_x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chrom<span class="op">:</span>end, <span class="kw">any_of</span>(ER_positive_samples)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">intervs_to_mat</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expr_m &lt;-<span class="st"> </span><span class="kw">get_gene_expression_mat</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">any_of</span>(<span class="kw">c</span>(<span class="st">&quot;chrom&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;name3.chr&quot;</span>)))
+expr_mat &lt;-<span class="st"> </span>expr_m <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">column_to_rownames</span>(<span class="st">&quot;name&quot;</span>)
+f &lt;-<span class="st"> </span><span class="kw">rowSums</span>(<span class="op">!</span><span class="kw">is.na</span>(expr_mat)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>
+expr_mat &lt;-<span class="st"> </span>expr_mat[f, ]
+<span class="kw">dim</span>(expr_mat)</code></pre></div>
+<pre><code>## [1] 17691  2124</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">em_cross &lt;-<span class="st"> </span><span class="kw">em_cross_cor</span>(meth_mat, expr_mat, <span class="dt">meth_cor_thresh =</span> <span class="fl">0.25</span>, <span class="dt">expr_cor_thresh =</span> <span class="fl">0.25</span>) <span class="op">%cache_rds%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/X_er_positive_em_cross_cor.rds&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">em_cross_clust &lt;-<span class="st"> </span><span class="kw">cluster_em_cross_cor</span>(em_cross, <span class="dt">k_meth =</span> <span class="dv">32</span>, <span class="dt">k_expr =</span> <span class="dv">32</span>) <span class="op">%cache_rds%</span><span class="st"> </span><span class="kw">here</span>(<span class="st">&quot;data/X_er_positive_em_cross_cor_clust.rds&quot;</span>)</code></pre></div>
+<div id="extended-data-figure-9a" class="section level4">
+<h4><span class="header-section-number">11.5.0.1</span> Extended Data Figure 9A</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">repr.plot.width =</span> <span class="dv">8</span>, <span class="dt">repr.plot.height =</span> <span class="dv">13</span>)
+<span class="kw">plot_em_cross_cor</span>(em_cross_clust)</code></pre></div>
+<pre><code>## plotting em cross</code></pre>
+<p><img src="dosage-compensation_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">em_cross_clust<span class="op">$</span>em_cross[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##                                AARS        ABCA6        ABCA8        ABCB1
+## chrX_12156083_12156634 -0.009473256  0.069027019  0.089264904  0.014470847
+## chrX_14261885_14262436 -0.029288914 -0.007331325 -0.003098204 -0.054763278
+## chrX_23017576_23018127  0.091659895 -0.029980425 -0.017798906 -0.016557969
+## chrX_23800773_23801324 -0.142085957  0.028894237  0.062800268 -0.001669589
+## chrX_23925621_23926172 -0.080076720 -0.025302800  0.012101469  0.012796371
+##                              ABI3BP
+## chrX_12156083_12156634  0.089861306
+## chrX_14261885_14262436 -0.001929155
+## chrX_23017576_23018127 -0.010672580
+## chrX_23800773_23801324  0.016375597
+## chrX_23925621_23926172 -0.010378608</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(em_cross_clust<span class="op">$</span>em_cross)</code></pre></div>
+<pre><code>## [1] 1218  595</code></pre>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="methylation-expression-in-cis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="finding-specific-dosage-compensation-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
