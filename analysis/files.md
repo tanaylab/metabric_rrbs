@@ -5,7 +5,7 @@ See scripts that generate those files at `raw-data.Rmd` and `pipeline.Rmd`.
 
 In addition, during the analysis some files are heavy to compute and therefore are cached for convenience. See below a list of all the files. 
 
-In general - in order to run the analysis notebooks you would need to first download the processed files from http://www.wisdom.weizmann.ac.il/~atanay/metabric/analysis_files.tar.gz. 
+In general - in order to run the analysis notebooks you would need to first download the processed files from https://tanaylab.weizmann.ac.il/metabric_rrbs/analysis_files.tar.gz. 
 
 The analysis files bundle contains a `misha` db and additional processed files: 
 
@@ -28,7 +28,6 @@ A [misha](https://github.com/tanaylab/misha) database of `hg19` is needed for th
 - Expression `data/expression_matrix.csv`
     See raw-data.Rmd for alternative promoter choice. 
 - Mean Epipolymorhism per locus: `data/loci_epipoly_mean.tsv`. See the Epipolymorhism notebook for the code that generated it. 
-- Epipolymorphism in cis-regulatated regions: `data/promoter_cis_reg_epipoly.tsv`, `data/genomic_cis_reg_epipoly.tsv`
 - Copy Number Abberations `data/cna.tsv`
 - Mutations: `data/mutations.tsv`
 - Survival: `data/survival.tsv`

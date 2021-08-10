@@ -1,4 +1,5 @@
 rmd_files: 
+  - "index.Rmd"
   - "coverage-stats.Rmd"
   - "TME.Rmd"
   - "Epigenomic-scores.Rmd"
@@ -11,6 +12,7 @@ rmd_files:
   - "dosage-compensation.Rmd"
   - "sup-tables.Rmd"
   - "files.md"
+  - "figures-key.md"
 
 new_session: yes
 
