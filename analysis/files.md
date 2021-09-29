@@ -5,7 +5,7 @@ See scripts that generate those files at `raw-data.Rmd` and `pipeline.Rmd`.
 
 In addition, during the analysis some files are heavy to compute and therefore are cached for convenience. See below a list of all the files. 
 
-In general - in order to run the analysis notebooks you would need to first download the processed files from https://tanaylab.weizmann.ac.il/metabric_rrbs/analysis_files.tar.gz. 
+In general - in order to run the analysis notebooks you would need to first download the processed files from https://metabric-rrbs.s3.eu-west-1.amazonaws.com/analysis_files.tar.gz. 
 
 The analysis files bundle contains a `misha` db and additional processed files: 
 
