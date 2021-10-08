@@ -15,7 +15,8 @@ packages <- c(
     "tanaylab/methylayer",
     "cowplot",
     "patchwork",
-    "vegan"
+    "vegan",
+    "ggpubr"
 )
 
 suppressPackageStartupMessages(library(here))
