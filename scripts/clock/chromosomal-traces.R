@@ -37,7 +37,7 @@ get_tor_clock_chrom_trace <- function(chrom, ER, iterator = 1e4) {
         df <- meth_df_sum %>% left_join(chr_bins)
         
         df              
-    } %cache_df% here(glue("data/tor_clock_chrom_trace_{chrom}_{iterator}.tsv")) %>% as_tibble()
+    } %cache_df% here(glue("data/tor_clock_chrom_trace_{chrom}_{iterator}.tsv", iterator = format(iterator, scientific = FALSE))) %>% as_tibble()
 }
 
 plot_tor_clock_chrom_track <- function(chrom, ER, iterator = 1e4, min_n = 50, trace_df = NULL, tor_breaks = main_config$genomic_regions$tor_high_low){
