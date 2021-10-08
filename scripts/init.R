@@ -16,7 +16,8 @@ packages <- c(
     "cowplot",
     "patchwork",
     "vegan",
-    "ggpubr"
+    "ggpubr",
+    "umap"
 )
 
 suppressPackageStartupMessages(library(here))
