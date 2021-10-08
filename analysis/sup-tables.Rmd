@@ -57,6 +57,7 @@ Metadata fields are:
 - log10_global_epm
 
 ```{r}
+dir.create(here("export"))
 samp_qc <- fread(here("data/sample_qc.csv")) %>% as_tibble()
 ```
 

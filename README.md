@@ -16,6 +16,12 @@ The above file contains a folder named `db` and a folder named `data`. Please co
 
 See `files.md` for a description of these files and `pipeline.Rmd` for the code that generated them. 
 
+You can also run all the notebooks at once by running (inside the analysis folder):
+
+```r
+bookdown::render_book("index.Rmd", new_session = TRUE, output = bookdown::gitbook())
+```
+
 ## Dependencies
 
 The initialization script (`scripts/init.R`) installs automatically the necessary R packages to run the notebooks. 

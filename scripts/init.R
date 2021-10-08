@@ -46,7 +46,7 @@ source_files(scripts_dir)
 
 
 # Load sample metadata
-init_metadata()
+init_metadata(main_config_file)
 init_colors(main_config$colors)
 
 define_genomic_regions(main_config_file)
