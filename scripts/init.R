@@ -17,7 +17,8 @@ packages <- c(
     "patchwork",
     "vegan",
     "ggpubr",
-    "umap"
+    "umap",
+    "survminer"
 )
 
 suppressPackageStartupMessages(library(here))
