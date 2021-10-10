@@ -74,6 +74,8 @@ Run the container:
 docker run -v $(pwd)/db:/workdir/db -v $(pwd)/data:/workdir/data -ti -p 8888:8888 tanaylab/metabric-rrbs
 ```
 
+Connect to the jupyter server running at port 8888.
+
 
 
 
