@@ -8,6 +8,8 @@ This is the code that generates the figures for the METABRIC RRBS paper. The cod
 
 ## Run the notebooks
 
+See below for docker instructions. 
+
 Due to the size of the METABRIC-RRBS dataset (~2.2TB full, 55GB pileup alone), we generated a few smaller processed files to help reproduce the analysis. Even this bundle is quite large (~50GB), and you can download it from: 
 
 https://metabric-rrbs.s3.eu-west-1.amazonaws.com/analysis_files.tar.gz
@@ -46,3 +48,32 @@ Running in a different order might work for some of the notebooks, but it might 
 ## Find a specific figure
 
 `figures-key.md` lists where each figure in the paper was generated. 
+
+## Docker 
+
+We also provide a docker image which contains all the needed dependencies, to use it run:
+
+Download the analysis files: 
+
+```bash
+wget https://metabric-rrbs.s3.eu-west-1.amazonaws.com/analysis_files.tar.gz
+tar xvzf analysis_files.tar.gz
+```
+
+Change permissions for the analysis files:
+
+```bash
+chmod a+wx data/
+chmod a+r -R data/
+chmod a+rx -R db/
+```
+
+Run the container:
+
+```bash
+docker run -v $(pwd)/db:/workdir/db -v $(pwd)/data:/workdir/data -ti -p 8888:8888 tanaylab/metabric-rrbs
+```
+
+
+
+
