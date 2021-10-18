@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-This is the code that generates the figures for the METABRIC RRBS paper. The code is splitted to jupyter notebooks that can be found under the analysis folder. 
+This is the code that generates the figures for the [METABRIC RRBS paper](https://doi.org/10.1038/s41467-021-25661-w). The code is splitted to jupyter notebooks that can be found under the analysis folder. 
 
 ## Run the notebooks
 
